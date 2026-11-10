@@ -87,7 +87,7 @@ def test_room_code_is_four_digits_and_can_be_used_to_join(monkeypatch) -> None:
     assert joined.json()["game_id"] == created["game_id"]
 
 
-def test_replay_redirects_connected_players_to_their_new_room(monkeypatch) -> None:
+def test_replay_restarts_same_room_for_connected_players(monkeypatch) -> None:
     monkeypatch.setattr(main, "game_service", GameService())
     main.connections.clear()
     client = TestClient(main.app)
@@ -116,12 +116,14 @@ def test_replay_redirects_connected_players_to_their_new_room(monkeypatch) -> No
             assert response.status_code == 200
             host_message = host_socket.receive_json()
             guest_message = guest_socket.receive_json()
-            assert host_message["type"] == "replay"
-            assert guest_message["type"] == "replay"
-            assert host_message["game_id"] == response.json()["game_id"]
-            assert guest_message["game_id"] == response.json()["game_id"]
-            assert guest_message["player_id"] != response.json()["player_id"]
-            assert guest_message["player_token"] != response.json()["player_token"]
+            assert response.json()["game_id"] == host["game_id"]
+            assert response.json()["room_code"] == host["room_code"]
+            assert host_message["game_id"] == host["game_id"]
+            assert guest_message["game_id"] == host["game_id"]
+            assert host_message["phase"] == "WAITING_FOR_PLAYERS"
+            assert guest_message["phase"] == "WAITING_FOR_PLAYERS"
+            assert host_message["players"][1]["player_id"] == guest["player_id"]
+            assert guest_message["players"][0]["player_id"] == host["player_id"]
 
 
 def test_rest_game_creation_join_and_role_privacy(monkeypatch) -> None:

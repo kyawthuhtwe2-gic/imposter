@@ -159,7 +159,7 @@ export default function GamePage() {
     submitGuess,
     markGuessSpoken,
     resolveSpokenGuess,
-    createReplaySession,
+    restartGame,
   } = useGameResults(id, guessPlayerId, request);
   const [clue, setClue] = useState("");
   const [submittingHint, setSubmittingHint] = useState(false);
@@ -296,13 +296,8 @@ export default function GamePage() {
   async function replay() {
     if (replaying) return;
     setReplaying(true);
-    const newGame = await createReplaySession(playerId);
-    if (!newGame) {
-      setReplaying(false);
-      return;
-    }
-    window.sessionStorage.setItem(`imposter-token:${newGame.game_id}`, newGame.player_token);
-    window.location.href = `/room/${newGame.game_id}?playerId=${newGame.player_id}`;
+    await restartGame(playerId);
+    setReplaying(false);
   }
 
   return (
@@ -842,14 +837,14 @@ export default function GamePage() {
                         onClick={replay}
                         disabled={replaying}
                       >
-                        {replaying ? "ဂိမ်းအသစ် ဖွင့်နေသည်..." : "ပြန်ကစားမယ်"}
+                        {replaying ? "ဂိမ်းပြန်စနေသည်..." : "ပြန်ကစားမယ်"}
                         {!replaying && <span aria-hidden="true">↻</span>}
                       </button>
                     )}
                   </div>
                   <p className="inline-note">{isHost
-                    ? "ဂိမ်းအသစ်အတွက် အခန်းကုဒ်ကို ကစားသမားများထံ မျှဝေပါ။"
-                    : "အိမ်ရှင်က ဂိမ်းအသစ်စတင်ရန် စောင့်ပါ၊ သို့မဟုတ် အခန်းအသစ်ထဲ ဝင်ပါ။"}</p>
+                    ? "လက်ရှိအခန်းနှင့် ကစားသမားများကို ဆက်သုံးပြီး ဂိမ်းကို ပြန်စနိုင်သည်။"
+                    : "အိမ်ရှင်က ဒီအခန်းထဲမှာ ဂိမ်းပြန်စရန် စောင့်နေသည်။"}</p>
                 </section>
               ) : (
                 <div className="round-result-actions">
