@@ -448,7 +448,7 @@ export default function GamePage() {
                   </div>
                 </div>
               )}
-              <div className="form-row">
+              <div className="form-row lobby-actions">
                 {isHost && (
                   <button
                     className="primary-button"

@@ -679,6 +679,10 @@ option {
   margin-top: 0;
 }
 
+.lobby-actions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .room-settings-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
