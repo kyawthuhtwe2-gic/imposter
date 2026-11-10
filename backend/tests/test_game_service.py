@@ -536,6 +536,33 @@ def test_reset_preserves_scores_and_clears_round_data(
     assert all(player.role is None and not player.role_viewed for player in game.players)
 
 
+def test_restart_game_reuses_room_players_and_settings_and_clears_scores() -> None:
+    service, game_id, players = create_game(3, 1, clue_rounds=2)
+    game = service.games[game_id]
+    game.phase = GamePhase.GAME_OVER
+    game.total_rounds = 3
+    game.desired_player_count = 3
+    game.players[0].score = 7
+    game.players[0].wins = 2
+    game.players[1].losses = 2
+    player_credentials = [
+        (player.player_id, player.player_token) for player in game.players
+    ]
+
+    restarted = service.restart_game(game_id, players[0])
+
+    assert restarted is game
+    assert restarted.phase == GamePhase.WAITING_FOR_PLAYERS
+    assert restarted.game_id == game_id
+    assert [(player.player_id, player.player_token) for player in restarted.players] == player_credentials
+    assert restarted.imposter_count == 1
+    assert restarted.total_rounds == 3
+    assert restarted.desired_player_count == 3
+    assert restarted.clue_rounds == 2
+    assert restarted.hint_input_mode == HintInputMode.TEXT_INPUT
+    assert all((player.score, player.wins, player.losses) == (0, 0, 0) for player in restarted.players)
+
+
 def finish_match_round(
     service: GameService,
     game_id: str,

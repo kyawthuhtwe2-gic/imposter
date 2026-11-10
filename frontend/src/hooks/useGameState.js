@@ -145,7 +145,7 @@ export function useVoting(gameId, playerId, request) {
 }
 
 export function useGameResults(gameId, playerId, request) {
-  const createReplaySession = useCallback(
+  const restartGame = useCallback(
     (hostPlayerId = playerId) =>
       request(`/games/${encodeURIComponent(gameId)}/replay`, {
         player_id: hostPlayerId,
@@ -187,6 +187,6 @@ export function useGameResults(gameId, playerId, request) {
     markGuessSpoken,
     resolveSpokenGuess,
     resetGame,
-    createReplaySession,
+    restartGame,
   };
 }

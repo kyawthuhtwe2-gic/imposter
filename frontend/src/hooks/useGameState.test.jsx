@@ -60,7 +60,7 @@ describe("game state hooks", () => {
       await results.result.current.markGuessSpoken();
       await results.result.current.resolveSpokenGuess(true, "host");
       await results.result.current.resetGame();
-      await results.result.current.createReplaySession("host");
+      await results.result.current.restartGame("host");
     });
 
     expect(request.mock.calls.map(([path]) => path)).toEqual([
