@@ -374,7 +374,7 @@ export default function GamePage() {
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="editPlayerCount">ကစားသမားအရေအတွက်</label>
+                    <label htmlFor="editPlayerCount">Player</label>
                     <select
                       id="editPlayerCount"
                       value={game.desired_player_count ?? Math.max(3, game.player_count)}
@@ -389,7 +389,7 @@ export default function GamePage() {
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="editImposterCount">Imposter အရေအတွက်</label>
+                    <label htmlFor="editImposterCount">Imposter</label>
                     <select
                       id="editImposterCount"
                       value={game.imposter_count ?? 1}

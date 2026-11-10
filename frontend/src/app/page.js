@@ -177,7 +177,7 @@ export default function HomePage() {
             {categories.map((name) => <option key={name} value={name}>{name}</option>)}
           </select>
 
-          <label htmlFor="imposterCount">Imposter အရေအတွက်</label>
+          <label htmlFor="imposterCount">Imposter</label>
           <select
             id="imposterCount"
             value={imposterCount}
@@ -194,7 +194,7 @@ export default function HomePage() {
             <option value="3">၃ ယောက်</option>
           </select>
 
-          <label htmlFor="playerCount">ကစားသမားအရေအတွက်</label>
+          <label htmlFor="playerCount">Player</label>
           <select
             id="playerCount"
             value={playerCount}
