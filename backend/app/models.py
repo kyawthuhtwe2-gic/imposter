@@ -65,6 +65,14 @@ class RoundSettingsRequest(PlayerActionRequest):
     total_rounds: int = Field(ge=1, le=20, strict=True)
 
 
+class ClueRoundSettingsRequest(PlayerActionRequest):
+    clue_rounds: int = Field(ge=1, le=10, strict=True)
+
+
+class CategorySettingsRequest(PlayerActionRequest):
+    category: str = Field(min_length=1)
+
+
 class PlayerCountSettingsRequest(PlayerActionRequest):
     desired_player_count: int = Field(ge=3, le=10, strict=True)
 

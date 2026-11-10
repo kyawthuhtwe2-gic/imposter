@@ -164,11 +164,19 @@ export default function GamePage() {
   const [clue, setClue] = useState("");
   const [submittingHint, setSubmittingHint] = useState(false);
   const [editingRoom, setEditingRoom] = useState(false);
+  const [categories, setCategories] = useState([]);
   const [replaying, setReplaying] = useState(false);
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState("");
   const canControlPlayer = (candidateId) => localPlayerIds.includes(candidateId);
   const votingPlayer = players.find((player) => player.player_id === votingPlayerId);
+
+  useEffect(() => {
+    if (!editingRoom || !isHost || categories.length > 0) return;
+    request("/categories", undefined, "GET").then((result) => {
+      if (result) setCategories(result.categories);
+    });
+  }, [categories.length, editingRoom, isHost, request]);
 
   async function submitTextGuess(event) {
     event.preventDefault();
@@ -258,10 +266,24 @@ export default function GamePage() {
     });
   }
 
+  async function changeCategory(event) {
+    await request(`/games/${encodeURIComponent(id)}/settings/category`, {
+      player_id: playerId,
+      category: event.target.value,
+    });
+  }
+
   async function changeTotalRounds(event) {
     await request(`/games/${encodeURIComponent(id)}/settings/rounds`, {
       player_id: playerId,
       total_rounds: Number(event.target.value),
+    });
+  }
+
+  async function changeClueRounds(event) {
+    await request(`/games/${encodeURIComponent(id)}/settings/clue-rounds`, {
+      player_id: playerId,
+      clue_rounds: Number(event.target.value),
     });
   }
 
@@ -369,6 +391,14 @@ export default function GamePage() {
               {isHost && editingRoom && (
                 <div className="room-settings-grid">
                   <div>
+                    <label htmlFor="editCategory">စကားလုံးအမျိုးအစား</label>
+                    <select id="editCategory" value={game.category} onChange={changeCategory}>
+                      {categories.map((category) => (
+                        <option key={category} value={category}>{category}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
                     <label htmlFor="editHintMode">အရိပ်အမြွက်နှင့် နောက်ဆုံးခန့်မှန်းပုံစံ</label>
                     <select id="editHintMode" value={game.hint_input_mode ?? ""} onChange={changeHintMode}>
                       <option value="TABLE_TALK">လူချင်းပြောမည် (အိမ်ရှင်က ခန့်မှန်းချက်စစ်မည်)</option>
@@ -400,6 +430,13 @@ export default function GamePage() {
                       <option value="1">၁ ယောက်</option>
                       <option value="2">၂ ယောက်</option>
                       <option value="3">၃ ယောက်</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label htmlFor="editClueRounds">အရိပ်အမြွက်ပေးရမည့် အကြိမ်</label>
+                    <select id="editClueRounds" value={game.clue_rounds} onChange={changeClueRounds}>
+                      {Array.from({ length: 10 }, (_, index) => index + 1)
+                        .map((count) => <option key={count} value={count}>{count} ကြိမ်</option>)}
                     </select>
                   </div>
                   <div>

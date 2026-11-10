@@ -271,11 +271,62 @@ def test_round_count_settings_are_validated_and_host_only(monkeypatch) -> None:
     assert state.json()["total_rounds"] == 10
     assert state.json()["clue_rounds"] == 5
     assert state.json()["current_clue_round"] == 0
+    categories = client.get("/categories").json()["categories"]
+    new_category = next(
+        category
+        for category in categories
+        if category != state.json()["category"]
+    )
+    category_update = client.post(
+        f"/games/{created['game_id']}/settings/category",
+        json={"player_id": created["player_id"], "category": new_category},
+        headers=auth,
+    )
+    assert category_update.status_code == 200
+    state = client.get(
+        f"/games/{created['game_id']}/state",
+        params={"player_id": created["player_id"]},
+        headers=auth,
+    )
+    assert state.json()["category"] == new_category
+    clue_update = client.post(
+        f"/games/{created['game_id']}/settings/clue-rounds",
+        json={"player_id": created["player_id"], "clue_rounds": 8},
+        headers=auth,
+    )
+    assert clue_update.status_code == 200
+    state = client.get(
+        f"/games/{created['game_id']}/state",
+        params={"player_id": created["player_id"]},
+        headers=auth,
+    )
+    assert state.json()["clue_rounds"] == 8
     assert client.post(
         f"/games/{created['game_id']}/settings/rounds",
         json={"player_id": guest["player_id"], "total_rounds": 2},
         headers=auth,
     ).status_code == 403
+    assert client.post(
+        f"/games/{created['game_id']}/settings/clue-rounds",
+        json={"player_id": guest["player_id"], "clue_rounds": 2},
+        headers=auth,
+    ).status_code == 403
+    assert client.post(
+        f"/games/{created['game_id']}/settings/category",
+        json={"player_id": guest["player_id"], "category": categories[0]},
+        headers=auth,
+    ).status_code == 403
+    assert client.post(
+        f"/games/{created['game_id']}/settings/category",
+        json={"player_id": created["player_id"], "category": "Unknown category"},
+        headers=auth,
+    ).status_code == 400
+    for clue_rounds in (0, 11):
+        assert client.post(
+            f"/games/{created['game_id']}/settings/clue-rounds",
+            json={"player_id": created["player_id"], "clue_rounds": clue_rounds},
+            headers=auth,
+        ).status_code == 422
 
 
 def test_hint_mode_selection_and_table_talk_turns(monkeypatch) -> None:

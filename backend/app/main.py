@@ -5,7 +5,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.game_service import GameService
 from app.models import (
+    CategorySettingsRequest,
     ClueRequest,
+    ClueRoundSettingsRequest,
     CreateGameRequest,
     GameSettingsRequest,
     HintModeSettingsRequest,
@@ -206,6 +208,23 @@ async def set_game_settings(
     return {"status": "updated"}
 
 
+@app.post("/games/{game_id}/settings/category")
+async def set_category(
+    game_id: str,
+    request: CategorySettingsRequest,
+    authorization: str | None = Header(default=None),
+) -> dict[str, str]:
+    authorize_player(game_id, request.player_id, authorization)
+    try:
+        game_service.configure_category(
+            game_id, request.player_id, request.category
+        )
+    except (ValueError, PermissionError) as error:
+        raise_game_error(error)
+    await broadcast(game_id)
+    return {"status": "updated"}
+
+
 @app.post("/games/{game_id}/settings/rounds")
 async def set_round_settings(
     game_id: str,
@@ -216,6 +235,23 @@ async def set_round_settings(
     try:
         game_service.configure_total_rounds(
             game_id, request.player_id, request.total_rounds
+        )
+    except (ValueError, PermissionError) as error:
+        raise_game_error(error)
+    await broadcast(game_id)
+    return {"status": "updated"}
+
+
+@app.post("/games/{game_id}/settings/clue-rounds")
+async def set_clue_round_settings(
+    game_id: str,
+    request: ClueRoundSettingsRequest,
+    authorization: str | None = Header(default=None),
+) -> dict[str, str]:
+    authorize_player(game_id, request.player_id, authorization)
+    try:
+        game_service.configure_clue_rounds(
+            game_id, request.player_id, request.clue_rounds
         )
     except (ValueError, PermissionError) as error:
         raise_game_error(error)

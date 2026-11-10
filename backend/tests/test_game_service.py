@@ -184,6 +184,27 @@ def test_selected_player_count_controls_room_capacity_and_start() -> None:
     ]
 
 
+def test_category_can_be_changed_by_host_before_game_starts() -> None:
+    service, game_id, players = create_game()
+    category = next(
+        category
+        for category in game_module.WORDS_BY_CATEGORY
+        if category != service.games[game_id].category
+    )
+
+    service.configure_category(game_id, players[0], category)
+    assert service.get_game_state(game_id, players[0]).category == category
+
+    with pytest.raises(PermissionError, match="Only the game host"):
+        service.configure_category(game_id, players[1], category)
+    with pytest.raises(ValueError, match="Unknown category"):
+        service.configure_category(game_id, players[0], "Unknown category")
+
+    service.games[game_id].phase = GamePhase.ROLE_ASSIGNMENT
+    with pytest.raises(ValueError, match="before the game starts"):
+        service.configure_category(game_id, players[0], category)
+
+
 @pytest.mark.parametrize("round_count", [1, 3, 5, 10, 20])
 def test_supported_round_counts(round_count: int) -> None:
     service, game_id, players = create_game()
@@ -196,6 +217,23 @@ def test_invalid_round_counts_are_rejected(round_count: int) -> None:
     service, game_id, players = create_game()
     with pytest.raises(ValueError, match="between 1 and 20"):
         service.configure_total_rounds(game_id, players[0], round_count)
+
+
+def test_clue_round_count_can_be_configured_by_host_before_game_starts() -> None:
+    service, game_id, players = create_game()
+
+    service.configure_clue_rounds(game_id, players[0], 5)
+    assert service.get_game_state(game_id, players[0]).clue_rounds == 5
+
+    with pytest.raises(PermissionError, match="Only the game host"):
+        service.configure_clue_rounds(game_id, players[1], 3)
+    for count in (0, 11, 1.5, True):
+        with pytest.raises(ValueError, match="between 1 and 10"):
+            service.configure_clue_rounds(game_id, players[0], count)
+
+    service.games[game_id].phase = GamePhase.ROLE_ASSIGNMENT
+    with pytest.raises(ValueError, match="before the game starts"):
+        service.configure_clue_rounds(game_id, players[0], 2)
 
 
 def test_role_reveal_is_sequential_private_and_one_time() -> None:

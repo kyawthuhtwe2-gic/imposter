@@ -198,6 +198,15 @@ class GameService:
             )
         game.desired_player_count = desired_player_count
 
+    def configure_category(self, game_id: str, player_id: str, category: str) -> None:
+        game = self._get_game(game_id)
+        self._require_host(game, player_id)
+        if game.phase != GamePhase.WAITING_FOR_PLAYERS:
+            raise ValueError("The category can only be changed before the game starts")
+        if category not in WORDS_BY_CATEGORY:
+            raise ValueError(f"Unknown category: {category}")
+        game.category = category
+
     def add_player_as_host(
         self, game_id: str, host_id: str, player_name: str
     ) -> Player:
@@ -269,6 +278,17 @@ class GameService:
         if type(total_rounds) is not int or not 1 <= total_rounds <= 20:
             raise ValueError("The total round count must be between 1 and 20")
         game.total_rounds = total_rounds
+
+    def configure_clue_rounds(
+        self, game_id: str, player_id: str, clue_rounds: int
+    ) -> None:
+        game = self._get_game(game_id)
+        self._require_host(game, player_id)
+        if game.phase != GamePhase.WAITING_FOR_PLAYERS:
+            raise ValueError("The clue round count can only be changed before the game starts")
+        if type(clue_rounds) is not int or not 1 <= clue_rounds <= 10:
+            raise ValueError("The clue round count must be between 1 and 10")
+        game.clue_rounds = clue_rounds
 
     def configure_hint_input_mode(
         self, game_id: str, player_id: str, hint_input_mode: HintInputMode
