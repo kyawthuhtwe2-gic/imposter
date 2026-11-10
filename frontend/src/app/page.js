@@ -245,15 +245,15 @@ export default function HomePage() {
             စုစုပေါင်းအရိပ်အမြွက်အကြိမ် · {clueRoundCountValid ? clueRounds : "၁ မှ ၁၀ အတွင်း ရွေးပါ"}
           </p>
 
-          <label htmlFor="hintInputMode">အရိပ်အမြွက်ပေးမည့်ပုံစံ</label>
+          <label htmlFor="hintInputMode">အရိပ်အမြွက်နှင့် နောက်ဆုံးခန့်မှန်းပုံစံ</label>
           <select
             id="hintInputMode"
             value={hintInputMode}
             onChange={(event) => setHintInputMode(event.target.value)}
             required
           >
-            <option value="TABLE_TALK">လူချင်းမျက်နှာချင်းဆိုင် ပြောမည်</option>
-            <option value="TEXT_INPUT">စာရိုက်ထည့်မည်</option>
+            <option value="TABLE_TALK">လူချင်းပြောမည် (အိမ်ရှင်က ခန့်မှန်းချက်စစ်မည်)</option>
+            <option value="TEXT_INPUT">စာရိုက်ထည့်မည် (ခန့်မှန်းချက်ကို အလိုအလျောက်စစ်မည်)</option>
           </select>
 
           <button className="primary-button" type="submit" disabled={submitting || !hintInputMode}>

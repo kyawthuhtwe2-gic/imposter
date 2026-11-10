@@ -95,6 +95,10 @@ class ImposterGuessRequest(PlayerActionRequest):
         return value.strip()
 
 
+class ImposterGuessDecisionRequest(PlayerActionRequest):
+    correct: bool
+
+
 class PublicPlayer(BaseModel):
     player_id: str
     name: str
@@ -177,6 +181,7 @@ class GameStateResponse(BaseModel):
     vote_counts: list[VoteCount] | None
     tied_player_ids: list[str]
     eliminated_player_id: str | None
+    guess_submitted: bool
     winner: str | None
     result_message: str | None
 

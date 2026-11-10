@@ -37,6 +37,7 @@ Open `http://localhost:3000`.
 - Games support 3–10 players with unique, case-insensitive names.
 - The host can choose 1–3 imposters; two require at least 5 players, and three require at least 7 players.
 - The host assigns roles, then players reveal them one at a time. Only the authenticated current player can request their role; imposters never receive the secret word.
+- Before starting, the host chooses table talk or text input for clues and the imposter's final guess. In table-talk mode, the imposter says their one guess aloud and the host confirms whether it is correct; in text mode, the game checks the submitted word automatically.
 - Clues proceed in player turn order. Every active player gives one clue per round; the host can start additional clue rounds or open voting.
 - Votes are hidden until all eligible players vote. Ties trigger a revote limited to tied candidates.
 - A normal player voted out gives the imposter team the win. An identified imposter gets one secret-word guess: a correct guess wins for imposters; an incorrect guess eliminates that imposter, and remaining imposters continue. If none remain, normal players win.

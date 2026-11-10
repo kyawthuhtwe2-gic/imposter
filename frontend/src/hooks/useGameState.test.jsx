@@ -57,6 +57,8 @@ describe("game state hooks", () => {
       await voting.result.current.submitVote("target");
       await voting.result.current.resolveVotes();
       await results.result.current.submitGuess("word");
+      await results.result.current.markGuessSpoken();
+      await results.result.current.resolveSpokenGuess(true, "host");
       await results.result.current.resetGame();
       await results.result.current.createReplaySession("host");
     });
@@ -66,13 +68,17 @@ describe("game state hooks", () => {
       "/games/g/votes",
       "/games/g/votes/resolve",
       "/games/g/imposter-guess",
+      "/games/g/imposter-guess/spoken",
+      "/games/g/imposter-guess/resolve",
       "/games/g/reset",
       "/games/g/replay",
     ]);
     expect(request.mock.calls[0][1]).toEqual({ player_id: "p", clue: "hint" });
     expect(request.mock.calls[1][1]).toEqual({ player_id: "p", target_id: "target" });
     expect(request.mock.calls[3][1]).toEqual({ player_id: "p", guess: "word" });
-    expect(request.mock.calls[5][1]).toEqual({ player_id: "host" });
+    expect(request.mock.calls[4][1]).toEqual({ player_id: "p" });
+    expect(request.mock.calls[5][1]).toEqual({ player_id: "host", correct: true });
+    expect(request.mock.calls[7][1]).toEqual({ player_id: "host" });
   });
 
   it("marks table-talk hints through the shared clue-turn endpoint", async () => {

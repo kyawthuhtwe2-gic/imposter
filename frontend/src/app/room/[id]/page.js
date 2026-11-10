@@ -120,6 +120,8 @@ export default function GamePage() {
   const isHost = game?.host_id === playerId;
   const [localPlayerIds, setLocalPlayerIds] = useState([]);
   const [selectedVoterId, setSelectedVoterId] = useState("");
+  const [guess, setGuess] = useState("");
+  const [submittingGuess, setSubmittingGuess] = useState(false);
   useEffect(() => {
     if (!game || !playerId) return;
     const availableIds = game.players
@@ -153,16 +155,30 @@ export default function GamePage() {
   const { role, hint, revealRole, requestHint, hideAndPass } = useRoleReveal(id, revealPlayerId, request);
   const { submitClue, markHintGiven } = useClueRound(id, cluePlayerId, request);
   const { submitVote, resolveVotes } = useVoting(id, votingPlayerId, request);
-  const { submitGuess, createReplaySession } = useGameResults(id, guessPlayerId, request);
+  const {
+    submitGuess,
+    markGuessSpoken,
+    resolveSpokenGuess,
+    createReplaySession,
+  } = useGameResults(id, guessPlayerId, request);
   const [clue, setClue] = useState("");
   const [submittingHint, setSubmittingHint] = useState(false);
-  const [guess, setGuess] = useState("");
   const [editingRoom, setEditingRoom] = useState(false);
   const [replaying, setReplaying] = useState(false);
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState("");
   const canControlPlayer = (candidateId) => localPlayerIds.includes(candidateId);
   const votingPlayer = players.find((player) => player.player_id === votingPlayerId);
+
+  async function submitTextGuess(event) {
+    event.preventDefault();
+    if (submittingGuess || !guess.trim()) return;
+
+    setSubmittingGuess(true);
+    const result = await submitGuess(guess.trim());
+    if (result) setGuess("");
+    setSubmittingGuess(false);
+  }
 
   if (!playerId) {
     return <main className="state-shell"><section className="glass-card state-card">
@@ -313,19 +329,6 @@ export default function GamePage() {
 
       <div className="room-layout">
         <section className="room-main">
-          <header className="room-heading">
-            <div>
-              <p className="eyebrow">
-                အခန်းကုဒ် · {game.room_code}
-              </p>
-              <h1>{PHASE_LABELS[game.phase] ?? "ဂိမ်းခန်း"}</h1>
-              <p className="muted">{game.category} အမျိုးအစား · ကစားသမား {game.player_count} ဦး</p>
-            </div>
-            <button className="copy-button" type="button" onClick={copyRoomCode}>
-              {copied ? "ကူးယူပြီး" : "ကုဒ်ကူးယူရန်"}
-            </button>
-          </header>
-
           {game.phase === "CLUE_ROUND" && (
             <section className="round-progress" aria-label={`အရိပ်အမြွက်အကြိမ် ${game.current_clue_round} / ${game.clue_rounds}`}>
               <div className="round-progress-label">
@@ -348,7 +351,6 @@ export default function GamePage() {
 
           {game.phase === "WAITING_FOR_PLAYERS" && (
             <section className="glass-card game-panel">
-              <p className="eyebrow">ဂိမ်းပြင်ဆင်ရန်</p>
               <h2>သူငယ်ချင်းတွေကို ဖိတ်ခေါ်ပါ</h2>
               <p className="muted">
                 အခန်းကုဒ်ကို မျှဝေပြီး {game.desired_player_count ?? "၃ မှ ၁၀"} ယောက် စုဝေးပါ။
@@ -357,17 +359,23 @@ export default function GamePage() {
               <div className="lobby-code">
                 <span>အခန်းကုဒ်</span>
                 <strong>{game.room_code}</strong>
-                <button type="button" className="icon-button" onClick={copyRoomCode} aria-label="အခန်းကုဒ်ကူးယူရန်">
-                  ⧉
+                <button
+                  type="button"
+                  className={`icon-button copy-room-button${copied ? " copied" : ""}`}
+                  onClick={copyRoomCode}
+                  aria-label={copied ? "အခန်းကုဒ်ကူးယူပြီးပါပြီ" : "အခန်းကုဒ်ကူးယူရန်"}
+                  title={copied ? "ကူးယူပြီးပါပြီ" : "အခန်းကုဒ်ကူးယူရန်"}
+                >
+                  <span aria-hidden="true">{copied ? "✓" : "⧉"}</span>
                 </button>
               </div>
               {isHost && editingRoom && (
                 <div className="room-settings-grid">
                   <div>
-                    <label htmlFor="editHintMode">အရိပ်အမြွက်ပေးမည့်ပုံစံ</label>
+                    <label htmlFor="editHintMode">အရိပ်အမြွက်နှင့် နောက်ဆုံးခန့်မှန်းပုံစံ</label>
                     <select id="editHintMode" value={game.hint_input_mode ?? ""} onChange={changeHintMode}>
-                      <option value="TABLE_TALK">လူချင်းမျက်နှာချင်းဆိုင် ပြောမည်</option>
-                      <option value="TEXT_INPUT">စာရိုက်ထည့်မည်</option>
+                      <option value="TABLE_TALK">လူချင်းပြောမည် (အိမ်ရှင်က ခန့်မှန်းချက်စစ်မည်)</option>
+                      <option value="TEXT_INPUT">စာရိုက်ထည့်မည် (ခန့်မှန်းချက်ကို အလိုအလျောက်စစ်မည်)</option>
                     </select>
                   </div>
                   <div>
@@ -715,14 +723,10 @@ export default function GamePage() {
               <p className="eyebrow">နောက်ဆုံးအခွင့်အရေး</p>
               <h2>လျှို့ဝှက်စကားလုံးကို ခန့်မှန်းပါ</h2>
               <p className="muted">ဖော်ထုတ်ခံရသူက စကားလုံးကို တစ်ကြိမ်သာ ခန့်မှန်းနိုင်သည်။</p>
-              {canControlPlayer(game.eliminated_player_id) ? (
+              {game.hint_input_mode === "TEXT_INPUT" && canControlPlayer(game.eliminated_player_id) ? (
                 <form
                   className="action-form"
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    submitGuess(guess);
-                    setGuess("");
-                  }}
+                  onSubmit={submitTextGuess}
                 >
                   <label htmlFor="guess">သင့်ခန့်မှန်းချက်</label>
                   <input
@@ -733,8 +737,35 @@ export default function GamePage() {
                     placeholder="စကားလုံးရိုက်ထည့်ပါ"
                     required
                   />
-                  <button className="primary-button" type="submit">ခန့်မှန်းချက် ပို့မယ် <span aria-hidden="true">→</span></button>
+                  <button className="primary-button" type="submit" disabled={submittingGuess || !guess.trim()}>
+                    {submittingGuess ? "ပို့နေသည်…" : "ခန့်မှန်းချက် ပို့မယ်"} <span aria-hidden="true">→</span>
+                  </button>
                 </form>
+              ) : game.hint_input_mode === "TABLE_TALK" ? (
+                <div className="table-talk-actions">
+                  <p className="table-talk-prompt">
+                    ဖော်ထုတ်ခံရသူက စကားလုံးကို လူချင်းပြောပါ။ ခန့်မှန်းချက်ကို အိမ်ရှင်က အတည်ပြုပေးမည်။
+                  </p>
+                  {canControlPlayer(game.eliminated_player_id) && !game.guess_submitted && (
+                    <button className="primary-button" type="button" onClick={markGuessSpoken}>
+                      ခန့်မှန်းပြီးပါပြီ <span aria-hidden="true">→</span>
+                    </button>
+                  )}
+                  {game.guess_submitted && isHost ? (
+                    <div className="guess-decision-actions">
+                      <button className="primary-button" type="button" onClick={() => resolveSpokenGuess(true, playerId)}>
+                        မှန်သည်
+                      </button>
+                      <button className="secondary-button" type="button" onClick={() => resolveSpokenGuess(false, playerId)}>
+                        မှားသည်
+                      </button>
+                    </div>
+                  ) : game.guess_submitted ? (
+                    <p className="inline-note">အိမ်ရှင်က ခန့်မှန်းချက်ကို မှန်/မှား အတည်ပြုပေးရန် စောင့်နေသည်။</p>
+                  ) : !canControlPlayer(game.eliminated_player_id) ? (
+                    <p className="inline-note">ဖော်ထုတ်ခံရသူက ခန့်မှန်းချက်ပြောပြီး အတည်ပြုရန် စောင့်နေသည်။</p>
+                  ) : null}
+                </div>
               ) : (
                 <p className="inline-note">လျှို့ဝှက်လူလိမ်၏ ခန့်မှန်းချက်ကို စောင့်နေသည်။</p>
               )}

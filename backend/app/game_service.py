@@ -638,27 +638,68 @@ class GameService:
             self.calculate_winner(game_id, IMPOSTER_TEAM)
             return
         game.phase = GamePhase.IMPOSTER_GUESS
+        game.guess_submitted = False
+        game.guess_correct = False
         game.result_message = f"{target.name} was an imposter and may guess the secret word."
 
     def submit_imposter_guess(self, game_id: str, player_id: str, guess: str) -> bool:
         game = self._get_game(game_id)
         if game.phase != GamePhase.IMPOSTER_GUESS:
             raise ValueError("There is no imposter guess to submit")
+        if game.hint_input_mode != HintInputMode.TEXT_INPUT:
+            raise ValueError("Text guesses are not enabled for this game")
         if player_id != game.eliminated_player_id:
             raise PermissionError("Only the identified imposter may guess the secret word")
         player = self._get_player(game, player_id)
         if player.role != IMPOSTER_GUESS or player.eliminated:
             raise PermissionError("This player cannot guess the secret word")
+        if game.guess_submitted:
+            raise ValueError("The imposter guess was already submitted")
         guess = guess.strip()
         if not guess or len(guess) > 200:
             raise ValueError("The guess must contain 1 to 200 characters")
         correct = guess.casefold() == (game.secret_word or "").casefold()
         game.guess_submitted = True
         game.guess_correct = correct
+        self._resolve_imposter_guess(game, correct)
+        return correct
+
+    def mark_imposter_guess_spoken(self, game_id: str, player_id: str) -> None:
+        game = self._get_game(game_id)
+        if game.phase != GamePhase.IMPOSTER_GUESS:
+            raise ValueError("There is no imposter guess to submit")
+        if game.hint_input_mode != HintInputMode.TABLE_TALK:
+            raise ValueError("Spoken guesses are not enabled for this game")
+        if player_id != game.eliminated_player_id:
+            raise PermissionError("Only the identified imposter may guess the secret word")
+        player = self._get_player(game, player_id)
+        if player.role != IMPOSTER_GUESS or player.eliminated:
+            raise PermissionError("This player cannot guess the secret word")
+        if game.guess_submitted:
+            raise ValueError("The imposter guess was already submitted")
+        game.guess_submitted = True
+
+    def resolve_spoken_imposter_guess(
+        self, game_id: str, player_id: str, correct: bool
+    ) -> bool:
+        game = self._get_game(game_id)
+        if game.phase != GamePhase.IMPOSTER_GUESS:
+            raise ValueError("There is no imposter guess to resolve")
+        if game.hint_input_mode != HintInputMode.TABLE_TALK:
+            raise ValueError("Spoken guesses are not enabled for this game")
+        self._require_host(game, player_id)
+        if not game.guess_submitted:
+            raise ValueError("The imposter must say their guess before it can be resolved")
+        game.guess_correct = correct
+        self._resolve_imposter_guess(game, correct)
+        return correct
+
+    def _resolve_imposter_guess(self, game: Game, correct: bool) -> None:
+        player = self._get_player(game, game.eliminated_player_id or "")
         player.eliminated = True
         if correct:
             game.result_message = f"{player.name} guessed the secret word. The imposters win."
-            self.calculate_winner(game_id, IMPOSTER_TEAM)
+            self.calculate_winner(game.game_id, IMPOSTER_TEAM)
         elif any(
             candidate.role == IMPOSTER_GUESS and not candidate.eliminated
             for candidate in game.players
@@ -681,8 +722,7 @@ class GameService:
             game.submitted_clue_player_ids.clear()
         else:
             game.result_message = f"{player.name} guessed incorrectly. The normal players win."
-            self.calculate_winner(game_id, PLAYER_TEAM)
-        return correct
+            self.calculate_winner(game.game_id, PLAYER_TEAM)
 
     def calculate_winner(self, game_id: str, winner: str) -> str:
         game = self._get_game(game_id)
@@ -925,6 +965,7 @@ class GameService:
             vote_counts=visible_votes,
             tied_player_ids=game.tied_player_ids.copy() if game.phase == GamePhase.VOTING else [],
             eliminated_player_id=game.eliminated_player_id,
+            guess_submitted=game.guess_submitted,
             winner=game.winner,
             result_message=game.result_message,
         )

@@ -638,6 +638,27 @@ option {
   color: #d4cbf7;
 }
 
+.copy-room-button {
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.copy-room-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(167, 139, 250, 0.55);
+  background: rgba(124, 58, 237, 0.16);
+}
+
+.copy-room-button.copied {
+  border-color: rgba(110, 231, 183, 0.5);
+  background: rgba(16, 185, 129, 0.16);
+  color: var(--green);
+  animation: copy-success 320ms ease;
+}
+
+@keyframes copy-success {
+  50% { transform: scale(1.14); }
+}
+
 .form-row {
   display: grid;
   grid-template-columns: minmax(150px, 0.8fr) minmax(0, 1.2fr);
@@ -998,6 +1019,17 @@ option {
   display: grid;
   gap: 0.55rem;
   margin-top: 1.3rem;
+}
+
+.guess-decision-actions {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.guess-decision-actions > button {
+  flex: 1;
+  width: auto;
+  margin-top: 0;
 }
 
 .action-form .primary-button {

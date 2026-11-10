@@ -486,6 +486,36 @@ def test_wrong_guess_eliminates_one_of_multiple_imposters_and_continues(
     assert all(player.score == 0 for player in service.games[game_id].players)
 
 
+@pytest.mark.parametrize(("correct", "expected_winner"), [(True, "IMPOSTERS"), (False, "PLAYERS")])
+def test_table_talk_imposter_guess_is_resolved_by_host(
+    monkeypatch: pytest.MonkeyPatch,
+    correct: bool,
+    expected_winner: str,
+) -> None:
+    monkeypatch.setattr(game_module, "sample", lambda players, count: players[1 : 1 + count])
+    service, game_id, players = create_game()
+    service.configure_hint_input_mode(game_id, players[0], HintInputMode.TABLE_TALK)
+    reveal_roles(service, game_id, players[0])
+    assert service.games[game_id].players[1].role == "imposter"
+    game = service.games[game_id]
+    while game.turn_index < len(game.turn_order):
+        service.mark_hint_given(game_id, game.turn_order[game.turn_index])
+    complete_ballot(service, game_id, players, players[1])
+    service.handle_tie(game_id, players[0])
+
+    service.mark_imposter_guess_spoken(game_id, players[1])
+    assert service.get_game_state(game_id, players[0]).guess_submitted
+    with pytest.raises(ValueError, match="already submitted"):
+        service.mark_imposter_guess_spoken(game_id, players[1])
+    with pytest.raises(PermissionError, match="game host"):
+        service.resolve_spoken_imposter_guess(game_id, players[1], correct)
+
+    assert service.resolve_spoken_imposter_guess(game_id, players[0], correct) is correct
+    state = service.get_game_state(game_id, players[0])
+    assert state.phase == GamePhase.GAME_OVER
+    assert state.winner == expected_winner
+
+
 def test_reset_preserves_scores_and_clears_round_data(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

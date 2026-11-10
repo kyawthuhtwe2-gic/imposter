@@ -21,6 +21,56 @@ def test_cors_allows_configured_origins() -> None:
     assert response.headers["access-control-allow-origin"] == origin
 
 
+def test_spoken_imposter_guess_is_adjudicated_by_authenticated_host(monkeypatch) -> None:
+    service = GameService()
+    monkeypatch.setattr(main, "game_service", service)
+    client = TestClient(main.app)
+    host = client.post(
+        "/games",
+        json={"player_name": "Host", "hint_input_mode": "TABLE_TALK"},
+    ).json()
+    imposter = client.post(
+        f"/games/{host['game_id']}/players",
+        json={"player_name": "Imposter"},
+    ).json()
+    game = service.games[host["game_id"]]
+    game.phase = GamePhase.IMPOSTER_GUESS
+    game.round_number = 1
+    game.eliminated_player_id = imposter["player_id"]
+    game.secret_word = "secret"
+    game.players[0].role = "player"
+    game.players[1].role = "imposter"
+
+    spoken = client.post(
+        f"/games/{host['game_id']}/imposter-guess/spoken",
+        json={"player_id": imposter["player_id"]},
+        headers={"Authorization": f"Bearer {imposter['player_token']}"},
+    )
+    assert spoken.status_code == 200
+    state = client.get(
+        f"/games/{host['game_id']}/state",
+        params={"player_id": host["player_id"]},
+        headers={"Authorization": f"Bearer {host['player_token']}"},
+    ).json()
+    assert state["guess_submitted"] is True
+
+    rejected = client.post(
+        f"/games/{host['game_id']}/imposter-guess/resolve",
+        json={"player_id": imposter["player_id"], "correct": True},
+        headers={"Authorization": f"Bearer {imposter['player_token']}"},
+    )
+    assert rejected.status_code == 403
+
+    resolved = client.post(
+        f"/games/{host['game_id']}/imposter-guess/resolve",
+        json={"player_id": host["player_id"], "correct": True},
+        headers={"Authorization": f"Bearer {host['player_token']}"},
+    )
+    assert resolved.status_code == 200
+    assert resolved.json() == {"correct": True}
+    assert game.phase == GamePhase.GAME_OVER
+
+
 def test_room_code_is_four_digits_and_can_be_used_to_join(monkeypatch) -> None:
     monkeypatch.setattr(main, "game_service", GameService())
     client = TestClient(main.app)

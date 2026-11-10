@@ -73,6 +73,9 @@ export async function gameRequest(path, { method = "GET", body, token } = {}) {
 
   const result = await response.json();
   if (!response.ok) {
+    if (response.status === 404 && result.detail === "Not Found") {
+      throw new Error("အသုံးပြုနေသော backend တွင် လူချင်းပြော ခန့်မှန်းစနစ် မပါသေးပါ။ Backend အသစ်ကို deploy လုပ်ပြီး ထပ်ကြိုးစားပါ။");
+    }
     throw new Error(localizeError(result.detail));
   }
   return result;

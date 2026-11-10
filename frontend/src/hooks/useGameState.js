@@ -160,6 +160,21 @@ export function useGameResults(gameId, playerId, request) {
       }),
     [gameId, playerId, request],
   );
+  const markGuessSpoken = useCallback(
+    () =>
+      request(`/games/${encodeURIComponent(gameId)}/imposter-guess/spoken`, {
+        player_id: playerId,
+      }),
+    [gameId, playerId, request],
+  );
+  const resolveSpokenGuess = useCallback(
+    (correct, hostPlayerId = playerId) =>
+      request(`/games/${encodeURIComponent(gameId)}/imposter-guess/resolve`, {
+        player_id: hostPlayerId,
+        correct,
+      }),
+    [gameId, playerId, request],
+  );
   const resetGame = useCallback(
     () =>
       request(`/games/${encodeURIComponent(gameId)}/reset`, {
@@ -167,5 +182,11 @@ export function useGameResults(gameId, playerId, request) {
       }),
     [gameId, playerId, request],
   );
-  return { submitGuess, resetGame, createReplaySession };
+  return {
+    submitGuess,
+    markGuessSpoken,
+    resolveSpokenGuess,
+    resetGame,
+    createReplaySession,
+  };
 }

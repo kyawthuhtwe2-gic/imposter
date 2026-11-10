@@ -10,6 +10,7 @@ from app.models import (
     GameSettingsRequest,
     HintModeSettingsRequest,
     ImposterHintResponse,
+    ImposterGuessDecisionRequest,
     ImposterGuessRequest,
     JoinGameRequest,
     PlayerActionRequest,
@@ -509,6 +510,38 @@ async def submit_imposter_guess(
     try:
         correct = game_service.submit_imposter_guess(
             game_id, request.player_id, request.guess
+        )
+    except (ValueError, PermissionError) as error:
+        raise_game_error(error)
+    await broadcast(game_id)
+    return {"correct": correct}
+
+
+@app.post("/games/{game_id}/imposter-guess/spoken")
+async def mark_spoken_imposter_guess(
+    game_id: str,
+    request: PlayerActionRequest,
+    authorization: str | None = Header(default=None),
+) -> dict[str, str]:
+    authorize_player(game_id, request.player_id, authorization)
+    try:
+        game_service.mark_imposter_guess_spoken(game_id, request.player_id)
+    except (ValueError, PermissionError) as error:
+        raise_game_error(error)
+    await broadcast(game_id)
+    return {"status": "submitted"}
+
+
+@app.post("/games/{game_id}/imposter-guess/resolve")
+async def resolve_spoken_imposter_guess(
+    game_id: str,
+    request: ImposterGuessDecisionRequest,
+    authorization: str | None = Header(default=None),
+) -> dict[str, bool]:
+    authorize_player(game_id, request.player_id, authorization)
+    try:
+        correct = game_service.resolve_spoken_imposter_guess(
+            game_id, request.player_id, request.correct
         )
     except (ValueError, PermissionError) as error:
         raise_game_error(error)
