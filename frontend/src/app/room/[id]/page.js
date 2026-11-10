@@ -441,9 +441,7 @@ export default function GamePage() {
                   </button>
                 )}
               </div>
-              {game.player_count < 3 && (
-                <p className="inline-note">ဂိမ်းစရန် အနည်းဆုံး ကစားသမား ၃ ဦး လိုအပ်သည်။</p>
-              )}
+  
               {game.desired_player_count && game.player_count < game.desired_player_count && (
                 <p className="inline-note">
                   စတင်ရန် ကစားသမား {game.desired_player_count - game.player_count} ဦး ထပ်ဝင်ရန် လိုသည်။
