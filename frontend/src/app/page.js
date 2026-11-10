@@ -241,9 +241,6 @@ export default function HomePage() {
               />
             </>
           )}
-          <p className={`round-total ${!clueRoundCountValid ? "round-total-error" : ""}`}>
-            စုစုပေါင်းအရိပ်အမြွက်အကြိမ် · {clueRoundCountValid ? clueRounds : "၁ မှ ၁၀ အတွင်း ရွေးပါ"}
-          </p>
 
           <label htmlFor="hintInputMode">အရိပ်အမြွက်နှင့် နောက်ဆုံးခန့်မှန်းပုံစံ</label>
           <select
