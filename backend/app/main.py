@@ -458,21 +458,45 @@ async def finish_game(
 
 
 @app.post("/games/{game_id}/replay")
-async def restart_game(
+async def create_replay_session(
     game_id: str,
     request: PlayerActionRequest,
     authorization: str | None = Header(default=None),
 ) -> dict[str, str]:
     authorize_player(game_id, request.player_id, authorization)
     try:
-        game = game_service.restart_game(game_id, request.player_id)
+        replay_game, host = game_service.create_replay_session(
+            game_id, request.player_id
+        )
     except (ValueError, PermissionError) as error:
         raise_game_error(error)
-    await broadcast(game_id)
+    replay_players = {
+        old_player_id: next(
+            player
+            for player in replay_game.players
+            if player.player_id == new_player_id
+        )
+        for old_player_id, new_player_id in game_service.games[
+            game_id
+        ].replay_player_ids.items()
+    }
+    for websocket, connected_player_id in connections.get(game_id, {}).copy().items():
+        replay_player = replay_players.get(connected_player_id)
+        if replay_player is None:
+            continue
+        await websocket.send_json(
+            {
+                "type": "replay",
+                "game_id": replay_game.game_id,
+                "player_id": replay_player.player_id,
+                "player_token": replay_player.player_token,
+            }
+        )
     return {
-        "game_id": game.game_id,
-        "room_code": game.room_code,
-        "status": "restarted",
+        "game_id": replay_game.game_id,
+        "room_code": replay_game.room_code,
+        "player_id": host.player_id,
+        "player_token": host.player_token,
     }
 
 

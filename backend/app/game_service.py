@@ -85,6 +85,8 @@ class Game:
     round_results: list[RoundResult] = field(default_factory=list)
     normal_player_wins: int = 0
     imposter_wins: int = 0
+    replay_game_id: str | None = None
+    replay_player_ids: dict[str, str] = field(default_factory=dict)
 
 
 class GameService:
@@ -385,24 +387,30 @@ class GameService:
             raise ValueError("A game can only end after a round result")
         game.phase = GamePhase.GAME_OVER
 
-    def restart_game(self, game_id: str, player_id: str) -> Game:
-        game = self._get_game(game_id)
-        self._require_host(game, player_id)
-        if game.phase != GamePhase.GAME_OVER:
-            raise ValueError("A game can only be restarted after it ends")
-
-        imposter_count = game.imposter_count
-        total_rounds = game.total_rounds
-        desired_player_count = game.desired_player_count
-        self.reset_round(game_id, player_id)
-        game.imposter_count = imposter_count
-        game.total_rounds = total_rounds
-        game.desired_player_count = desired_player_count
-        for player in game.players:
-            player.score = 0
-            player.wins = 0
-            player.losses = 0
-        return game
+    def create_replay_session(self, game_id: str, player_id: str) -> tuple[Game, Player]:
+        previous_game = self._get_game(game_id)
+        self._require_host(previous_game, player_id)
+        if previous_game.phase != GamePhase.GAME_OVER:
+            raise ValueError("A replay session can only be created after the game ends")
+        if previous_game.replay_game_id is not None:
+            replay_game = self._get_game(previous_game.replay_game_id)
+            return replay_game, self._get_player(replay_game, replay_game.host_id)
+        host = self._get_player(previous_game, player_id)
+        replay_game, replay_host = self.create_game(
+            host.name,
+            previous_game.category,
+            previous_game.imposter_count,
+            previous_game.total_rounds,
+            clue_rounds=previous_game.clue_rounds,
+            hint_input_mode=previous_game.hint_input_mode,
+        )
+        previous_game.replay_player_ids[host.player_id] = replay_host.player_id
+        for player in previous_game.players:
+            if player.player_id != host.player_id:
+                replay_player = self.add_player(replay_game.game_id, player.name)
+                previous_game.replay_player_ids[player.player_id] = replay_player.player_id
+        previous_game.replay_game_id = replay_game.game_id
+        return replay_game, replay_host
 
     def start_role_reveal(self, game_id: str, player_id: str) -> None:
         game = self._get_game(game_id)

@@ -55,6 +55,14 @@ export function useGameState(gameId, playerId) {
       try {
         const message = JSON.parse(event.data);
         if (!active) return;
+        if (message.type === "replay") {
+          window.sessionStorage.setItem(
+            `imposter-token:${message.game_id}`,
+            message.player_token,
+          );
+          window.location.href = `/room/${message.game_id}?playerId=${message.player_id}`;
+          return;
+        }
         setGame(message);
       } catch {
         setError("ဂိမ်းအချက်အလက်ကို ဖတ်မရပါ။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။");
@@ -137,7 +145,7 @@ export function useVoting(gameId, playerId, request) {
 }
 
 export function useGameResults(gameId, playerId, request) {
-  const restartGame = useCallback(
+  const createReplaySession = useCallback(
     (hostPlayerId = playerId) =>
       request(`/games/${encodeURIComponent(gameId)}/replay`, {
         player_id: hostPlayerId,
@@ -179,6 +187,6 @@ export function useGameResults(gameId, playerId, request) {
     markGuessSpoken,
     resolveSpokenGuess,
     resetGame,
-    restartGame,
+    createReplaySession,
   };
 }

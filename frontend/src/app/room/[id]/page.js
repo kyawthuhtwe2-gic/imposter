@@ -159,7 +159,7 @@ export default function GamePage() {
     submitGuess,
     markGuessSpoken,
     resolveSpokenGuess,
-    restartGame,
+    resetGame,
   } = useGameResults(id, guessPlayerId, request);
   const [clue, setClue] = useState("");
   const [submittingHint, setSubmittingHint] = useState(false);
@@ -296,8 +296,8 @@ export default function GamePage() {
   async function replay() {
     if (replaying) return;
     setReplaying(true);
-    await restartGame(playerId);
-    setReplaying(false);
+    const result = await resetGame();
+    if (!result) setReplaying(false);
   }
 
   return (
@@ -837,14 +837,14 @@ export default function GamePage() {
                         onClick={replay}
                         disabled={replaying}
                       >
-                        {replaying ? "ဂိမ်းပြန်စနေသည်..." : "ပြန်ကစားမယ်"}
+                        {replaying ? "အခန်းကို ပြန်စနေသည်..." : "ပြန်ကစားမယ်"}
                         {!replaying && <span aria-hidden="true">↻</span>}
                       </button>
                     )}
                   </div>
                   <p className="inline-note">{isHost
-                    ? "လက်ရှိအခန်းနှင့် ကစားသမားများကို ဆက်သုံးပြီး ဂိမ်းကို ပြန်စနိုင်သည်။"
-                    : "အိမ်ရှင်က ဒီအခန်းထဲမှာ ဂိမ်းပြန်စရန် စောင့်နေသည်။"}</p>
+                    ? "ကစားသမားအားလုံးကို ထားရှိပြီး ဒီအခန်းကုဒ်ဖြင့် ဂိမ်းကို ပြန်စမည်။"
+                    : "အိမ်ရှင်က ဒီအခန်းထဲတွင် ဂိမ်းကို ပြန်စရန် စောင့်နေသည်။"}</p>
                 </section>
               ) : (
                 <div className="round-result-actions">

@@ -536,41 +536,6 @@ def test_reset_preserves_scores_and_clears_round_data(
     assert all(player.role is None and not player.role_viewed for player in game.players)
 
 
-def test_restart_reuses_room_players_and_settings_but_resets_match_scores() -> None:
-    service = GameService()
-    game, host = service.create_game(
-        "Host",
-        "အစားအသောက်",
-        2,
-        total_rounds=3,
-        desired_player_count=5,
-        clue_rounds=2,
-        hint_input_mode=HintInputMode.TABLE_TALK,
-    )
-    guest = service.add_player(game.game_id, "Guest")
-    game.phase = GamePhase.GAME_OVER
-    game.players[0].score = 4
-    game.players[0].wins = 4
-    game.players[1].losses = 4
-
-    restarted = service.restart_game(game.game_id, host.player_id)
-
-    assert restarted is game
-    assert restarted.game_id == game.game_id
-    assert restarted.room_code == game.room_code
-    assert restarted.phase == GamePhase.WAITING_FOR_PLAYERS
-    assert restarted.total_rounds == 3
-    assert restarted.desired_player_count == 5
-    assert restarted.imposter_count == 2
-    assert restarted.clue_rounds == 2
-    assert restarted.hint_input_mode == HintInputMode.TABLE_TALK
-    assert [(player.player_id, player.player_token) for player in restarted.players] == [
-        (host.player_id, host.player_token),
-        (guest.player_id, guest.player_token),
-    ]
-    assert all((player.score, player.wins, player.losses) == (0, 0, 0) for player in restarted.players)
-
-
 def finish_match_round(
     service: GameService,
     game_id: str,

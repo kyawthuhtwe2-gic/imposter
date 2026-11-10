@@ -41,7 +41,7 @@ Open `http://localhost:3000`.
 - Clues proceed in player turn order. Every active player gives one clue per round; the host can start additional clue rounds or open voting.
 - Votes are hidden until all eligible players vote. Ties trigger a revote limited to tied candidates.
 - A normal player voted out gives the imposter team the win. An identified imposter gets one secret-word guess: a correct guess wins for imposters; an incorrect guess eliminates that imposter, and remaining imposters continue. If none remain, normal players win.
-- Wins and losses accumulate per player between rounds. Only the host can reset a finished round or restart the game in the same room; restarting keeps its players, room code, and settings while clearing match scores.
+- Wins and losses accumulate per player between rounds. Only the host can reset a finished round.
 
 The API is rooted at `/games`; browse `/docs` for the endpoints. `POST /games` and `POST /games/{id}/players` return a private player token. Send it as a `Bearer` authorization header on game actions and state requests. The frontend stores this token in browser session storage; WebSocket connections authenticate with the same token.
 
