@@ -224,10 +224,12 @@ export default function GamePage() {
       ? "Imposter အဖွဲ့"
       : "Player အဖွဲ့";
   const connectionLabel = connection === "Connected"
-    ? "ချိတ်ဆက်ထားသည်"
-    : connection === "Disconnected" || connection === "Connection error"
-      ? "ပြန်လည်ချိတ်ဆက်ရန် လိုအပ်သည်"
-      : "ချိတ်ဆက်နေသည်";
+    ? "Connected"
+    : connection === "Disconnected"
+      ? "Disconnected"
+      : connection === "Connection error"
+        ? "Connection error"
+        : "Connecting";
 
   async function copyRoomCode() {
     try {
