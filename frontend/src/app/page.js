@@ -106,7 +106,7 @@ export default function HomePage() {
             width={345}
             height={370}
           />
-          <span>လျှို့ဝှက်လူလိမ်</span>
+          <span>Imposter</span>
         </a>
         <ThemeToggle />
       </header>
@@ -177,7 +177,7 @@ export default function HomePage() {
             {categories.map((name) => <option key={name} value={name}>{name}</option>)}
           </select>
 
-          <label htmlFor="imposterCount">လျှို့ဝှက်လူလိမ် အရေအတွက်</label>
+          <label htmlFor="imposterCount">Imposter အရေအတွက်</label>
           <select
             id="imposterCount"
             value={imposterCount}

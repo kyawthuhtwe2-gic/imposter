@@ -221,8 +221,8 @@ export default function GamePage() {
   const overallWinner = game.final_results?.winner === "TIE"
     ? "သရေကျပါသည်"
     : game.final_results?.winner === "IMPOSTERS"
-      ? "လျှို့ဝှက်လူလိမ်အဖွဲ့"
-      : "ပုံမှန်ကစားသမားအဖွဲ့";
+      ? "Imposter အဖွဲ့"
+      : "Player အဖွဲ့";
   const connectionLabel = connection === "Connected"
     ? "ချိတ်ဆက်ထားသည်"
     : connection === "Disconnected" || connection === "Connection error"
@@ -311,7 +311,7 @@ export default function GamePage() {
             width={345}
             height={370}
           />
-          <span>လျှို့ဝှက်လူလိမ်</span>
+          <span>Imposter</span>
         </a>
         <div className="room-header-actions">
           <div className="connection-pill">
@@ -389,7 +389,7 @@ export default function GamePage() {
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="editImposterCount">လျှို့ဝှက်လူလိမ် အရေအတွက်</label>
+                    <label htmlFor="editImposterCount">Imposter အရေအတွက်</label>
                     <select
                       id="editImposterCount"
                       value={game.imposter_count ?? 1}
@@ -488,7 +488,7 @@ export default function GamePage() {
                       <div className={`role-reveal-card ${role.role === "imposter" ? "imposter-role" : ""}`}>
                         <span className="role-symbol" aria-hidden="true">{role.role === "imposter" ? "◉" : "✦"}</span>
                         <p className="eyebrow">သင့်အခန်းကဏ္ဍ</p>
-                        <h2>{role.role === "imposter" ? "လျှို့ဝှက်လူလိမ်" : "ပုံမှန်ကစားသမား"}</h2>
+                        <h2>{role.role === "imposter" ? "Imposter" : "Player"}</h2>
                         {role.role === "imposter" ? (
                           <p>လျှို့ဝှက်စကားလုံးကို သင်မသိပါ။ အခြားသူများပေးသော အရိပ်အမြွက်များကို နားထောင်ပါ။</p>
                         ) : (
@@ -760,7 +760,7 @@ export default function GamePage() {
                   ) : null}
                 </div>
               ) : (
-                <p className="inline-note">လျှို့ဝှက်လူလိမ်၏ ခန့်မှန်းချက်ကို စောင့်နေသည်။</p>
+                <p className="inline-note">Imposter ၏ ခန့်မှန်းချက်ကို စောင့်နေသည်။</p>
               )}
             </section>
           )}
@@ -774,14 +774,14 @@ export default function GamePage() {
                 {game.phase === "GAME_OVER" ? "နောက်ဆုံးအကြိမ်ရလဒ်" : "အကြိမ်ရလဒ်"}
                 {" · "}အကြိမ် {roundResult.round_number} / {game.total_rounds}
               </p>
-              <h2>{roundResult.winner === "IMPOSTERS" ? "လျှို့ဝှက်လူလိမ်အဖွဲ့" : "ပုံမှန်ကစားသမားအဖွဲ့"} အနိုင်ရပါပြီ</h2>
+              <h2>{roundResult.winner === "IMPOSTERS" ? "Imposter အဖွဲ့" : "Player အဖွဲ့"} အနိုင်ရပါပြီ</h2>
               <div className="round-reveal">
                 <div>
                   <span>လျှို့ဝှက်စကားလုံး</span>
                   <strong>{roundResult.secret_word}</strong>
                 </div>
                 <div>
-                  <span>လျှို့ဝှက်လူလိမ်</span>
+                  <span>Imposter</span>
                   <strong>{roundResult.imposter_names.join("၊ ")}</strong>
                 </div>
               </div>
@@ -805,7 +805,7 @@ export default function GamePage() {
                       <li key={player.player_id}>
                         <span>
                           {player.player_name}
-                          <small>{player.role === "imposter" ? " · လျှို့ဝှက်လူလိမ်" : " · ပုံမှန်ကစားသမား"}</small>
+                          <small>{player.role === "imposter" ? " · Imposter" : " · Player"}</small>
                         </span>
                         <strong>
                           {(roundResult.winner === "IMPOSTERS") === (player.role === "imposter")
@@ -824,7 +824,7 @@ export default function GamePage() {
                   <h3>{overallWinner}{overallWinner !== "သရေကျပါသည်" ? " အနိုင်ရပါပြီ" : ""}</h3>
                   <div className="final-score">
                     <span>ကစားပြီး {game.final_results.rounds_played} / {game.final_results.total_rounds} ကြိမ်</span>
-                    <strong>ပုံမှန်အဖွဲ့ {game.final_results.normal_player_wins} : {game.final_results.imposter_wins} လျှို့ဝှက်လူလိမ်အဖွဲ့</strong>
+                    <strong>Player အဖွဲ့ {game.final_results.normal_player_wins} : {game.final_results.imposter_wins} Imposter အဖွဲ့</strong>
                   </div>
                   <div className="modal-actions">
                     <button className="secondary-button" type="button" onClick={() => { window.location.href = "/"; }}>

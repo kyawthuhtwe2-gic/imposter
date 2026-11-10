@@ -1,8 +1,8 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "လျှို့ဝှက်လူလိမ်",
-  description: "သူငယ်ချင်းများနှင့် လျှို့ဝှက်လူလိမ်ဂိမ်း ကစားပါ။",
+  title: "Imposter",
+  description: "သူငယ်ချင်းများနှင့် Imposter ဂိမ်း ကစားပါ။",
   icons: {
     icon: "/imposter-logo-icon.webp",
   },
