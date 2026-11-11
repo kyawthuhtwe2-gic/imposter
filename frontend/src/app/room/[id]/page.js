@@ -900,7 +900,6 @@ export default function GamePage() {
             <div>
               <h2>Player များ</h2>
             </div>
-            <span className="count-badge">{game.player_count}</span>
           </div>
           <PlayerList
             players={players}
