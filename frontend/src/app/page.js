@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { gameRequest } from "../utils/gameApi";
 import ThemeToggle from "../components/ThemeToggle";
+import SelectBox from "../components/SelectBox";
 
 export default function HomePage() {
   const [playerName, setPlayerName] = useState("");
@@ -167,24 +168,23 @@ export default function HomePage() {
           />
 
           <label htmlFor="category">စကားလုံးအမျိုးအစား</label>
-          <select
+          <SelectBox
             id="category"
             value={category}
-            onChange={(event) => setCategory(event.target.value)}
+            onValueChange={setCategory}
             disabled={loadingCategories}
           >
             <option value="">
               {loadingCategories ? "ခဏစောင့်ပါ..." : "ကျပန်းရွေးပါ"}
             </option>
             {categories.map((name) => <option key={name} value={name}>{name}</option>)}
-          </select>
+          </SelectBox>
 
           <label htmlFor="imposterCount">Imposter</label>
-          <select
+          <SelectBox
             id="imposterCount"
             value={imposterCount}
-            onChange={(event) => {
-              const nextImposterCount = event.target.value;
+            onValueChange={(nextImposterCount) => {
               setImposterCount(nextImposterCount);
               setPlayerCount((currentCount) =>
                 String(Math.max(Number(currentCount), Number(nextImposterCount) * 2 + 1)),
@@ -194,14 +194,13 @@ export default function HomePage() {
             <option value="1">၁ ယောက်</option>
             <option value="2">၂ ယောက်</option>
             <option value="3">၃ ယောက်</option>
-          </select>
+          </SelectBox>
 
           <label htmlFor="playerCount">Player</label>
-          <select
+          <SelectBox
             id="playerCount"
             value={playerCount}
-            onChange={(event) => {
-              const nextPlayerCount = event.target.value;
+            onValueChange={(nextPlayerCount) => {
               setPlayerCount(nextPlayerCount);
               if (Number(nextPlayerCount) < Number(imposterCount) * 2 + 1) {
                 setImposterCount("1");
@@ -211,13 +210,13 @@ export default function HomePage() {
             {Array.from({ length: 8 }, (_, index) => index + 3).map((count) => (
               <option key={count} value={count}>{count} ယောက်</option>
             ))}
-          </select>
+          </SelectBox>
 
           <label htmlFor="clueRoundCount">အရိပ်အမြွက်ပေးရမည့် အကြိမ်</label>
-          <select
+          <SelectBox
             id="clueRoundCount"
             value={clueRoundChoice}
-            onChange={(event) => setClueRoundChoice(event.target.value)}
+            onValueChange={setClueRoundChoice}
           >
             <option value="1">၁ ကြိမ်</option>
             <option value="2">၂ ကြိမ်</option>
@@ -225,7 +224,7 @@ export default function HomePage() {
             <option value="4">၄ ကြိမ်</option>
             <option value="5">၅ ကြိမ်</option>
             <option value="custom">စိတ်ကြိုက်သတ်မှတ်မယ်</option>
-          </select>
+          </SelectBox>
           {clueRoundChoice === "custom" && (
             <>
               <label htmlFor="customClueRounds">အရိပ်အမြွက်အကြိမ် (၁ မှ ၁၀)</label>
@@ -245,15 +244,15 @@ export default function HomePage() {
           )}
 
           <label htmlFor="hintInputMode">အရိပ်အမြွက်နှင့် နောက်ဆုံးခန့်မှန်းပုံစံ</label>
-          <select
+          <SelectBox
             id="hintInputMode"
             value={hintInputMode}
-            onChange={(event) => setHintInputMode(event.target.value)}
+            onValueChange={setHintInputMode}
             required
           >
             <option value="TABLE_TALK">လူချင်းပြောမည် (အိမ်ရှင်က ခန့်မှန်းချက်စစ်မည်)</option>
             <option value="TEXT_INPUT">စာရိုက်ထည့်မည် (ခန့်မှန်းချက်ကို အလိုအလျောက်စစ်မည်)</option>
-          </select>
+          </SelectBox>
 
           <button className="primary-button" type="submit" disabled={submitting || !hintInputMode}>
             {submitting ? "ခဏစောင့်ပါ..." : "အခန်းအသစ် စတင်မယ်"}

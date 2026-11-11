@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import ThemeToggle from "../../../components/ThemeToggle";
+import SelectBox from "../../../components/SelectBox";
 import {
   useClueRound,
   useGameResults,
@@ -269,43 +270,43 @@ export default function GamePage() {
     await request(`/games/${encodeURIComponent(id)}/finish`, { player_id: playerId });
   }
 
-  async function changePlayerCount(event) {
+  async function changePlayerCount(value) {
     await request(`/games/${encodeURIComponent(id)}/settings/players`, {
       player_id: playerId,
-      desired_player_count: Number(event.target.value),
+      desired_player_count: Number(value),
     });
   }
 
-  async function changeCategory(event) {
+  async function changeCategory(value) {
     await request(`/games/${encodeURIComponent(id)}/settings/category`, {
       player_id: playerId,
-      category: event.target.value,
+      category: value,
     });
   }
 
-  async function changeTotalRounds(event) {
+  async function changeTotalRounds(value) {
     await request(`/games/${encodeURIComponent(id)}/settings/rounds`, {
       player_id: playerId,
-      total_rounds: Number(event.target.value),
+      total_rounds: Number(value),
     });
   }
 
-  async function changeClueRounds(event) {
+  async function changeClueRounds(value) {
     await request(`/games/${encodeURIComponent(id)}/settings/clue-rounds`, {
       player_id: playerId,
-      clue_rounds: Number(event.target.value),
+      clue_rounds: Number(value),
     });
   }
 
-  async function changeHintMode(event) {
+  async function changeHintMode(value) {
     await request(`/games/${encodeURIComponent(id)}/settings/hint-mode`, {
       player_id: playerId,
-      hint_input_mode: event.target.value,
+      hint_input_mode: value,
     });
   }
 
-  async function changeImposterCount(event) {
-    const imposterCount = Number(event.target.value);
+  async function changeImposterCount(value) {
+    const imposterCount = Number(value);
     const minimumPlayers = imposterCount * 2 + 1;
     const targetPlayerCount = Math.max(
       game.desired_player_count ?? 3,
@@ -402,25 +403,25 @@ export default function GamePage() {
                 <div className="room-settings-grid">
                   <div>
                     <label htmlFor="editCategory">စကားလုံးအမျိုးအစား</label>
-                    <select id="editCategory" value={game.category} onChange={changeCategory}>
+                    <SelectBox id="editCategory" value={game.category} onValueChange={changeCategory}>
                       {categories.map((category) => (
                         <option key={category} value={category}>{category}</option>
                       ))}
-                    </select>
+                    </SelectBox>
                   </div>
                   <div>
                     <label htmlFor="editHintMode">အရိပ်အမြွက်နှင့် နောက်ဆုံးခန့်မှန်းပုံစံ</label>
-                    <select id="editHintMode" value={game.hint_input_mode ?? ""} onChange={changeHintMode}>
+                    <SelectBox id="editHintMode" value={game.hint_input_mode ?? ""} onValueChange={changeHintMode}>
                       <option value="TABLE_TALK">လူချင်းပြောမည် (အိမ်ရှင်က ခန့်မှန်းချက်စစ်မည်)</option>
                       <option value="TEXT_INPUT">စာရိုက်ထည့်မည် (ခန့်မှန်းချက်ကို အလိုအလျောက်စစ်မည်)</option>
-                    </select>
+                    </SelectBox>
                   </div>
                   <div>
                     <label htmlFor="editPlayerCount">Player</label>
-                    <select
+                    <SelectBox
                       id="editPlayerCount"
                       value={game.desired_player_count ?? Math.max(3, game.player_count)}
-                      onChange={changePlayerCount}
+                      onValueChange={changePlayerCount}
                     >
                       {Array.from({ length: 8 }, (_, index) => index + 3)
                         .filter((count) =>
@@ -428,33 +429,33 @@ export default function GamePage() {
                           count >= (game.imposter_count ?? 1) * 2 + 1,
                         )
                         .map((count) => <option key={count} value={count}>{count} ယောက်</option>)}
-                    </select>
+                    </SelectBox>
                   </div>
                   <div>
                     <label htmlFor="editImposterCount">Imposter</label>
-                    <select
+                    <SelectBox
                       id="editImposterCount"
                       value={game.imposter_count ?? 1}
-                      onChange={changeImposterCount}
+                      onValueChange={changeImposterCount}
                     >
                       <option value="1">၁ ယောက်</option>
                       <option value="2">၂ ယောက်</option>
                       <option value="3">၃ ယောက်</option>
-                    </select>
+                    </SelectBox>
                   </div>
                   <div>
                     <label htmlFor="editClueRounds">အရိပ်အမြွက်ပေးရမည့် အကြိမ်</label>
-                    <select id="editClueRounds" value={game.clue_rounds} onChange={changeClueRounds}>
+                    <SelectBox id="editClueRounds" value={game.clue_rounds} onValueChange={changeClueRounds}>
                       {Array.from({ length: 10 }, (_, index) => index + 1)
                         .map((count) => <option key={count} value={count}>{count} ကြိမ်</option>)}
-                    </select>
+                    </SelectBox>
                   </div>
                   <div>
                     <label htmlFor="editTotalRounds">ဂိမ်းအကြိမ်ရေ</label>
-                    <select id="editTotalRounds" value={game.total_rounds} onChange={changeTotalRounds}>
+                    <SelectBox id="editTotalRounds" value={game.total_rounds} onValueChange={changeTotalRounds}>
                       {Array.from({ length: 20 }, (_, index) => index + 1)
                         .map((count) => <option key={count} value={count}>{count} ကြိမ်</option>)}
-                    </select>
+                    </SelectBox>
                   </div>
                 </div>
               )}
@@ -711,15 +712,15 @@ export default function GamePage() {
               {eligibleLocalVoters.length > 1 && (
                 <div className="voter-selector">
                   <label htmlFor="voterSelect">မဲပေးမည့် Player</label>
-                  <select
+                  <SelectBox
                     id="voterSelect"
                     value={votingPlayerId}
-                    onChange={(event) => setSelectedVoterId(event.target.value)}
+                    onValueChange={setSelectedVoterId}
                   >
                     {eligibleLocalVoters.map((player) => (
                       <option key={player.player_id} value={player.player_id}>{player.name}</option>
                     ))}
-                  </select>
+                  </SelectBox>
                 </div>
               )}
               {game.tied_player_ids.length > 0 && (
