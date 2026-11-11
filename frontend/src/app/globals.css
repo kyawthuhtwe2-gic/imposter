@@ -675,18 +675,23 @@ html[data-theme="day"] .watermark-credit strong {
   font-size: 0.77rem;
 }
 
-.connection-dot,
-.turn-dot {
+.connection-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: #74809c;
 }
 
-.connection-dot.online,
-.turn-dot {
+.connection-dot.online {
   background: var(--green);
   box-shadow: 0 0 12px rgba(110, 231, 183, 0.65);
+}
+
+.turn-indicator-image {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  filter: drop-shadow(0 0 5px rgba(251, 113, 133, 0.45));
 }
 
 .room-layout {
@@ -1036,15 +1041,16 @@ html[data-theme="day"] .watermark-credit strong {
   gap: 0.6rem;
   margin: 1.1rem 0;
   padding: 0.7rem 0.8rem;
-  border: 1px solid rgba(110, 231, 183, 0.13);
+  border: 1px solid rgba(251, 113, 133, 0.24);
   border-radius: 12px;
-  background: rgba(16, 185, 129, 0.07);
-  color: #b9daca;
+  background: rgba(225, 29, 72, 0.1);
+  color: #ffd1d8;
   font-size: 0.86rem;
 }
 
 .your-turn-indicator {
-  color: #c4f7df;
+  margin-left: auto;
+  color: #ffaab7;
   font-size: 1.05rem;
   font-weight: 700;
 }
@@ -2225,15 +2231,20 @@ html[data-theme="day"] .role-reveal-card.imposter-role {
   background: linear-gradient(145deg, rgba(252, 224, 231, 0.92), rgba(255, 255, 255, 0.94));
 }
 
-html[data-theme="day"] .turn-banner,
 html[data-theme="day"] .clue-status-list li.submitted {
   border-color: rgba(22, 131, 93, 0.2);
   background: rgba(22, 131, 93, 0.07);
   color: #285d4b;
 }
 
+html[data-theme="day"] .turn-banner {
+  border-color: rgba(200, 61, 90, 0.24);
+  background: rgba(200, 61, 90, 0.08);
+  color: #8f2940;
+}
+
 html[data-theme="day"] .your-turn-indicator {
-  color: #17684c;
+  color: #a52e48;
 }
 
 html[data-theme="day"] .secondary-button {

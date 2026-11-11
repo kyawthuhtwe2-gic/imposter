@@ -581,9 +581,16 @@ export default function GamePage() {
               </ul>
               {currentTurn ? (
                 <div className="turn-banner">
-                  <span className="turn-dot" />
-                  <span className="your-turn-indicator">သင့်အလှည့်</span>
+                  <Image
+                    className="turn-indicator-image"
+                    src="/turn-alert.png"
+                    alt=""
+                    aria-hidden="true"
+                    width={32}
+                    height={32}
+                  />
                   <strong>{currentTurn.name}</strong>
+                  <span className="your-turn-indicator">သင့်အလှည့်ပါ</span>
                 </div>
               ) : (
                 <p className="inline-note success-note">လူတိုင်း အရိပ်အမြွက် ပေးပြီးပါပြီ။ မဲပေးနိုင်ပါပြီ။</p>
