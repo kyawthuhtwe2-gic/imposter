@@ -691,9 +691,9 @@ html[data-theme="day"] .watermark-credit strong {
 
 .room-layout {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(250px, 1fr);
+  grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1fr);
   align-items: start;
-  gap: 1.2rem;
+  gap: 1.4rem;
   padding-top: 2rem;
 }
 
