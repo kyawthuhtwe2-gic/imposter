@@ -231,6 +231,11 @@ export default function GamePage() {
     : game.final_results?.winner === "IMPOSTERS"
       ? "Imposter အဖွဲ့"
       : "Player အဖွဲ့";
+  const roundWinner = roundResult?.winner === "IMPOSTERS"
+    ? "Imposter အဖွဲ့"
+    : "Player အဖွဲ့";
+  const resultWinner = game.phase === "GAME_OVER" ? overallWinner : roundWinner;
+  const isGameTie = game.phase === "GAME_OVER" && game.final_results?.winner === "TIE";
   const connectionLabel = connection === "Connected"
     ? "Connected"
     : connection === "Disconnected"
@@ -806,20 +811,32 @@ export default function GamePage() {
 
           {(game.phase === "ROUND_RESULTS" || game.phase === "GAME_OVER") && roundResult && (
             <section className="glass-card game-panel result-screen">
+              <header className={`result-hero${isGameTie ? " is-draw" : ""}`}>
+                <span className="result-hero-icon" aria-hidden="true">{isGameTie ? "=" : "✦"}</span>
+                <div className="result-hero-copy">
+                  <p className="eyebrow">{game.phase === "GAME_OVER" ? "ဂိမ်းအပြီးသတ်" : `အကြိမ် ${game.round_number} ရလဒ်`}</p>
+                  <h2>{resultWinner}{isGameTie ? "" : " အနိုင်ရပါပြီ"}</h2>
+                </div>
+                <span className="result-status">{isGameTie ? "သရေ" : "အနိုင်ရ"}</span>
+              </header>
+
               <div className="round-reveal">
-                <div>
+                <div className="round-reveal-secret">
                   <span>လျှို့ဝှက်စကားလုံး</span>
                   <strong>{roundResult.secret_word}</strong>
                 </div>
-                <div>
+                <div className="round-reveal-imposters">
                   <span>Imposter</span>
                   <strong>{roundResult.imposter_names.join("၊ ")}</strong>
                 </div>
               </div>
 
               <div className="result-columns">
-                <div>
-                  <h3>မဲရလဒ်</h3>
+                <div className="result-votes">
+                  <div className="result-votes-heading">
+                    <h3>မဲရလဒ်</h3>
+                    <span>{roundResult.vote_counts.length} Player</span>
+                  </div>
                   <ul className="results-list">
                     {roundResult.vote_counts.map((result) => (
                       <li key={result.player_id}>
@@ -833,12 +850,6 @@ export default function GamePage() {
 
               {game.phase === "GAME_OVER" && game.final_results ? (
                 <section className="final-results">
-                  <p className="eyebrow">နောက်ဆုံးရလဒ်</p>
-                  <h3>{overallWinner}{overallWinner !== "သရေကျပါသည်" ? " အနိုင်ရပါပြီ" : ""}</h3>
-                  <div className="final-score">
-                    <span>ကစားပြီး {game.final_results.rounds_played} / {game.final_results.total_rounds} ကြိမ်</span>
-                    <strong>Player အဖွဲ့ {game.final_results.normal_player_wins} : {game.final_results.imposter_wins} Imposter အဖွဲ့</strong>
-                  </div>
                   <div className="modal-actions">
                     <button className="secondary-button" type="button" onClick={() => { window.location.href = "/"; }}>
                       ပင်မစာမျက်နှာသို့ ပြန်သွားမယ်
