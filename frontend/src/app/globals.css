@@ -105,7 +105,7 @@ strong {
 
 .home-shell {
   max-width: 1120px;
-  padding-top: 1.4rem;
+  padding-top: 0rem;
 }
 
 .room-header-actions {
@@ -547,8 +547,10 @@ textarea:focus {
   display: grid;
   gap: 0.3rem;
   justify-items: end;
-  width: min(100% - 2.5rem, 1120px);
-  margin: auto auto 1rem;
+  width: 100%;
+  margin: auto 0 0;
+  padding: 0.75rem 1.25rem 1rem;
+  border-top: 1px solid var(--border);
   color: #737a98;
   text-align: right;
   font-size: 0.78rem;
@@ -557,13 +559,10 @@ textarea:focus {
 .creator-watermark {
   display: inline-flex;
   align-items: center;
-  justify-self: end;
+  justify-self: center;
   gap: 0.65rem;
   margin-top: 0.15rem;
   padding: 0.45rem 0.7rem;
-  border: 1px solid rgba(167, 139, 250, 0.16);
-  border-radius: 999px;
-  background: linear-gradient(110deg, rgba(124, 58, 237, 0.07), rgba(96, 165, 250, 0.045));
   color: var(--muted);
   text-align: left;
   font-size: 0.68rem;
@@ -583,8 +582,9 @@ textarea:focus {
 }
 
 .watermark-credit {
-  display: grid;
-  gap: 0.05rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
   line-height: 1.2;
 }
 
@@ -609,8 +609,7 @@ textarea:focus {
 }
 
 html[data-theme="day"] .creator-watermark {
-  border-color: rgba(112, 68, 197, 0.16);
-  background: linear-gradient(110deg, rgba(112, 68, 197, 0.055), rgba(40, 116, 201, 0.035));
+  background: transparent;
 }
 
 html[data-theme="day"] .watermark-mark {
@@ -645,7 +644,6 @@ html[data-theme="day"] .watermark-credit strong {
   align-items: center;
   justify-content: space-between;
   padding-bottom: 1.2rem;
-  border-bottom: 1px solid rgba(184, 190, 255, 0.09);
 }
 
 .room-page-topbar,
@@ -653,9 +651,21 @@ html[data-theme="day"] .watermark-credit strong {
   position: sticky;
   top: 0;
   z-index: 20;
-  padding-top: 0.65rem;
+  padding-top: 1.4rem;
   background: transparent;
   backdrop-filter: blur(14px);
+}
+
+.room-page-topbar::after,
+.home-topbar::after {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  border-bottom: 1px solid var(--border);
+  content: "";
+  pointer-events: none;
+  transform: translateX(-50%);
 }
 
 .wordmark {
