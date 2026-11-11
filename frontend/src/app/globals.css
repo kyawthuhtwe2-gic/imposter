@@ -448,10 +448,19 @@ option {
 }
 
 .page-footer {
+  display: grid;
+  gap: 0.3rem;
   margin-top: 1.35rem;
   color: #737a98;
   text-align: center;
   font-size: 0.78rem;
+}
+
+.creator-watermark {
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.035em;
+  opacity: 0.72;
 }
 
 .home-error {
