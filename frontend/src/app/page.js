@@ -250,8 +250,8 @@ export default function HomePage() {
             onValueChange={setHintInputMode}
             required
           >
-            <option value="TABLE_TALK">လူချင်းပြောမည် (အိမ်ရှင်က ခန့်မှန်းချက်စစ်မည်)</option>
-            <option value="TEXT_INPUT">စာရိုက်ထည့်မည် (ခန့်မှန်းချက်ကို အလိုအလျောက်စစ်မည်)</option>
+            <option value="TABLE_TALK">လူချင်းပြောမည်</option>
+            <option value="TEXT_INPUT">စာရိုက်ထည့်မည်</option>
           </SelectBox>
 
           <button className="primary-button" type="submit" disabled={submitting || !hintInputMode}>

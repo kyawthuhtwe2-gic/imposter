@@ -412,8 +412,8 @@ export default function GamePage() {
                   <div>
                     <label htmlFor="editHintMode">အရိပ်အမြွက်နှင့် နောက်ဆုံးခန့်မှန်းပုံစံ</label>
                     <SelectBox id="editHintMode" value={game.hint_input_mode ?? ""} onValueChange={changeHintMode}>
-                      <option value="TABLE_TALK">လူချင်းပြောမည် (အိမ်ရှင်က ခန့်မှန်းချက်စစ်မည်)</option>
-                      <option value="TEXT_INPUT">စာရိုက်ထည့်မည် (ခန့်မှန်းချက်ကို အလိုအလျောက်စစ်မည်)</option>
+                      <option value="TABLE_TALK">လူချင်းပြောမည်</option>
+                      <option value="TEXT_INPUT">စာရိုက်ထည့်မည်</option>
                     </SelectBox>
                   </div>
                   <div>
