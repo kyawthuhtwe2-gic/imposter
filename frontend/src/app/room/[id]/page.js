@@ -587,7 +587,6 @@ export default function GamePage() {
             <section className="glass-card game-panel">
               <div className="section-title-row">
                 <div>
-                  <p className="eyebrow">သံသယရှိသူကို ရှာဖွေပါ</p>
                   <h2>အရိပ်အမြွက်ပေးပါ</h2>
                 </div>
                 <span className="count-badge">{clueRoundSubmissionCount}/{activeCluePlayers.length}</span>
