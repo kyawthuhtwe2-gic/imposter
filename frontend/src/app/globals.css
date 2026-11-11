@@ -674,7 +674,7 @@ html[data-theme="day"] .watermark-credit strong {
   object-fit: cover;
 }
 
-.connection-pill {
+.room-id-pill {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
@@ -2013,7 +2013,7 @@ html[data-theme="day"] .watermark-credit strong {
     grid-template-columns: 1fr;
   }
 
-  .connection-pill {
+  .room-id-pill {
     font-size: 0.7rem;
   }
 
@@ -2232,7 +2232,7 @@ html[data-theme="day"] .clue-status-list li,
 html[data-theme="day"] .vote-option,
 html[data-theme="day"] .results-list li,
 html[data-theme="day"] .player-row,
-html[data-theme="day"] .connection-pill {
+html[data-theme="day"] .room-id-pill {
   border-color: var(--border);
   background-color: rgba(255, 255, 255, 0.58);
   color: var(--text);

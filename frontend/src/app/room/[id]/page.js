@@ -406,9 +406,16 @@ export default function GamePage() {
           <span>Imposter</span>
         </a>
         <div className="room-header-actions">
-          <div className="connection-pill">
-            <span className={`connection-dot ${connection === "Connected" ? "online" : ""}`} />
-            {connectionLabel}
+          <div
+            className="room-id-pill"
+            aria-label={`Room ID ${game.room_code}; ${connectionLabel}`}
+            title={connectionLabel}
+          >
+            <span
+              className={`connection-dot ${connection === "Connected" ? "online" : ""}`}
+              aria-hidden="true"
+            />
+            အခန်းကုဒ် {game.room_code}
           </div>
           <ThemeToggle />
         </div>
@@ -594,7 +601,6 @@ export default function GamePage() {
                     <>
                       <div className={`role-reveal-card ${role.role === "imposter" ? "imposter-role" : ""}`}>
                         <span className="role-symbol" aria-hidden="true">{role.role === "imposter" ? "◉" : "✦"}</span>
-                        <p className="eyebrow">သင့်အခန်းကဏ္ဍ</p>
                         <h2>{role.role === "imposter" ? "Imposter" : "Player"}</h2>
                         {role.role === "imposter" ? (
                           <p>လျှို့ဝှက်စကားလုံးကို သင်မသိပါ။ အခြားသူများပေးသော အရိပ်အမြွက်များကို နားထောင်ပါ။</p>
@@ -932,7 +938,6 @@ export default function GamePage() {
                 <div className="result-votes">
                   <div className="result-votes-heading">
                     <h3>မဲရလဒ်</h3>
-                    <span>{roundResult.vote_counts.length} Player</span>
                   </div>
                   <ul className="results-list">
                     {roundResult.vote_counts.map((result) => (
