@@ -582,7 +582,6 @@ export default function GamePage() {
 
           {game.phase === "ROLE_REVEAL" && (
             <section className="glass-card game-panel centered-panel">
-              <p className="eyebrow">သီးသန့်ကြည့်ရှုရန်</p>
               {canControlPlayer(game.current_reveal_player_id) ? (
                 <>
                   <h2>{currentReveal?.name ?? "Player"}၊ သင့်အလှည့်ပါ</h2>
