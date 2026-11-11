@@ -691,7 +691,7 @@ html[data-theme="day"] .watermark-credit strong {
 
 .room-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 310px;
+  grid-template-columns: minmax(0, 2fr) minmax(250px, 1fr);
   align-items: start;
   gap: 1.2rem;
   padding-top: 2rem;
@@ -1814,12 +1814,6 @@ html[data-theme="day"] .watermark-credit strong {
 
 @keyframes spin {
   to { transform: rotate(360deg); }
-}
-
-@media (max-width: 800px) {
-  .room-layout {
-    grid-template-columns: minmax(0, 1fr) 270px;
-  }
 }
 
 @media (max-width: 680px) {
