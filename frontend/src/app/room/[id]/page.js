@@ -817,6 +817,7 @@ export default function GamePage() {
                   <p className="eyebrow">{game.phase === "GAME_OVER" ? "ဂိမ်းအပြီးသတ်" : `အကြိမ် ${game.round_number} ရလဒ်`}</p>
                   <h2>{resultWinner}{isGameTie ? "" : " အနိုင်ရပါပြီ"}</h2>
                 </div>
+                <span className="result-status">{isGameTie ? "သရေ" : "အနိုင်ရ"}</span>
               </header>
 
               <div className="round-reveal">
@@ -848,7 +849,7 @@ export default function GamePage() {
               </div>
 
               {game.phase === "GAME_OVER" && game.final_results ? (
-                <section>
+                <section className="final-results">
                   <div className="modal-actions">
                     <button className="secondary-button" type="button" onClick={() => { window.location.href = "/"; }}>
                       ပင်မစာမျက်နှာသို့ ပြန်သွားမယ်
