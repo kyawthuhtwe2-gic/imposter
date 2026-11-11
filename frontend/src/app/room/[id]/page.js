@@ -849,7 +849,7 @@ export default function GamePage() {
               </div>
 
               {game.phase === "GAME_OVER" && game.final_results ? (
-                <section className="final-results">
+                <footer className="final-results">
                   <div className="modal-actions">
                     <button className="secondary-button" type="button" onClick={() => { window.location.href = "/"; }}>
                       ပင်မစာမျက်နှာသို့ ပြန်သွားမယ်
@@ -869,7 +869,7 @@ export default function GamePage() {
                   <p className="inline-note">{isHost
                     ? "လက်ရှိအခန်းနှင့် Player များကို ဆက်သုံးပြီး ဂိမ်းကို ပြန်စနိုင်သည်။"
                     : "အိမ်ရှင်က ဒီအခန်းထဲမှာ ဂိမ်းပြန်စရန် စောင့်နေသည်။"}</p>
-                </section>
+                </footer>
               ) : (
                 <div className="round-result-actions">
                   {isHost ? (
