@@ -610,7 +610,7 @@ export default function GamePage() {
                   <span className="turn-dot" />
                   <span className="your-turn-indicator">သင့်အလှည့်</span>
                   <strong>{currentTurn.name}</strong>
-                  {canControlPlayer(currentTurn.player_id) && <span className="you-badge">ဒီစက်</span>}
+                  {canControlPlayer(currentTurn.player_id) && <span className="you-badge">Your Turn</span>}
                 </div>
               ) : (
                 <p className="inline-note success-note">လူတိုင်း အရိပ်အမြွက် ပေးပြီးပါပြီ။ မဲပေးနိုင်ပါပြီ။</p>
