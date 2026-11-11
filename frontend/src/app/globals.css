@@ -457,10 +457,72 @@ option {
 }
 
 .creator-watermark {
+  display: inline-flex;
+  align-items: center;
+  justify-self: center;
+  gap: 0.65rem;
+  margin-top: 0.15rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid rgba(167, 139, 250, 0.16);
+  border-radius: 999px;
+  background: linear-gradient(110deg, rgba(124, 58, 237, 0.07), rgba(96, 165, 250, 0.045));
   color: var(--muted);
-  font-size: 0.7rem;
-  letter-spacing: 0.035em;
-  opacity: 0.72;
+  text-align: left;
+  font-size: 0.68rem;
+}
+
+.watermark-mark {
+  display: grid;
+  width: 1.65rem;
+  height: 1.65rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  border-radius: 50%;
+  background: rgba(124, 58, 237, 0.1);
+  color: var(--purple);
+  font-size: 0.8rem;
+}
+
+.watermark-credit {
+  display: grid;
+  gap: 0.05rem;
+  line-height: 1.2;
+}
+
+.watermark-credit > span {
+  color: var(--muted);
+  font-size: 0.61rem;
+}
+
+.watermark-credit strong {
+  color: var(--text);
+  font-size: 0.75rem;
+}
+
+.watermark-date {
+  margin-left: 0.15rem;
+  padding-left: 0.65rem;
+  border-left: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.64rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+html[data-theme="day"] .creator-watermark {
+  border-color: rgba(112, 68, 197, 0.16);
+  background: linear-gradient(110deg, rgba(112, 68, 197, 0.055), rgba(40, 116, 201, 0.035));
+}
+
+html[data-theme="day"] .watermark-mark {
+  border-color: rgba(112, 68, 197, 0.18);
+  background: rgba(112, 68, 197, 0.07);
+  color: #7044c5;
+}
+
+html[data-theme="day"] .watermark-credit strong {
+  color: #30334a;
 }
 
 .home-error {
