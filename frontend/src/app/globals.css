@@ -437,6 +437,7 @@ option {
 .how-to-play {
   margin: 1.2rem 0 0;
   padding: 1.2rem 1.4rem;
+  padding-top: 0rem;
   border: 1px solid rgba(184, 190, 255, 0.08);
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.025);

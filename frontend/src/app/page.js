@@ -298,7 +298,7 @@ export default function HomePage() {
         </div>
 
         <aside className="how-to-play">
-          <p className="eyebrow">ကစားနည်းအကျဉ်း</p>
+          <h3>ကစားနည်းအကျဉ်း</h3>
           <ol>
             <li>လူတိုင်းက ကိုယ့်အခန်းကဏ္ဍကို တစ်ယောက်ချင်းစီ ကြည့်ပါ။</li>
             <li>လျှို့ဝှက်စကားလုံးကို မပြောဘဲ အရိပ်အမြွက်တစ်ခု ပေးပါ။</li>
