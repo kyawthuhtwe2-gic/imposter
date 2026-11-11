@@ -636,7 +636,7 @@ html[data-theme="day"] .watermark-credit strong {
 
 .room-shell {
   max-width: 1120px;
-  padding-top: 1.4rem;
+  padding-top: 0rem;
 }
 
 .room-topbar {
