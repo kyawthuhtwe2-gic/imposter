@@ -709,7 +709,6 @@ export default function GamePage() {
                   </svg>
                   {turnAlertsEnabled ? "အသံသတိပေးချက် ဖွင့်ထားသည်" : "အသံနှင့် Browser အသိပေးချက် ဖွင့်ရန်"}
                 </button>
-                {turnAlertMessage && <span role="status">{turnAlertMessage}</span>}
               </div>
 
               {game.hint_input_mode === "TEXT_INPUT" && clues.length > 0 ? (
