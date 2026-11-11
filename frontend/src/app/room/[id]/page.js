@@ -806,14 +806,6 @@ export default function GamePage() {
 
           {(game.phase === "ROUND_RESULTS" || game.phase === "GAME_OVER") && roundResult && (
             <section className="glass-card game-panel result-screen">
-              <div className={`result-emblem ${roundResult.winner === "IMPOSTERS" ? "imposter-emblem" : ""}`} aria-hidden="true">
-                {roundResult.winner === "IMPOSTERS" ? "◉" : "✦"}
-              </div>
-              <p className="eyebrow">
-                {game.phase === "GAME_OVER" ? "နောက်ဆုံးအကြိမ်ရလဒ်" : "အကြိမ်ရလဒ်"}
-                {" · "}အကြိမ် {roundResult.round_number} / {game.total_rounds}
-              </p>
-              <h2>{roundResult.winner === "IMPOSTERS" ? "Imposter အဖွဲ့" : "Player အဖွဲ့"} အနိုင်ရပါပြီ</h2>
               <div className="round-reveal">
                 <div>
                   <span>လျှို့ဝှက်စကားလုံး</span>
@@ -833,19 +825,6 @@ export default function GamePage() {
                       <li key={result.player_id}>
                         <span>{result.player_name}</span>
                         <strong>{result.count} မဲ</strong>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <h3>Player စာရင်း</h3>
-                  <ul className="results-list">
-                    {roundResult.player_stats.map((player) => (
-                      <li key={player.player_id}>
-                        <span>
-                          {player.player_name}
-                          <small>{player.role === "imposter" ? " · Imposter" : " · Player"}</small>
-                        </span>
                       </li>
                     ))}
                   </ul>
