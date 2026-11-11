@@ -91,6 +91,10 @@ export default function GamePage() {
   const isHost = game?.host_id === playerId;
   const [localPlayerIds, setLocalPlayerIds] = useState([]);
   const lastVibratedTurn = useRef("");
+  const lastNotifiedTurn = useRef("");
+  const audioContext = useRef(null);
+  const [turnAlertsEnabled, setTurnAlertsEnabled] = useState(false);
+  const [turnAlertMessage, setTurnAlertMessage] = useState("");
   const [selectedVoterId, setSelectedVoterId] = useState("");
   const [guess, setGuess] = useState("");
   const [submittingGuess, setSubmittingGuess] = useState(false);
@@ -145,6 +149,63 @@ export default function GamePage() {
   const canControlPlayer = (candidateId) => localPlayerIds.includes(candidateId);
   const votingPlayer = players.find((player) => player.player_id === votingPlayerId);
 
+  async function enableTurnAlerts() {
+    if (!window.AudioContext) {
+      setTurnAlertMessage("ဒီဘရောက်ဆာတွင် အသံသတိပေးချက်ကို မပံ့ပိုးပါ။");
+      return;
+    }
+
+    let permissionRequest = Promise.resolve("unsupported");
+    try {
+      if ("Notification" in window) {
+        permissionRequest = window.Notification.permission === "default"
+          ? window.Notification.requestPermission()
+          : Promise.resolve(window.Notification.permission);
+      }
+    } catch {
+      permissionRequest = Promise.resolve("unavailable");
+    }
+
+    try {
+      if (!audioContext.current) audioContext.current = new window.AudioContext();
+      await audioContext.current.resume();
+      const permission = await permissionRequest.catch(() => "unavailable");
+      setTurnAlertsEnabled(true);
+      setTurnAlertMessage(
+        permission === "granted"
+          ? "အသံနှင့် Browser အသိပေးချက် ဖွင့်ထားပါပြီ။"
+          : permission === "denied"
+            ? "အသံဖွင့်ထားပါပြီ။ Browser အသိပေးချက်ကို ဘရောက်ဆာဆက်တင်မှ ခွင့်ပြုပါ။"
+            : permission === "unsupported"
+              ? "အသံသတိပေးချက် ဖွင့်ထားပါပြီ။"
+              : "အသံဖွင့်ထားပါပြီ။ Browser အသိပေးချက် မရရှိနိုင်ပါ။",
+      );
+    } catch {
+      setTurnAlertMessage("သတိပေးချက်ကို ဖွင့်မရပါ။ ဘရောက်ဆာဆက်တင်ကို စစ်ဆေးပြီး ထပ်ကြိုးစားပါ။");
+    }
+  }
+
+  function playTurnAlert() {
+    const context = audioContext.current;
+    if (!context || context.state !== "running") return;
+
+    const now = context.currentTime;
+    [660, 880].forEach((frequency, index) => {
+      const oscillator = context.createOscillator();
+      const gain = context.createGain();
+      const start = now + index * 0.16;
+      oscillator.type = "sine";
+      oscillator.frequency.value = frequency;
+      gain.gain.setValueAtTime(0.0001, start);
+      gain.gain.exponentialRampToValueAtTime(0.18, start + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.22);
+      oscillator.connect(gain);
+      gain.connect(context.destination);
+      oscillator.start(start);
+      oscillator.stop(start + 0.23);
+    });
+  }
+
   useEffect(() => {
     if (!isMyTurn || lastVibratedTurn.current === turnKey) return;
     lastVibratedTurn.current = turnKey;
@@ -152,6 +213,26 @@ export default function GamePage() {
       navigator.vibrate([180, 90, 180]);
     }
   }, [isMyTurn, turnKey]);
+
+  useEffect(() => {
+    if (!isMyTurn || !turnAlertsEnabled || lastNotifiedTurn.current === turnKey) return;
+    lastNotifiedTurn.current = turnKey;
+    playTurnAlert();
+    if ("Notification" in window && window.Notification.permission === "granted") {
+      try {
+        new window.Notification("သင့်အလှည့်ပါ", {
+          body: "အရိပ်အမြွက် ပေးရန် သင့်အလှည့်ရောက်ပါပြီ။",
+          icon: "/turn-alert.png",
+        });
+      } catch {
+        setTurnAlertMessage("အသံသတိပေးချက် ဖွင့်ထားပါပြီ။ Browser အသိပေးချက် မပြနိုင်ပါ။");
+      }
+    }
+  }, [isMyTurn, turnAlertsEnabled, turnKey]);
+
+  useEffect(() => () => {
+    audioContext.current?.close();
+  }, []);
 
   useEffect(() => {
     if (!editingRoom || !isHost || categories.length > 0) return;
@@ -576,7 +657,7 @@ export default function GamePage() {
                       <span className="clue-status-indicator" aria-hidden="true">
                         {submitted ? "✓" : "·"}
                       </span>
-                      <span>{player.name}</span>
+                      <h3>{player.name}</h3>
                       {currentTurn?.player_id === player.player_id ? (
                         canControlPlayer(player.player_id) ? (
                           <span className="you-badge">{submitted ? "ပေးပြီး" : "Your Turn"}</span>
@@ -608,6 +689,17 @@ export default function GamePage() {
               ) : (
                 <p className="inline-note success-note">လူတိုင်း အရိပ်အမြွက် ပေးပြီးပါပြီ။ မဲပေးနိုင်ပါပြီ။</p>
               )}
+              <div className="turn-alert-controls">
+                <button
+                  className="mini-action"
+                  type="button"
+                  onClick={enableTurnAlerts}
+                  disabled={turnAlertsEnabled}
+                >
+                  {turnAlertsEnabled ? "အသံသတိပေးချက် ဖွင့်ထားသည်" : "အသံနှင့် Browser အသိပေးချက် ဖွင့်ရန်"}
+                </button>
+                {turnAlertMessage && <span role="status">{turnAlertMessage}</span>}
+              </div>
 
               {game.hint_input_mode === "TEXT_INPUT" && clues.length > 0 ? (
                 <ol className="clue-list">

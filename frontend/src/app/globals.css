@@ -1071,6 +1071,19 @@ html[data-theme="day"] .watermark-credit strong {
   font-weight: 700;
 }
 
+.turn-alert-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin: 0.75rem 0 1rem;
+}
+
+.turn-alert-controls > span {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
 .table-talk-actions {
   display: grid;
   gap: 0.8rem;
