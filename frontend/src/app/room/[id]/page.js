@@ -14,7 +14,7 @@ import {
 } from "../../../hooks/useGameState";
 
 const PHASE_LABELS = {
-  WAITING_FOR_PLAYERS: "ကစားသမားများကို စောင့်နေသည်",
+  WAITING_FOR_PLAYERS: "Player များကို စောင့်နေသည်",
   ROLE_ASSIGNMENT: "အခန်းကဏ္ဍ သတ်မှတ်ပြီးပါပြီ",
   ROLE_REVEAL: "အခန်းကဏ္ဍ ကြည့်ရှုချိန်",
   CLUE_ROUND: "အရိပ်အမြွက် ပေးချိန်",
@@ -191,7 +191,7 @@ export default function GamePage() {
   if (!playerId) {
     return <main className="state-shell"><section className="glass-card state-card">
       <p className="eyebrow">အခန်းထဲ ဝင်ရန်</p>
-      <h1>ကစားသမားအချက်အလက် မရှိပါ</h1>
+      <h1>Player အချက်အလက် မရှိပါ</h1>
       <p>ပင်မစာမျက်နှာမှ အခန်းထဲ ပြန်ဝင်ပါ။</p>
       <a className="primary-button link-button" href="/">ပင်မစာမျက်နှာသို့</a>
     </section></main>;
@@ -478,7 +478,7 @@ export default function GamePage() {
   
               {game.desired_player_count && game.player_count < game.desired_player_count && (
                 <p className="inline-note">
-                  စတင်ရန် ကစားသမား {game.desired_player_count - game.player_count} ဦး ထပ်ဝင်ရန် လိုသည်။
+                  စတင်ရန် Player {game.desired_player_count - game.player_count} ဦး ထပ်ဝင်ရန် လိုသည်။
                 </p>
               )}
               {!game.hint_input_mode && (
@@ -510,7 +510,7 @@ export default function GamePage() {
               <p className="eyebrow">သီးသန့်ကြည့်ရှုရန်</p>
               {canControlPlayer(game.current_reveal_player_id) ? (
                 <>
-                  <h2>{currentReveal?.name ?? "ကစားသမား"}၊ သင့်အလှည့်ပါ</h2>
+                  <h2>{currentReveal?.name ?? "Player"}၊ သင့်အလှည့်ပါ</h2>
                   {!role ? (
                     <>
                       <div className="hidden-role-card">
@@ -564,7 +564,7 @@ export default function GamePage() {
                 <>
                   <div className="hidden-role-card">
                     <span className="loading-orb" aria-hidden="true" />
-                    <strong>{currentReveal?.name ?? "နောက်ကစားသမား"} ကြည့်ရှုနေသည်</strong>
+                    <strong>{currentReveal?.name ?? "နောက် Player"} ကြည့်ရှုနေသည်</strong>
                     <span>အလှည့်ရောက်သည်အထိ စောင့်ပါ။</span>
                   </div>
                   <p className="inline-note">အခြားသူ၏ အခန်းကဏ္ဍကို မကြည့်ပါနှင့်။</p>
@@ -694,7 +694,7 @@ export default function GamePage() {
               <p className="muted">မိမိကိုယ်ကို မဲပေး၍မရပါ။ မဲရလဒ်ကို အားလုံးမဲပေးပြီးမှ ဖော်ပြပါမည်။</p>
               {eligibleLocalVoters.length > 1 && (
                 <div className="voter-selector">
-                  <label htmlFor="voterSelect">မဲပေးမည့် ကစားသမား</label>
+                  <label htmlFor="voterSelect">မဲပေးမည့် Player</label>
                   <select
                     id="voterSelect"
                     value={votingPlayerId}
@@ -712,7 +712,7 @@ export default function GamePage() {
               {votingPlayer?.has_voted ? (
                 <div className="voted-state">
                   <span className="success-check" aria-hidden="true">✓</span>
-                  <div><strong>{votingPlayer.name} ၏ မဲကို မှတ်တမ်းတင်ပြီးပါပြီ</strong><span>ကျန်ကစားသမားများ မဲပေးရန် စောင့်နေသည်။</span></div>
+                  <div><strong>{votingPlayer.name} ၏ မဲကို မှတ်တမ်းတင်ပြီးပါပြီ</strong><span>ကျန်Player များ မဲပေးရန် စောင့်နေသည်။</span></div>
                 </div>
               ) : canControlPlayer(votingPlayerId) && voteTargets.length > 0 ? (
                 <ul className="vote-options">
@@ -838,7 +838,7 @@ export default function GamePage() {
                   </ul>
                 </div>
                 <div>
-                  <h3>ကစားသမားစာရင်း</h3>
+                  <h3>Player စာရင်း</h3>
                   <ul className="results-list">
                     {roundResult.player_stats.map((player) => (
                       <li key={player.player_id}>
@@ -846,11 +846,6 @@ export default function GamePage() {
                           {player.player_name}
                           <small>{player.role === "imposter" ? " · Imposter" : " · Player"}</small>
                         </span>
-                        <strong>
-                          {(roundResult.winner === "IMPOSTERS") === (player.role === "imposter")
-                            ? "နိုင်"
-                            : "ရှုံး"}
-                        </strong>
                       </li>
                     ))}
                   </ul>
@@ -882,7 +877,7 @@ export default function GamePage() {
                     )}
                   </div>
                   <p className="inline-note">{isHost
-                    ? "လက်ရှိအခန်းနှင့် ကစားသမားများကို ဆက်သုံးပြီး ဂိမ်းကို ပြန်စနိုင်သည်။"
+                    ? "လက်ရှိအခန်းနှင့် Player များကို ဆက်သုံးပြီး ဂိမ်းကို ပြန်စနိုင်သည်။"
                     : "အိမ်ရှင်က ဒီအခန်းထဲမှာ ဂိမ်းပြန်စရန် စောင့်နေသည်။"}</p>
                 </section>
               ) : (
@@ -911,7 +906,7 @@ export default function GamePage() {
           <div className="section-title-row">
             <div>
               <p className="eyebrow">အခန်းထဲရှိသူများ</p>
-              <h2>ကစားသမားများ</h2>
+              <h2>Player များ</h2>
             </div>
             <span className="count-badge">{game.player_count}</span>
           </div>

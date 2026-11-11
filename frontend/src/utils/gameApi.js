@@ -3,16 +3,16 @@ const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000").rep
 function localizeError(detail) {
   const message = typeof detail === "string" ? detail : "";
   if (/authentication|required|invalid player/i.test(message)) {
-    return "ကစားသမားအတည်ပြုချက် မအောင်မြင်ပါ။ အခန်းထဲ ပြန်ဝင်ပါ။";
+    return "Player အတည်ပြုချက် မအောင်မြင်ပါ။ အခန်းထဲ ပြန်ဝင်ပါ။";
   }
   if (/not found|does not belong/i.test(message)) {
-    return "အခန်း သို့မဟုတ် ကစားသမားကို ရှာမတွေ့ပါ။ ကုဒ်ကို ပြန်စစ်ပါ။";
+    return "အခန်း သို့မဟုတ် Playerကို ရှာမတွေ့ပါ။ ကုဒ်ကို ပြန်စစ်ပါ။";
   }
   if (/3 to 10 players|at least two active players/i.test(message)) {
-    return "ဂိမ်းစရန် ကစားသမား ၃ ယောက်မှ ၁၀ ယောက်အထိ လိုအပ်သည်။";
+    return "ဂိမ်းစရန် Player ၃ ယောက်မှ ၁၀ ယောက်အထိ လိုအပ်သည်။";
   }
   if (/at most \d+ players|supports at most/i.test(message)) {
-    return "ဒီအခန်းတွင် ကစားသမား အများဆုံး ၁၀ ယောက်သာ ဝင်နိုင်သည်။";
+    return "ဒီအခန်းတွင် Player အများဆုံး ၁၀ ယောက်သာ ဝင်နိုင်သည်။";
   }
   if (/unique|already in a game|already given this clue/i.test(message)) {
     return "အမည် သို့မဟုတ် အရိပ်အမြွက်ကို အသုံးပြုပြီးဖြစ်သည်။ တခြားတစ်ခုကို ရွေးပါ။";
@@ -27,7 +27,7 @@ function localizeError(detail) {
     return "မိမိကိုယ်ကို မဲပေး၍မရပါ။";
   }
   if (/tie|tied|revote/i.test(message)) {
-    return "မဲသရေကျနေသည်။ သတ်မှတ်ထားသော ကစားသမားများကို ပြန်မဲပေးပါ။";
+    return "မဲသရေကျနေသည်။ သတ်မှတ်ထားသော Player များကို ပြန်မဲပေးပါ။";
   }
   if (/vote|ballot|voting/i.test(message)) {
     return "မဲပေးမှုကို လက်ခံမရပါ။ မဲအဆင့်နှင့် သင့်ရွေးချယ်မှုကို စစ်ဆေးပါ။";
