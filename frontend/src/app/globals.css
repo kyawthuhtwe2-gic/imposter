@@ -104,7 +104,8 @@ strong {
 }
 
 .home-shell {
-  max-width: 960px;
+  max-width: 1120px;
+  padding-top: 1.4rem;
 }
 
 .room-header-actions {
@@ -203,7 +204,7 @@ strong {
 
 .home-content-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.7fr) minmax(250px, 1fr);
+  grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1fr);
   align-items: start;
   gap: 1.4rem;
 }
@@ -216,9 +217,8 @@ strong {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.1rem;
-  width: min(100%, 620px);
-  margin: 0 auto;
-  margin-top: 1.25rem;
+  width: 100%;
+  margin: 1.25rem 0 0;
 }
 
 .home-choice-button {
@@ -269,8 +269,8 @@ strong {
 }
 
 .setup-card-single {
-  width: min(100%, 620px);
-  margin: 0 auto;
+  width: 100%;
+  margin-inline: 0;
 }
 
 .glass-card {
@@ -1830,7 +1830,7 @@ html[data-theme="day"] .watermark-credit strong {
   }
 
   .home-shell {
-    padding-top: 1.5rem;
+    padding-top: 0.75rem;
   }
 
   .hero {
