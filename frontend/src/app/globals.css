@@ -1086,6 +1086,12 @@ option {
   font-weight: 700;
 }
 
+.player-row .player-avatar svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
 .progress-track {
   overflow: hidden;
   height: 6px;

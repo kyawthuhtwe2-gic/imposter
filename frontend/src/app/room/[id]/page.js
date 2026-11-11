@@ -52,9 +52,14 @@ function PlayerList({ players, playerId, game, isHost, request }) {
 
   return (
     <ul className="player-list">
-      {players.map((player, index) => (
+      {players.map((player) => (
         <li className={`player-row${player.player_id === playerId ? " current-player" : ""}`} key={player.player_id}>
-          <span className="player-avatar" aria-hidden="true">{index + 1}</span>
+          <span className="player-avatar" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4.5 21a7.5 7.5 0 0 1 15 0z" />
+            </svg>
+          </span>
           <div className="player-name">
             {editingPlayerId === player.player_id ? (
               <form className="player-edit-form" onSubmit={(event) => saveName(event, player.player_id)}>
@@ -814,7 +819,6 @@ export default function GamePage() {
               <header className={`result-hero${isGameTie ? " is-draw" : ""}`}>
                 <span className="result-hero-icon" aria-hidden="true">{isGameTie ? "=" : "✦"}</span>
                 <div className="result-hero-copy">
-                  <p className="eyebrow">{game.phase === "GAME_OVER" ? "ဂိမ်းအပြီးသတ်" : `အကြိမ် ${game.round_number} ရလဒ်`}</p>
                   <h2>{resultWinner}{isGameTie ? "" : " အနိုင်ရပါပြီ"}</h2>
                 </div>
               </header>
@@ -894,7 +898,6 @@ export default function GamePage() {
         <aside className="glass-card players-panel">
           <div className="section-title-row">
             <div>
-              <p className="eyebrow">အခန်းထဲရှိသူများ</p>
               <h2>Player များ</h2>
             </div>
             <span className="count-badge">{game.player_count}</span>
