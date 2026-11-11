@@ -660,12 +660,11 @@ html[data-theme="day"] .watermark-credit strong {
 .home-topbar::after {
   position: absolute;
   bottom: 0;
-  left: 50%;
+  left: calc(50% - 50vw);
   width: 100vw;
   border-bottom: 1px solid var(--border);
   content: "";
   pointer-events: none;
-  transform: translateX(-50%);
 }
 
 .wordmark {
