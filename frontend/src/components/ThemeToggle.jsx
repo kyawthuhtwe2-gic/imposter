@@ -32,7 +32,6 @@ export default function ThemeToggle() {
       aria-pressed={theme === "day"}
     >
       <span aria-hidden="true">{theme === "night" ? "☀" : "☾"}</span>
-      {theme === "night" ? "နေ့ဘက်" : "ညဘက်"}
     </button>
   );
 }

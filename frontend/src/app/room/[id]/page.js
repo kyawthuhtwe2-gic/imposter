@@ -394,7 +394,7 @@ export default function GamePage() {
 
   return (
     <main className="room-shell">
-      <header className="room-topbar">
+      <header className="room-topbar room-page-topbar">
         <a className="wordmark" href="/" aria-label="ပင်မစာမျက်နှာ">
           <Image
             className="wordmark-logo"
