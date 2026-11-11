@@ -199,6 +199,17 @@ strong {
   gap: 1.1rem;
 }
 
+.home-content-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(250px, 1fr);
+  align-items: start;
+  gap: 1.4rem;
+}
+
+.home-setup-column {
+  min-width: 0;
+}
+
 .home-action-choices {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -433,7 +444,7 @@ option {
 
 .how-to-play ol {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
   gap: 1.1rem;
   margin: 0.75rem 0 0;
   padding: 0;
@@ -450,16 +461,17 @@ option {
 .page-footer {
   display: grid;
   gap: 0.3rem;
+  justify-items: end;
   margin-top: 1.35rem;
   color: #737a98;
-  text-align: center;
+  text-align: right;
   font-size: 0.78rem;
 }
 
 .creator-watermark {
   display: inline-flex;
   align-items: center;
-  justify-self: center;
+  justify-self: end;
   gap: 0.65rem;
   margin-top: 0.15rem;
   padding: 0.45rem 0.7rem;
@@ -1753,7 +1765,8 @@ html[data-theme="day"] .watermark-credit strong {
   }
 
   .setup-grid,
-  .room-layout {
+  .room-layout,
+  .home-content-layout {
     grid-template-columns: minmax(0, 1fr);
   }
 

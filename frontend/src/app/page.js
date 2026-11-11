@@ -111,47 +111,49 @@ export default function HomePage() {
         <ThemeToggle />
       </header>
 
-      <section className="setup-grid" aria-label="ဂိမ်းပြင်ဆင်ရန်">
-        <div className="home-action-choices" aria-label="လုပ်ဆောင်မှု ရွေးပါ">
-          <button
-            className={`home-choice-button${selectedAction === "room" ? " active" : ""}`}
-            type="button"
-            aria-pressed={selectedAction === "room"}
-            onClick={() => {
-              setSelectedAction("room");
-              setError("");
-            }}
-          >
-            <svg className="home-choice-image" viewBox="0 0 48 48" aria-hidden="true">
-              <path d="M7 21.5 24 8l17 13.5v19H7z" />
-              <path d="M19 40V26h10v14M14 23h.01M34 23h.01" />
-            </svg>
-            <span className="home-choice-copy">
-              <span>Room</span>
-              <small>အခန်းအသစ် ဖွင့်မယ်</small>
-            </span>
-          </button>
-          <button
-            className={`home-choice-button${selectedAction === "player" ? " active" : ""}`}
-            type="button"
-            aria-pressed={selectedAction === "player"}
-            onClick={() => {
-              setSelectedAction("player");
-              setError("");
-            }}
-          >
-            <svg className="home-choice-image" viewBox="0 0 48 48" aria-hidden="true">
-              <circle cx="24" cy="15" r="8" />
-              <path d="M9 41v-4a15 15 0 0 1 30 0v4z" />
-            </svg>
-            <span className="home-choice-copy">
-              <span>Player</span>
-              <small>အခန်းထဲ ဝင်မယ်</small>
-            </span>
-          </button>
-        </div>
+      <div className="home-content-layout">
+        <div className="home-setup-column">
+          <section className="setup-grid" aria-label="ဂိမ်းပြင်ဆင်ရန်">
+            <div className="home-action-choices" aria-label="လုပ်ဆောင်မှု ရွေးပါ">
+              <button
+                className={`home-choice-button${selectedAction === "room" ? " active" : ""}`}
+                type="button"
+                aria-pressed={selectedAction === "room"}
+                onClick={() => {
+                  setSelectedAction("room");
+                  setError("");
+                }}
+              >
+                <svg className="home-choice-image" viewBox="0 0 48 48" aria-hidden="true">
+                  <path d="M7 21.5 24 8l17 13.5v19H7z" />
+                  <path d="M19 40V26h10v14M14 23h.01M34 23h.01" />
+                </svg>
+                <span className="home-choice-copy">
+                  <span>Room</span>
+                  <small>အခန်းအသစ် ဖွင့်မယ်</small>
+                </span>
+              </button>
+              <button
+                className={`home-choice-button${selectedAction === "player" ? " active" : ""}`}
+                type="button"
+                aria-pressed={selectedAction === "player"}
+                onClick={() => {
+                  setSelectedAction("player");
+                  setError("");
+                }}
+              >
+                <svg className="home-choice-image" viewBox="0 0 48 48" aria-hidden="true">
+                  <circle cx="24" cy="15" r="8" />
+                  <path d="M9 41v-4a15 15 0 0 1 30 0v4z" />
+                </svg>
+                <span className="home-choice-copy">
+                  <span>Player</span>
+                  <small>အခန်းထဲ ဝင်မယ်</small>
+                </span>
+              </button>
+            </div>
 
-        {selectedAction === "room" && <form className="glass-card setup-card setup-card-single" onSubmit={createRoom}>
+            {selectedAction === "room" && <form className="glass-card setup-card setup-card-single" onSubmit={createRoom}>
 
           <label htmlFor="playerName">သင့်အမည်</label>
           <input
@@ -257,9 +259,9 @@ export default function HomePage() {
             {submitting ? "ခဏစောင့်ပါ..." : "အခန်းအသစ် စတင်မယ်"}
             {!submitting && <span aria-hidden="true">↗</span>}
           </button>
-        </form>}
+            </form>}
 
-        {selectedAction === "player" && <form className="glass-card setup-card join-card setup-card-single" onSubmit={joinRoom}>
+            {selectedAction === "player" && <form className="glass-card setup-card join-card setup-card-single" onSubmit={joinRoom}>
 
           <label htmlFor="joinPlayerName">သင့်အမည်</label>
           <input
@@ -289,21 +291,22 @@ export default function HomePage() {
             {submitting ? "ခဏစောင့်ပါ..." : "အခန်းထဲ ဝင်မယ်"}
             {!submitting && <span aria-hidden="true">→</span>}
           </button>
-        </form>}
-      </section>
+            </form>}
+          </section>
 
-      {error && <p className="error-message home-error" role="alert">{error}</p>}
+          {error && <p className="error-message home-error" role="alert">{error}</p>}
+        </div>
 
-      <aside className="how-to-play">
-        <p className="eyebrow">ကစားနည်းအကျဉ်း</p>
-        <ol>
-          <li>လူတိုင်းက ကိုယ့်အခန်းကဏ္ဍကို တစ်ယောက်ချင်းစီ ကြည့်ပါ။</li>
-          <li>လျှို့ဝှက်စကားလုံးကို မပြောဘဲ အရိပ်အမြွက်တစ်ခု ပေးပါ။</li>
-          <li>ဆွေးနွေးပြီး သံသယရှိသူကို မဲပေးရွေးချယ်ပါ။</li>
-        </ol>
-      </aside>
+        <aside className="how-to-play">
+          <p className="eyebrow">ကစားနည်းအကျဉ်း</p>
+          <ol>
+            <li>လူတိုင်းက ကိုယ့်အခန်းကဏ္ဍကို တစ်ယောက်ချင်းစီ ကြည့်ပါ။</li>
+            <li>လျှို့ဝှက်စကားလုံးကို မပြောဘဲ အရိပ်အမြွက်တစ်ခု ပေးပါ။</li>
+            <li>ဆွေးနွေးပြီး သံသယရှိသူကို မဲပေးရွေးချယ်ပါ။</li>
+          </ol>
+        </aside>
+      </div>
       <footer className="page-footer">
-        <span>လူ ၃ ယောက်မှ ၁၀ ယောက်အထိ ကစားနိုင်သည်</span>
         <div className="creator-watermark" aria-label="Developed by Kyaw Thu, 2026-11-10">
           <span className="watermark-mark" aria-hidden="true">✦</span>
           <span className="watermark-credit">
