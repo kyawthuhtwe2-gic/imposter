@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useParams, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ThemeToggle from "../../../components/ThemeToggle";
 import SelectBox from "../../../components/SelectBox";
 import {
@@ -90,6 +90,7 @@ export default function GamePage() {
   const players = usePlayers(game);
   const isHost = game?.host_id === playerId;
   const [localPlayerIds, setLocalPlayerIds] = useState([]);
+  const lastVibratedTurn = useRef("");
   const [selectedVoterId, setSelectedVoterId] = useState("");
   const [guess, setGuess] = useState("");
   const [submittingGuess, setSubmittingGuess] = useState(false);
@@ -109,6 +110,8 @@ export default function GamePage() {
     );
   }, [game?.players, game?.game_id, playerId]);
   const currentTurn = players.find((player) => player.player_id === game?.current_turn_player_id);
+  const isMyTurn = game?.phase === "CLUE_ROUND" && currentTurn?.player_id === playerId;
+  const turnKey = `${game?.game_id}:${game?.round_number}:${game?.current_clue_round}:${currentTurn?.player_id}`;
   const currentReveal = players.find((player) => player.player_id === game?.current_reveal_player_id);
   const revealPlayerId = game?.current_reveal_player_id ?? playerId;
   const cluePlayerId = game?.current_turn_player_id ?? playerId;
@@ -141,6 +144,14 @@ export default function GamePage() {
   const [copyError, setCopyError] = useState("");
   const canControlPlayer = (candidateId) => localPlayerIds.includes(candidateId);
   const votingPlayer = players.find((player) => player.player_id === votingPlayerId);
+
+  useEffect(() => {
+    if (!isMyTurn || lastVibratedTurn.current === turnKey) return;
+    lastVibratedTurn.current = turnKey;
+    if (typeof navigator !== "undefined" && typeof navigator.vibrate === "function") {
+      navigator.vibrate([180, 90, 180]);
+    }
+  }, [isMyTurn, turnKey]);
 
   useEffect(() => {
     if (!editingRoom || !isHost || categories.length > 0) return;
@@ -580,7 +591,7 @@ export default function GamePage() {
                 })}
               </ul>
               {currentTurn ? (
-                <div className="turn-banner">
+                <div className={`turn-banner${isMyTurn ? " my-turn" : ""}`}>
                   <Image
                     className="turn-indicator-image"
                     src="/turn-alert.png"
@@ -590,7 +601,9 @@ export default function GamePage() {
                     height={32}
                   />
                   <strong>{currentTurn.name}</strong>
-                  <span className="your-turn-indicator">သင့်အလှည့်ပါ</span>
+                  <span className="your-turn-indicator">
+                    {isMyTurn ? "သင့်အလှည့်ပါ" : "အလှည့်ရောက်နေသည်"}
+                  </span>
                 </div>
               ) : (
                 <p className="inline-note success-note">လူတိုင်း အရိပ်အမြွက် ပေးပြီးပါပြီ။ မဲပေးနိုင်ပါပြီ။</p>

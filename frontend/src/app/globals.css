@@ -688,10 +688,26 @@ html[data-theme="day"] .watermark-credit strong {
 }
 
 .turn-indicator-image {
+  display: block;
   width: 32px;
   height: 32px;
   flex: 0 0 auto;
-  filter: drop-shadow(0 0 5px rgba(251, 113, 133, 0.45));
+}
+
+.turn-banner.my-turn .turn-indicator-image {
+  animation: bulb-glow 1s ease-in-out infinite;
+}
+
+@keyframes bulb-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 4px rgba(251, 113, 133, 0.45));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgba(251, 113, 133, 0.9));
+    transform: scale(1.08);
+  }
 }
 
 .room-layout {
