@@ -1315,16 +1315,12 @@ option {
 }
 
 .final-results {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin: calc(clamp(1.15rem, 3vw, 1.65rem) * -1);
-  margin-bottom: 1.35rem;
-  padding: clamp(1.15rem, 3vw, 1.65rem);
-  border-bottom: 1px solid rgba(167, 139, 250, 0.18);
-  background:
-    radial-gradient(ellipse at 0% 50%, rgba(124, 58, 237, 0.2), transparent 60%),
-    linear-gradient(110deg, rgba(124, 58, 237, 0.09), rgba(96, 165, 250, 0.055));
+  margin: 0;
+  padding: 1rem 0 0;
+  border-top: 1px solid rgba(167, 139, 250, 0.18);
+  border-radius: 0;
+  background: transparent;
+  text-align: center;
 }
 
 .final-results h3 {
