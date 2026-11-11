@@ -600,7 +600,15 @@ export default function GamePage() {
                         {submitted ? "✓" : "·"}
                       </span>
                       <span>{player.name}</span>
-                      <span>{submitted ? "ပေးပြီး" : "စောင့်နေသည်"}</span>
+                      {currentTurn?.player_id === player.player_id ? (
+                        canControlPlayer(player.player_id) ? (
+                          <span className="you-badge">{submitted ? "ပေးပြီး" : "Your Turn"}</span>
+                        ) : (
+                          <span>{submitted ? "ပေးပြီး" : "အလှည့်ရောက်နေသည်"}</span>
+                        )
+                      ) : (
+                        <span>{submitted ? "ပေးပြီး" : "စောင့်နေသည်"}</span>
+                      )}
                     </li>
                   );
                 })}
@@ -610,7 +618,6 @@ export default function GamePage() {
                   <span className="turn-dot" />
                   <span className="your-turn-indicator">သင့်အလှည့်</span>
                   <strong>{currentTurn.name}</strong>
-                  {canControlPlayer(currentTurn.player_id) && <span className="you-badge">Your Turn</span>}
                 </div>
               ) : (
                 <p className="inline-note success-note">လူတိုင်း အရိပ်အမြွက် ပေးပြီးပါပြီ။ မဲပေးနိုင်ပါပြီ။</p>
