@@ -565,7 +565,7 @@ textarea:focus {
   padding: 0.45rem 0.7rem;
   color: var(--muted);
   text-align: left;
-  font-size: 0.68rem;
+  font-size: 0.75rem;
 }
 
 .watermark-mark {
@@ -590,12 +590,12 @@ textarea:focus {
 
 .watermark-credit > span {
   color: var(--muted);
-  font-size: 0.61rem;
+  font-size: 0.7rem;
 }
 
 .watermark-credit strong {
   color: var(--text);
-  font-size: 0.75rem;
+  font-size: 0.82rem;
 }
 
 .watermark-date {
@@ -603,7 +603,7 @@ textarea:focus {
   padding-left: 0.65rem;
   border-left: 1px solid var(--border);
   color: var(--muted);
-  font-size: 0.64rem;
+  font-size: 0.7rem;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
@@ -1895,7 +1895,7 @@ html[data-theme="day"] .watermark-credit strong {
   }
 
   .home-shell {
-    padding-top: 0.75rem;
+    padding-top: 0rem;
   }
 
   .hero {
@@ -1920,6 +1920,11 @@ html[data-theme="day"] .watermark-credit strong {
 
   .room-shell {
     padding-top: 0.75rem;
+  }
+
+  .room-page-topbar,
+  .home-topbar {
+    padding-top: 1rem;
   }
 
   .room-layout {
