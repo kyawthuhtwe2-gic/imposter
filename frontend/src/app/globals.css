@@ -27,6 +27,8 @@ html {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   overflow-x: clip;
   min-height: 100vh;
   margin: 0;
@@ -463,7 +465,8 @@ option {
   display: grid;
   gap: 0.3rem;
   justify-items: end;
-  margin-top: 1.35rem;
+  width: min(100% - 2.5rem, 1120px);
+  margin: auto auto 1rem;
   color: #737a98;
   text-align: right;
   font-size: 0.78rem;
@@ -1602,7 +1605,8 @@ html[data-theme="day"] .watermark-credit strong {
 
 .state-shell {
   display: grid;
-  min-height: 100vh;
+  flex: 1;
+  min-height: 0;
   place-items: center;
 }
 

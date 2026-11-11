@@ -306,16 +306,6 @@ export default function HomePage() {
           </ol>
         </aside>
       </div>
-      <footer className="page-footer">
-        <div className="creator-watermark" aria-label="Developed by Kyaw Thu, 2026-11-10">
-          <span className="watermark-mark" aria-hidden="true">✦</span>
-          <span className="watermark-credit">
-            <span>Developed by</span>
-            <strong>Kyaw Thu</strong>
-          </span>
-          <span className="watermark-date">2026.11.10</span>
-        </div>
-      </footer>
     </main>
   );
 }
