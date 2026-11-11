@@ -691,11 +691,22 @@ export default function GamePage() {
               )}
               <div className="turn-alert-controls">
                 <button
-                  className="mini-action"
+                  className="mini-action turn-alert-button"
                   type="button"
                   onClick={enableTurnAlerts}
                   disabled={turnAlertsEnabled}
                 >
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M11 5 6 9H3v6h3l5 4V5Z" fill="currentColor" />
+                    {turnAlertsEnabled ? (
+                      <>
+                        <path d="M15 9a5 5 0 0 1 0 6" />
+                        <path d="M17.5 6.5a9 9 0 0 1 0 11" />
+                      </>
+                    ) : (
+                      <path d="m16 9 5 6m0-6-5 6" />
+                    )}
+                  </svg>
                   {turnAlertsEnabled ? "အသံသတိပေးချက် ဖွင့်ထားသည်" : "အသံနှင့် Browser အသိပေးချက် ဖွင့်ရန်"}
                 </button>
                 {turnAlertMessage && <span role="status">{turnAlertMessage}</span>}
