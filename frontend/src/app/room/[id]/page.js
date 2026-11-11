@@ -27,19 +27,6 @@ const PHASE_LABELS = {
 };
 
 function PlayerList({ players, playerId, game, isHost, request }) {
-  const [editingPlayerId, setEditingPlayerId] = useState(null);
-  const [editedName, setEditedName] = useState("");
-
-  async function saveName(event, targetId) {
-    event.preventDefault();
-    const result = await request(
-      `/games/${encodeURIComponent(game.game_id)}/players/${encodeURIComponent(targetId)}`,
-      { player_id: playerId, player_name: editedName },
-      "PUT",
-    );
-    if (result) setEditingPlayerId(null);
-  }
-
   async function removePlayer(targetId) {
     const result = await request(
       `/games/${encodeURIComponent(game.game_id)}/players/${encodeURIComponent(targetId)}`,
@@ -62,19 +49,7 @@ function PlayerList({ players, playerId, game, isHost, request }) {
             </svg>
           </span>
           <div className="player-name">
-            {editingPlayerId === player.player_id ? (
-              <form className="player-edit-form" onSubmit={(event) => saveName(event, player.player_id)}>
-                <input
-                  aria-label={`${player.name} အမည်ပြင်ရန်`}
-                  value={editedName}
-                  maxLength={30}
-                  onChange={(event) => setEditedName(event.target.value)}
-                  required
-                />
-                <button className="mini-action" type="submit">သိမ်းမယ်</button>
-                <button className="mini-action quiet-action" type="button" onClick={() => setEditingPlayerId(null)}>မလုပ်တော့</button>
-              </form>
-            ) : <strong>{player.name}</strong>}
+            <strong>{player.name}</strong>
             <span>
               {player.player_id === playerId ? "သင်" : ""}
               {player.player_id === game.host_id ? (player.player_id === playerId ? " · " : "") + "အိမ်ရှင်" : ""}
@@ -82,16 +57,6 @@ function PlayerList({ players, playerId, game, isHost, request }) {
           </div>
           {isHost && game.phase === "WAITING_FOR_PLAYERS" ? (
             <span className="player-management">
-              <button
-                className="mini-action quiet-action"
-                type="button"
-                onClick={() => {
-                  setEditingPlayerId(player.player_id);
-                  setEditedName(player.name);
-                }}
-              >
-                ပြင်ရန်
-              </button>
               {player.player_id !== game.host_id && (
                 <button className="mini-action remove-action" type="button" onClick={() => removePlayer(player.player_id)}>
                   ဖယ်ရှား

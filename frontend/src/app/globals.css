@@ -1595,19 +1595,6 @@ html[data-theme="day"] .watermark-credit strong {
   color: #ffaab7;
 }
 
-.player-edit-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3rem;
-}
-
-.player-edit-form input {
-  flex: 1 1 100%;
-  min-height: 36px;
-  padding: 0.4rem 0.55rem;
-  font-size: 0.8rem;
-}
-
 .add-player-row form {
   display: grid;
   gap: 0.4rem;
