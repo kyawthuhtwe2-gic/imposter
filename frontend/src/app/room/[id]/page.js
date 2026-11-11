@@ -868,7 +868,7 @@ export default function GamePage() {
                   <p className="inline-note">{isHost
                     ? "လက်ရှိအခန်းနှင့် Player များကို ဆက်သုံးပြီး ဂိမ်းကို ပြန်စနိုင်သည်။"
                     : "အိမ်ရှင်က ဒီအခန်းထဲမှာ ဂိမ်းပြန်စရန် စောင့်နေသည်။"}</p>
-                </footer>
+                </section>
               ) : (
                 <div className="round-result-actions">
                   {isHost ? (
