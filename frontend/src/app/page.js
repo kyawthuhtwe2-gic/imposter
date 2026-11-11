@@ -302,7 +302,7 @@ export default function HomePage() {
           <li>ဆွေးနွေးပြီး သံသယရှိသူကို မဲပေးရွေးချယ်ပါ။</li>
         </ol>
       </aside>
-      <footer className="page-footer">လူ ၃ ယောက်မှ ၁၀ ယောက်အထိ · ဖုန်းတစ်လုံးတည်းဖြင့် အတူကစားနိုင်သည်</footer>
+      <footer className="page-footer">လူ ၃ ယောက်မှ ၁၀ ယောက်အထိ ကစားနိုင်သည်</footer>
     </main>
   );
 }
