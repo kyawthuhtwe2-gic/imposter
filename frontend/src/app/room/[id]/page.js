@@ -344,13 +344,6 @@ export default function GamePage() {
     });
   }
 
-  async function changeTotalRounds(value) {
-    await request(`/games/${encodeURIComponent(id)}/settings/rounds`, {
-      player_id: playerId,
-      total_rounds: Number(value),
-    });
-  }
-
   async function changeClueRounds(value) {
     await request(`/games/${encodeURIComponent(id)}/settings/clue-rounds`, {
       player_id: playerId,
@@ -502,13 +495,6 @@ export default function GamePage() {
                     <label htmlFor="editClueRounds">အရိပ်အမြွက်ပေးရမည့် အကြိမ်</label>
                     <SelectBox id="editClueRounds" value={game.clue_rounds} onValueChange={changeClueRounds}>
                       {Array.from({ length: 10 }, (_, index) => index + 1)
-                        .map((count) => <option key={count} value={count}>{count} ကြိမ်</option>)}
-                    </SelectBox>
-                  </div>
-                  <div>
-                    <label htmlFor="editTotalRounds">ဂိမ်းအကြိမ်ရေ</label>
-                    <SelectBox id="editTotalRounds" value={game.total_rounds} onValueChange={changeTotalRounds}>
-                      {Array.from({ length: 20 }, (_, index) => index + 1)
                         .map((count) => <option key={count} value={count}>{count} ကြိမ်</option>)}
                     </SelectBox>
                   </div>
