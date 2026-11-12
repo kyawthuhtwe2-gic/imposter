@@ -463,7 +463,7 @@ export default function GamePage() {
                     </SelectBox>
                   </div>
                   <div className="room-category-setting">
-                    <label htmlFor="editClueRounds">အရိပ်အမြွက်ပေးရမည့် အကြိမ်</label>
+                    <label htmlFor="editClueRounds">အရိပ်အမြွက်</label>
                     <SelectBox
                       id="editClueRounds"
                       value={game.clue_rounds}

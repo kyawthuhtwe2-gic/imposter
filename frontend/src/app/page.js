@@ -163,7 +163,7 @@ export default function HomePage() {
             ))}
           </SelectBox>
 
-          <label htmlFor="hintInputMode">အရိပ်အမြွက်နှင့် နောက်ဆုံးခန့်မှန်းပုံစံ</label>
+          <label htmlFor="hintInputMode">အရိပ်အမြွက်နှင့် ခန့်မှန်းပုံစံ</label>
           <SelectBox
             id="hintInputMode"
             value={hintInputMode}
