@@ -1858,6 +1858,10 @@ html[data-theme="day"] .watermark-credit strong {
     width: min(100% - 1.25rem, 560px);
   }
 
+  .page-footer {
+    padding-inline: max(0.625rem, calc((100% - 560px) / 2));
+  }
+
   .home-shell {
     padding-top: 0rem;
   }
