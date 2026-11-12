@@ -130,6 +130,7 @@ export default function HomePage() {
                   <span>Room</span>
                   <small>အခန်းအသစ် ဖွင့်မယ်</small>
                 </span>
+                {selectedAction === "room" && <span className="home-choice-check" aria-hidden="true">✓</span>}
               </button>
               <button
                 className={`home-choice-button${selectedAction === "player" ? " active" : ""}`}
@@ -145,6 +146,7 @@ export default function HomePage() {
                   <span>Player</span>
                   <small>အခန်းထဲ ဝင်မယ်</small>
                 </span>
+                {selectedAction === "player" && <span className="home-choice-check" aria-hidden="true">✓</span>}
               </button>
             </div>
 

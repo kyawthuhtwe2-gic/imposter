@@ -245,11 +245,15 @@ strong {
   transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
 }
 
-.home-choice-button:hover,
-.home-choice-button.active {
+.home-choice-button:hover {
   transform: translateY(-1px);
   border-color: rgba(167, 139, 250, 0.65);
   background: rgba(124, 58, 237, 0.2);
+}
+
+.home-choice-button.active {
+  border-color: var(--green);
+  background: rgba(110, 231, 183, 0.1);
 }
 
 .home-choice-button small {
@@ -269,6 +273,20 @@ strong {
   height: 56px;
   align-self: center;
   object-fit: contain;
+}
+
+.home-choice-check {
+  display: grid;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  margin-left: auto;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(110, 231, 183, 0.16);
+  color: var(--green);
+  font-size: 0.95rem;
+  line-height: 1;
 }
 
 .setup-card-single {
@@ -2167,10 +2185,18 @@ html[data-theme="day"] .home-choice-button {
   color: var(--text);
 }
 
-html[data-theme="day"] .home-choice-button:hover,
-html[data-theme="day"] .home-choice-button.active {
+html[data-theme="day"] .home-choice-button:hover {
   border-color: rgba(112, 68, 197, 0.5);
   background: rgba(112, 68, 197, 0.1);
+}
+
+html[data-theme="day"] .home-choice-button.active {
+  border-color: var(--green);
+  background: rgba(22, 131, 93, 0.1);
+}
+
+html[data-theme="day"] .home-choice-check {
+  background: rgba(22, 131, 93, 0.12);
 }
 
 html[data-theme="day"] .step-badge {
