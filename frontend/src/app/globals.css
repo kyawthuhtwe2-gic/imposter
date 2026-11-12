@@ -772,6 +772,10 @@ html[data-theme="day"] .watermark-credit strong {
   font-size: 1.35rem;
 }
 
+.guess-title {
+  padding: 0.75rem;
+}
+
 .game-panel > .muted {
   margin-bottom: 1.2rem;
 }

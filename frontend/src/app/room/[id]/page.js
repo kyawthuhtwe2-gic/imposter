@@ -868,7 +868,7 @@ export default function GamePage() {
               <div className="phase-icon phase-icon-large" aria-hidden="true">
                 <Image src="/qa.png" alt="" width={112} height={112} />
               </div>
-              <h2>လျှို့ဝှက်စကားလုံးကို ခန့်မှန်းပါ</h2>
+              <h2 className="guess-title">လျှို့ဝှက်စကားလုံးကို ခန့်မှန်းပါ</h2>
               {game.hint_input_mode === "TEXT_INPUT" && canControlPlayer(game.eliminated_player_id) ? (
                 <form
                   className="action-form"
