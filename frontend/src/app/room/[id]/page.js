@@ -643,14 +643,19 @@ export default function GamePage() {
               <ul className="clue-status-list" aria-label="အရိပ်အမြွက်ပေးပြီးသူများ">
                 {activeCluePlayers.map((player) => {
                   const submitted = game.submitted_clue_player_ids.includes(player.player_id);
+                  const isLocalTurn =
+                    currentTurn?.player_id === player.player_id && canControlPlayer(player.player_id);
                   return (
-                    <li key={player.player_id} className={submitted ? "submitted" : ""}>
+                    <li
+                      key={player.player_id}
+                      className={`${submitted ? "submitted " : ""}${isLocalTurn ? "my-turn" : ""}`}
+                    >
                       <span className="clue-status-indicator" aria-hidden="true">
                         {submitted ? "✓" : "·"}
                       </span>
                       <h3>{player.name}</h3>
                       {currentTurn?.player_id === player.player_id ? (
-                        canControlPlayer(player.player_id) ? (
+                        isLocalTurn ? (
                           <span className="you-badge">{submitted ? "ပေးပြီး" : "Your Turn"}</span>
                         ) : (
                           <span>{submitted ? "ပေးပြီး" : "အလှည့်ရောက်နေသည်"}</span>
@@ -662,22 +667,7 @@ export default function GamePage() {
                   );
                 })}
               </ul>
-              {currentTurn ? (
-                <div className={`turn-banner${isMyTurn ? " my-turn" : ""}`}>
-                  <Image
-                    className="turn-indicator-image"
-                    src="/turn-alert.png"
-                    alt=""
-                    aria-hidden="true"
-                    width={32}
-                    height={32}
-                  />
-                  <strong>{currentTurn.name}</strong>
-                  <span className="your-turn-indicator">
-                    {isMyTurn ? "သင့်အလှည့်ပါ" : "အလှည့်ရောက်နေသည်"}
-                  </span>
-                </div>
-              ) : (
+              {!currentTurn && (
                 <p className="inline-note success-note">လူတိုင်း အရိပ်အမြွက် ပေးပြီးပါပြီ။ မဲပေးနိုင်ပါပြီ။</p>
               )}
               <div className="turn-alert-controls">
