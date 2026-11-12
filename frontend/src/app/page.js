@@ -120,96 +120,96 @@ export default function HomePage() {
 
             {selectedAction === "room" && <form className="glass-card setup-card setup-card-single" onSubmit={createRoom}>
 
-          <label htmlFor="playerName">သင့်အမည်</label>
-          <input
-            id="playerName"
-            value={playerName}
-            onChange={(event) => setPlayerName(event.target.value)}
-            maxLength={30}
-            placeholder="အမည်ရိုက်ထည့်ပါ"
-            autoComplete="nickname"
-            required
-          />
+              <label htmlFor="playerName">သင့်အမည်</label>
+              <input
+                id="playerName"
+                value={playerName}
+                onChange={(event) => setPlayerName(event.target.value)}
+                maxLength={30}
+                placeholder="အမည်ရိုက်ထည့်ပါ"
+                autoComplete="nickname"
+                required
+              />
 
-          <label htmlFor="imposterCount">Imposter</label>
-          <SelectBox
-            id="imposterCount"
-            value={imposterCount}
-            onValueChange={(nextImposterCount) => {
-              setImposterCount(nextImposterCount);
-              setPlayerCount((currentCount) =>
-                String(Math.max(Number(currentCount), Number(nextImposterCount) * 2 + 1)),
-              );
-            }}
-          >
-            <option value="1">၁ ယောက်</option>
-            <option value="2">၂ ယောက်</option>
-            <option value="3">၃ ယောက်</option>
-          </SelectBox>
+              <label htmlFor="playerCount">Player</label>
+              <SelectBox
+                id="playerCount"
+                value={playerCount}
+                onValueChange={(nextPlayerCount) => {
+                  setPlayerCount(nextPlayerCount);
+                  if (Number(nextPlayerCount) < Number(imposterCount) * 2 + 1) {
+                    setImposterCount("1");
+                  }
+                }}
+              >
+                {Array.from({ length: 8 }, (_, index) => index + 3).map((count) => (
+                  <option key={count} value={count}>{count} ယောက်</option>
+                ))}
+              </SelectBox>
 
-          <label htmlFor="playerCount">Player</label>
-          <SelectBox
-            id="playerCount"
-            value={playerCount}
-            onValueChange={(nextPlayerCount) => {
-              setPlayerCount(nextPlayerCount);
-              if (Number(nextPlayerCount) < Number(imposterCount) * 2 + 1) {
-                setImposterCount("1");
-              }
-            }}
-          >
-            {Array.from({ length: 8 }, (_, index) => index + 3).map((count) => (
-              <option key={count} value={count}>{count} ယောက်</option>
-            ))}
-          </SelectBox>
+              <label htmlFor="imposterCount">Imposter</label>
+              <SelectBox
+                id="imposterCount"
+                value={imposterCount}
+                onValueChange={(nextImposterCount) => {
+                  setImposterCount(nextImposterCount);
+                  setPlayerCount((currentCount) =>
+                    String(Math.max(Number(currentCount), Number(nextImposterCount) * 2 + 1)),
+                  );
+                }}
+              >
+                <option value="1">၁ ယောက်</option>
+                <option value="2">၂ ယောက်</option>
+                <option value="3">၃ ယောက်</option>
+              </SelectBox>
 
-          <label htmlFor="hintInputMode">အရိပ်အမြွက်နှင့် ခန့်မှန်းပုံစံ</label>
-          <SelectBox
-            id="hintInputMode"
-            value={hintInputMode}
-            onValueChange={setHintInputMode}
-            required
-          >
-            <option value="TABLE_TALK">လူချင်းပြောမည်</option>
-            <option value="TEXT_INPUT">စာရိုက်ထည့်မည်</option>
-          </SelectBox>
+              <label htmlFor="hintInputMode">အရိပ်အမြွက်နှင့် ခန့်မှန်းပုံစံ</label>
+              <SelectBox
+                id="hintInputMode"
+                value={hintInputMode}
+                onValueChange={setHintInputMode}
+                required
+              >
+                <option value="TABLE_TALK">လူချင်းပြောမည်</option>
+                <option value="TEXT_INPUT">စာရိုက်ထည့်မည်</option>
+              </SelectBox>
 
-          <button className="primary-button" type="submit" disabled={submitting || !hintInputMode}>
-            {submitting ? "ခဏစောင့်ပါ..." : "အခန်းအသစ် စတင်မယ်"}
-            {!submitting && <span aria-hidden="true">↗</span>}
-          </button>
+              <button className="primary-button" type="submit" disabled={submitting || !hintInputMode}>
+                {submitting ? "ခဏစောင့်ပါ..." : "အခန်းအသစ် စတင်မယ်"}
+                {!submitting && <span aria-hidden="true">↗</span>}
+              </button>
             </form>}
 
             {selectedAction === "player" && <form className="glass-card setup-card join-card setup-card-single" onSubmit={joinRoom}>
 
-          <label htmlFor="joinPlayerName">သင့်အမည်</label>
-          <input
-            id="joinPlayerName"
-            value={joinPlayerName}
-            onChange={(event) => setJoinPlayerName(event.target.value)}
-            maxLength={30}
-            placeholder="အမည်ရိုက်ထည့်ပါ"
-            autoComplete="nickname"
-            required
-          />
+              <label htmlFor="joinPlayerName">သင့်အမည်</label>
+              <input
+                id="joinPlayerName"
+                value={joinPlayerName}
+                onChange={(event) => setJoinPlayerName(event.target.value)}
+                maxLength={30}
+                placeholder="အမည်ရိုက်ထည့်ပါ"
+                autoComplete="nickname"
+                required
+              />
 
-          <label htmlFor="gameId">အခန်းကုဒ်</label>
-          <input
-            id="gameId"
-            value={gameId}
-            onChange={(event) => setGameId(event.target.value.replace(/\D/g, "").slice(0, 4))}
-            inputMode="numeric"
-            maxLength={4}
-            pattern="[0-9]{4}"
-            placeholder="ဂဏန်း ၄ လုံး"
-            autoComplete="off"
-            required
-          />
+              <label htmlFor="gameId">အခန်းကုဒ်</label>
+              <input
+                id="gameId"
+                value={gameId}
+                onChange={(event) => setGameId(event.target.value.replace(/\D/g, "").slice(0, 4))}
+                inputMode="numeric"
+                maxLength={4}
+                pattern="[0-9]{4}"
+                placeholder="ဂဏန်း ၄ လုံး"
+                autoComplete="off"
+                required
+              />
 
-          <button className="secondary-button" type="submit" disabled={submitting}>
-            {submitting ? "ခဏစောင့်ပါ..." : "အခန်းထဲ ဝင်မယ်"}
-            {!submitting && <span aria-hidden="true">→</span>}
-          </button>
+              <button className="secondary-button" type="submit" disabled={submitting}>
+                {submitting ? "ခဏစောင့်ပါ..." : "အခန်းထဲ ဝင်မယ်"}
+                {!submitting && <span aria-hidden="true">→</span>}
+              </button>
             </form>}
           </section>
 
