@@ -865,8 +865,8 @@ export default function GamePage() {
 
           {game.phase === "IMPOSTER_GUESS" && (
             <section className="glass-card game-panel centered-panel">
-              <div className="phase-icon" aria-hidden="true">
-                <Image src="/qa.png" alt="" width={72} height={72} />
+              <div className="phase-icon phase-icon-large" aria-hidden="true">
+                <Image src="/qa.png" alt="" width={112} height={112} />
               </div>
               <h2>လျှို့ဝှက်စကားလုံးကို ခန့်မှန်းပါ</h2>
               <p className="muted">ဖော်ထုတ်ခံရသူက စကားလုံးကို တစ်ကြိမ်သာ ခန့်မှန်းနိုင်သည်။</p>

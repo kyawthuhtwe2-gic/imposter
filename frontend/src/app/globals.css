@@ -895,6 +895,11 @@ html[data-theme="day"] .watermark-credit strong {
   place-items: center;
 }
 
+.phase-icon.phase-icon-large {
+  width: 112px;
+  height: 112px;
+}
+
 .phase-icon img {
   display: block;
   width: 100%;
@@ -1980,6 +1985,11 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
   .phase-icon {
     width: 56px;
     height: 56px;
+  }
+
+  .phase-icon.phase-icon-large {
+    width: 88px;
+    height: 88px;
   }
 
   .lock-icon {
