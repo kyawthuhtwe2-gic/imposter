@@ -1403,6 +1403,22 @@ html[data-theme="day"] .watermark-credit strong {
   font-weight: 700;
 }
 
+.result-hero-icon.has-image,
+.result-hero.is-draw .result-hero-icon.has-image,
+html[data-theme="day"] .result-hero-icon.has-image,
+html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
+  width: 4rem;
+  height: 4rem;
+  border: 0;
+  background: transparent;
+}
+
+.result-hero-icon.has-image img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
 .result-hero.is-draw .result-hero-icon {
   border-color: rgba(147, 197, 253, 0.28);
   background: rgba(59, 130, 246, 0.14);

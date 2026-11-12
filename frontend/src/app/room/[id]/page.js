@@ -916,7 +916,9 @@ export default function GamePage() {
           {(game.phase === "ROUND_RESULTS" || game.phase === "GAME_OVER") && roundResult && (
             <section className="glass-card game-panel result-screen">
               <header className={`result-hero${isGameTie ? " is-draw" : ""}`}>
-                <span className="result-hero-icon" aria-hidden="true">{isGameTie ? "=" : "✦"}</span>
+                <span className="result-hero-icon has-image" aria-hidden="true">
+                  <Image src={isGameTie ? "/draw.png" : "/winner.png"} alt="" width={64} height={56} />
+                </span>
                 <div className="result-hero-copy">
                   <h2>{resultWinner}{isGameTie ? "" : " အနိုင်ရပါပြီ"}</h2>
                 </div>
