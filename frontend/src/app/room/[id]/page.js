@@ -568,7 +568,6 @@ export default function GamePage() {
                 <Image src="/ready.png" alt="" width={72} height={72} />
               </div>
               <h2>လူတိုင်း အသင့်ဖြစ်ပြီလား?</h2>
-              <p className="muted">စက်ကို တစ်ယောက်ချင်းစီထံ လွှဲပေးပြီး ကိုယ့်အခန်းကဏ္ဍကို သီးသန့်ကြည့်ပါ။</p>
               {isHost ? (
                 <button
                   className="primary-button"
