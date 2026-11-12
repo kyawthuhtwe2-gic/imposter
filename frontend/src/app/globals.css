@@ -2551,6 +2551,11 @@ html[data-theme="day"] .state-card .error-message {
     font-size: 0.85rem;
   }
 
+  .lobby-actions .primary-button,
+  .lobby-actions .room-edit-button {
+    font-size: 0.9rem;
+  }
+
   h1,
   .hero h1,
   .room-heading h1,
