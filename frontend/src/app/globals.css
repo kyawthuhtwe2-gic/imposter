@@ -1161,7 +1161,8 @@ html[data-theme="day"] .watermark-credit strong {
 }
 
 .hint-given-button {
-  min-height: 64px;
+  min-height: 48px;
+  padding: 0.55rem 0.85rem;
   border-color: rgba(167, 139, 250, 0.42);
   background: linear-gradient(115deg, #743ce5, #347ee8);
   box-shadow: 0 10px 28px rgba(80, 83, 221, 0.27);

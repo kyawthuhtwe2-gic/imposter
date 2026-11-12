@@ -713,11 +713,7 @@ export default function GamePage() {
                     </li>
                   ))}
                 </ol>
-              ) : game.hint_input_mode === "TABLE_TALK" ? (
-                <p className="empty-state">
-                  လူချင်းမျက်နှာချင်းဆိုင် ပြောပါ။ ပြောဆိုမှုများကို မှတ်တမ်းတင်မထားပါ။
-                </p>
-              ) : clues.length === 0 ? (
+              ) : game.hint_input_mode === "TEXT_INPUT" && clues.length === 0 ? (
                 <p className="empty-state">အရိပ်အမြွက် မပေးရသေးပါ။</p>
               ) : null}
 
