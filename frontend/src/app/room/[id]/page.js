@@ -741,9 +741,6 @@ export default function GamePage() {
               {canControlPlayer(game.current_turn_player_id) &&
                 game.hint_input_mode === "TABLE_TALK" && (
                   <div className="table-talk-actions">
-                    <p className="table-talk-prompt">
-                      {currentTurn?.name}၊ သင့်အရိပ်အမြွက်ကို အတူထိုင်နေသူများထံ ပြောပါ။
-                    </p>
                     <button
                       className="primary-button hint-given-button"
                       type="button"
