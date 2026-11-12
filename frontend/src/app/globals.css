@@ -264,10 +264,10 @@ strong {
 }
 
 .home-choice-image {
-  flex: 0 0 40px;
-  width: 40px;
-  height: 40px;
-  margin-top: 10px;
+  flex: 0 0 56px;
+  width: 56px;
+  height: 56px;
+  align-self: center;
   object-fit: contain;
 }
 

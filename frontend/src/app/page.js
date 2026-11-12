@@ -125,7 +125,7 @@ export default function HomePage() {
                   setError("");
                 }}
               >
-                <Image className="home-choice-image" src="/room.png" alt="" width={40} height={40} />
+                <Image className="home-choice-image" src="/room.png" alt="" width={56} height={56} />
                 <span className="home-choice-copy">
                   <span>Room</span>
                   <small>အခန်းအသစ် ဖွင့်မယ်</small>
@@ -140,7 +140,7 @@ export default function HomePage() {
                   setError("");
                 }}
               >
-                <Image className="home-choice-image" src="/player.png" alt="" width={40} height={40} />
+                <Image className="home-choice-image" src="/player.png" alt="" width={56} height={56} />
                 <span className="home-choice-copy">
                   <span>Player</span>
                   <small>အခန်းထဲ ဝင်မယ်</small>
