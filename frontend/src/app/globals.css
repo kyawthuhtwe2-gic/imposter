@@ -551,17 +551,20 @@ textarea:focus {
 }
 
 .page-footer {
-  padding-inline: max(0.625rem, calc((100% - 560px) / 2));
+  display: grid;
+  justify-items: start;
   width: 100%;
   margin: auto 0 0;
+  padding: 0.75rem max(1.25rem, calc((100% - 1100px) / 2));
   border-top: 1px solid var(--border);
   background: #000;
+  text-align: left;
 }
 
 .creator-watermark {
   display: inline-flex;
   align-items: center;
-  justify-self: center;
+  justify-self: start;
   gap: 0.65rem;
   color: var(--muted);
 }
