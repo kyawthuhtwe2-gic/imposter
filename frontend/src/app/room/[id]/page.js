@@ -584,7 +584,7 @@ export default function GamePage() {
             <section className="glass-card game-panel centered-panel">
               {canControlPlayer(game.current_reveal_player_id) ? (
                 <>
-                  <h2>{currentReveal?.name ?? "Player"}၊ သင့်အလှည့်ပါ</h2>
+                  <h2>{currentReveal?.name ?? "Player"}  သင့်အလှည့်ပါ</h2>
                   {!role ? (
                     <>
                       <div className="hidden-role-card">
