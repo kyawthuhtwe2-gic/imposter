@@ -205,6 +205,36 @@ def test_category_can_be_changed_by_host_before_game_starts() -> None:
         service.configure_category(game_id, players[0], category)
 
 
+def test_kanji_categories_are_only_available_for_table_talk(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(game_module, "choice", lambda categories: categories[-1])
+    service = GameService()
+    text_game, _ = service.create_game(
+        "Text Host", hint_input_mode=HintInputMode.TEXT_INPUT
+    )
+    assert not text_game.category.endswith(" Kanji")
+
+    with pytest.raises(ValueError, match="only available for face-to-face"):
+        service.create_game(
+            "Text Host",
+            "JLPT N5 Kanji",
+            hint_input_mode=HintInputMode.TEXT_INPUT,
+        )
+
+    talk_game, talk_host = service.create_game(
+        "Talk Host",
+        "JLPT N5 Kanji",
+        hint_input_mode=HintInputMode.TABLE_TALK,
+    )
+    assert talk_game.category == "JLPT N5 Kanji"
+
+    with pytest.raises(ValueError, match="only available for face-to-face"):
+        service.configure_hint_input_mode(
+            talk_game.game_id, talk_host.player_id, HintInputMode.TEXT_INPUT
+        )
+
+
 @pytest.mark.parametrize("round_count", [1, 3, 5, 10, 20])
 def test_supported_round_counts(round_count: int) -> None:
     service, game_id, players = create_game()

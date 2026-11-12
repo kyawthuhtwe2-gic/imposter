@@ -143,6 +143,9 @@ export default function GamePage() {
   const [submittingHint, setSubmittingHint] = useState(false);
   const [editingRoom, setEditingRoom] = useState(false);
   const [categories, setCategories] = useState([]);
+  const selectableCategories = game?.hint_input_mode === "TEXT_INPUT"
+    ? categories.filter((category) => !category.endsWith(" Kanji"))
+    : categories;
   const [replaying, setReplaying] = useState(false);
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState("");
@@ -355,13 +358,6 @@ export default function GamePage() {
     });
   }
 
-  async function changeHintMode(value) {
-    await request(`/games/${encodeURIComponent(id)}/settings/hint-mode`, {
-      player_id: playerId,
-      hint_input_mode: value,
-    });
-  }
-
   async function changeImposterCount(value) {
     const imposterCount = Number(value);
     const minimumPlayers = imposterCount * 2 + 1;
@@ -467,7 +463,7 @@ export default function GamePage() {
                 <div className="room-category-setting">
                   <label htmlFor="editCategory">စကားလုံးအမျိုးအစား</label>
                   <SelectBox id="editCategory" value={game.category} onValueChange={changeCategory}>
-                    {categories.map((category) => (
+                    {selectableCategories.map((category) => (
                       <option key={category} value={category}>{category}</option>
                     ))}
                   </SelectBox>
@@ -475,13 +471,6 @@ export default function GamePage() {
               )}
               {isHost && editingRoom && (
                 <div className="room-settings-grid">
-                  <div>
-                    <label htmlFor="editHintMode">အရိပ်အမြွက်နှင့် နောက်ဆုံးခန့်မှန်းပုံစံ</label>
-                    <SelectBox id="editHintMode" value={game.hint_input_mode ?? ""} onValueChange={changeHintMode}>
-                      <option value="TABLE_TALK">လူချင်းပြောမည်</option>
-                      <option value="TEXT_INPUT">စာရိုက်ထည့်မည်</option>
-                    </SelectBox>
-                  </div>
                   <div>
                     <label htmlFor="editPlayerCount">Player</label>
                     <SelectBox

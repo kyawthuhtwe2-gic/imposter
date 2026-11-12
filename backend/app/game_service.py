@@ -28,6 +28,10 @@ IMPOSTER_TEAM = "IMPOSTERS"
 PLAYER_TEAM = "PLAYERS"
 
 
+def _is_kanji_category(category: str) -> bool:
+    return category.endswith(" Kanji")
+
+
 @dataclass
 class Player:
     player_id: str
@@ -104,10 +108,27 @@ class GameService:
         hint_input_mode: HintInputMode | None = None,
     ) -> tuple[Game, Player]:
         name = self._normalize_name(player_name)
+        if hint_input_mode is not None and not isinstance(hint_input_mode, HintInputMode):
+            try:
+                hint_input_mode = HintInputMode(hint_input_mode)
+            except ValueError as error:
+                raise ValueError("Choose a valid hint input mode") from error
         if category is None:
-            category = choice(list(WORDS_BY_CATEGORY))
+            categories = list(WORDS_BY_CATEGORY)
+            if hint_input_mode == HintInputMode.TEXT_INPUT:
+                categories = [
+                    category
+                    for category in categories
+                    if not _is_kanji_category(category)
+                ]
+            category = choice(categories)
         if category not in WORDS_BY_CATEGORY:
             raise ValueError(f"Unknown category: {category}")
+        if (
+            hint_input_mode == HintInputMode.TEXT_INPUT
+            and _is_kanji_category(category)
+        ):
+            raise ValueError("Kanji categories are only available for face-to-face mode")
         if imposter_count is not None and (
             type(imposter_count) is not int or imposter_count not in (1, 2, 3)
         ):
@@ -130,11 +151,6 @@ class GameService:
             )
         if type(clue_rounds) is not int or not 1 <= clue_rounds <= 10:
             raise ValueError("The clue round count must be between 1 and 10")
-        if hint_input_mode is not None and not isinstance(hint_input_mode, HintInputMode):
-            try:
-                hint_input_mode = HintInputMode(hint_input_mode)
-            except ValueError as error:
-                raise ValueError("Choose a valid hint input mode") from error
         player = self._new_player(name)
         game = Game(
             game_id=uuid4().hex,
@@ -205,6 +221,11 @@ class GameService:
             raise ValueError("The category can only be changed before the game starts")
         if category not in WORDS_BY_CATEGORY:
             raise ValueError(f"Unknown category: {category}")
+        if (
+            game.hint_input_mode == HintInputMode.TEXT_INPUT
+            and _is_kanji_category(category)
+        ):
+            raise ValueError("Kanji categories are only available for face-to-face mode")
         game.category = category
 
     def add_player_as_host(
@@ -302,6 +323,11 @@ class GameService:
                 hint_input_mode = HintInputMode(hint_input_mode)
             except ValueError as error:
                 raise ValueError("Choose a valid hint input mode") from error
+        if (
+            hint_input_mode == HintInputMode.TEXT_INPUT
+            and _is_kanji_category(game.category)
+        ):
+            raise ValueError("Kanji categories are only available for face-to-face mode")
         game.hint_input_mode = hint_input_mode
 
     def assign_roles(self, game_id: str, player_id: str) -> None:
