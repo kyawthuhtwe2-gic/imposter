@@ -639,10 +639,10 @@ html[data-theme="day"] .watermark-credit strong {
 .wordmark-logo {
   width: 40px;
   height: 40px;
-  border: 1px solid rgba(184, 190, 255, 0.14);
-  border-radius: 12px;
-  background: #f7f7f7;
-  object-fit: cover;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  object-fit: contain;
 }
 
 .room-id-pill {
