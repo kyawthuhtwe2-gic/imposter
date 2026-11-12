@@ -268,11 +268,7 @@ strong {
   width: 40px;
   height: 40px;
   margin-top: 10px;
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 2;
+  object-fit: contain;
 }
 
 .setup-card-single {

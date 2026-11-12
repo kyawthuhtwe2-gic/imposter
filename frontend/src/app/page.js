@@ -125,10 +125,7 @@ export default function HomePage() {
                   setError("");
                 }}
               >
-                <svg className="home-choice-image" viewBox="0 0 48 48" aria-hidden="true">
-                  <path d="M7 21.5 24 8l17 13.5v19H7z" />
-                  <path d="M19 40V26h10v14M14 23h.01M34 23h.01" />
-                </svg>
+                <Image className="home-choice-image" src="/room.png" alt="" width={40} height={40} />
                 <span className="home-choice-copy">
                   <span>Room</span>
                   <small>အခန်းအသစ် ဖွင့်မယ်</small>
@@ -143,10 +140,7 @@ export default function HomePage() {
                   setError("");
                 }}
               >
-                <svg className="home-choice-image" viewBox="0 0 48 48" aria-hidden="true">
-                  <circle cx="24" cy="15" r="8" />
-                  <path d="M9 41v-4a15 15 0 0 1 30 0v4z" />
-                </svg>
+                <Image className="home-choice-image" src="/player.png" alt="" width={40} height={40} />
                 <span className="home-choice-copy">
                   <span>Player</span>
                   <small>အခန်းထဲ ဝင်မယ်</small>
