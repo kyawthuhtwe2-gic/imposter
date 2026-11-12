@@ -2061,10 +2061,6 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
 }
 
 @media (max-width: 420px) {
-  body {
-    font-size: 14px;
-  }
-
   .home-shell,
   .room-shell,
   .state-shell {
@@ -2480,5 +2476,61 @@ html[data-theme="day"] .state-card .error-message {
     width: 40px;
     height: 40px;
     flex-basis: 40px;
+  }
+}
+
+@media (max-width: 680px) {
+  body {
+    font-size: 16px;
+  }
+
+  label {
+    font-size: 0.95rem;
+  }
+
+  .eyebrow {
+    font-size: 0.85rem;
+  }
+
+  .home-choice-button small,
+  .how-to-play ol,
+  .page-footer .creator-watermark > span,
+  .room-id-pill,
+  .round-progress-label,
+  .copy-button,
+  .lobby-code span,
+  .inline-note,
+  .empty-state,
+  .hidden-role-card span:last-child,
+  .hint-box p,
+  .hint-box > span,
+  .text-button,
+  .turn-alert-controls > span,
+  .you-badge,
+  .clue-index,
+  .clue-player,
+  .clue-round-label,
+  .clue-status-list li,
+  .clue-status-list li > span:last-child,
+  .voted-state > div span,
+  .result-status,
+  .round-reveal span,
+  .result-votes-heading h3,
+  .result-votes-heading > span,
+  .result-columns .results-list li,
+  .result-columns .results-list small,
+  .result-columns .results-list strong,
+  .mini-action,
+  .add-player-row label,
+  .add-player-controls input,
+  .player-name strong,
+  .player-name > span,
+  .player-state,
+  .sidebar-tip p {
+    font-size: 0.9rem;
+  }
+
+  .room-id-pill {
+    font-size: 0.85rem;
   }
 }
