@@ -1161,7 +1161,7 @@ html[data-theme="day"] .watermark-credit strong {
 }
 
 .hint-given-button {
-  min-height: 60px;
+  min-height: 56px;
   padding: 0.55rem 0.85rem;
   border-color: rgba(167, 139, 250, 0.42);
   background: linear-gradient(115deg, #743ce5, #347ee8);
@@ -1243,7 +1243,7 @@ html[data-theme="day"] .watermark-credit strong {
 
 .clue-status-list li {
   display: flex;
-  min-height: 60px;
+  min-height: 56px;
   min-width: 0;
   align-items: center;
   gap: 0.45rem;
