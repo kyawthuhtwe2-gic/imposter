@@ -651,6 +651,7 @@ html[data-theme="day"] .watermark-credit strong {
   display: flex;
   align-items: center;
   gap: 0.65rem;
+  font-size: 1.25rem;
   font-weight: 700;
 }
 
@@ -2532,5 +2533,43 @@ html[data-theme="day"] .state-card .error-message {
 
   .room-id-pill {
     font-size: 0.85rem;
+  }
+
+  h1,
+  .hero h1,
+  .room-heading h1,
+  .state-card h1 {
+    font-size: clamp(1.9rem, 7vw, 2.2rem);
+  }
+
+  h2,
+  .card-heading h2,
+  .game-panel h2,
+  .players-panel h2,
+  .role-reveal-card h2,
+  .section-title-row h2,
+  .result-hero h2,
+  .result-modal h2,
+  .confirm-modal h2 {
+    font-size: clamp(1.5rem, 5.5vw, 1.75rem);
+  }
+
+  h3,
+  .how-to-play h3,
+  .result-votes-heading h3,
+  .final-results h3 {
+    font-size: clamp(1.25rem, 4.5vw, 1.45rem);
+  }
+
+  h4 {
+    font-size: clamp(1.15rem, 4vw, 1.3rem);
+  }
+
+  h5 {
+    font-size: clamp(1.05rem, 3.6vw, 1.15rem);
+  }
+
+  h6 {
+    font-size: clamp(1rem, 3.4vw, 1.1rem);
   }
 }
