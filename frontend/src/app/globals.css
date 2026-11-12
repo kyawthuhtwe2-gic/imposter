@@ -14,6 +14,11 @@
   --blue: #60a5fa;
   --green: #6ee7b7;
   --red: #fb7185;
+  --card-shadow: 0 22px 70px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+html[data-theme="day"] {
+  --card-shadow: 0 18px 48px rgba(37, 45, 80, 0.09), inset 0 1px 0 #fff;
 }
 
 * {
@@ -278,7 +283,7 @@ strong {
   border: 1px solid var(--border);
   border-radius: 22px;
   background: linear-gradient(145deg, rgba(25, 29, 55, 0.88), rgba(16, 20, 39, 0.88));
-  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  box-shadow: var(--card-shadow);
   backdrop-filter: blur(18px);
 }
 
@@ -939,6 +944,7 @@ html[data-theme="day"] .watermark-credit strong {
 }
 
 .hidden-role-card {
+  box-shadow: var(--card-shadow);
   display: grid;
   min-height: 180px;
   margin: 1.4rem 0;
@@ -964,6 +970,7 @@ html[data-theme="day"] .watermark-credit strong {
 }
 
 .role-reveal-card {
+  box-shadow: var(--card-shadow);
   margin: 1.3rem 0 0.9rem;
   padding: 1.6rem;
   border: 1px solid rgba(110, 231, 183, 0.22);
@@ -2084,7 +2091,7 @@ html[data-theme="day"] body::before {
 html[data-theme="day"] .glass-card {
   border-color: var(--border);
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(247, 248, 253, 0.94));
-  box-shadow: 0 18px 48px rgba(37, 45, 80, 0.09), inset 0 1px 0 #fff;
+  box-shadow: var(--card-shadow);
 }
 
 html[data-theme="day"] .hero h1 {
