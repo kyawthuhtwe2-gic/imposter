@@ -869,7 +869,6 @@ export default function GamePage() {
                 <Image src="/qa.png" alt="" width={112} height={112} />
               </div>
               <h2>လျှို့ဝှက်စကားလုံးကို ခန့်မှန်းပါ</h2>
-              <p className="muted">ဖော်ထုတ်ခံရသူက စကားလုံးကို တစ်ကြိမ်သာ ခန့်မှန်းနိုင်သည်။</p>
               {game.hint_input_mode === "TEXT_INPUT" && canControlPlayer(game.eliminated_player_id) ? (
                 <form
                   className="action-form"
@@ -906,8 +905,6 @@ export default function GamePage() {
                     </div>
                   ) : game.guess_submitted ? (
                     <p className="inline-note">အိမ်ရှင်က ခန့်မှန်းချက်ကို မှန်/မှား အတည်ပြုပေးရန် စောင့်နေသည်။</p>
-                  ) : !canControlPlayer(game.eliminated_player_id) ? (
-                    <p className="inline-note">ဖော်ထုတ်ခံရသူက ခန့်မှန်းချက်ပြောပြီး အတည်ပြုရန် စောင့်နေသည်။</p>
                   ) : null}
                 </div>
               ) : (
