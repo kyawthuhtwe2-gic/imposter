@@ -599,7 +599,9 @@ export default function GamePage() {
                   ) : (
                     <>
                       <div className={`role-reveal-card ${role.role === "imposter" ? "imposter-role" : ""}`}>
-                        <span className="role-symbol" aria-hidden="true">{role.role === "imposter" ? "◉" : "✦"}</span>
+                        <span className="role-symbol" aria-hidden="true">
+                          <Image src={role.role === "imposter" ? "/question.png" : "/secret.png"} alt="" width={64} height={64} />
+                        </span>
                         <h2>{role.role === "imposter" ? "Imposter" : "Player"}</h2>
                         {role.role === "imposter" ? (
                           <p>လျှို့ဝှက်စကားလုံးကို သင်မသိပါ။ အခြားသူများပေးသော အရိပ်အမြွက်များကို နားထောင်ပါ။</p>
