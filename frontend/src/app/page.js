@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { gameRequest } from "../utils/gameApi";
 import ThemeToggle from "../components/ThemeToggle";
 import SelectBox from "../components/SelectBox";
@@ -11,38 +11,18 @@ export default function HomePage() {
   const [joinPlayerName, setJoinPlayerName] = useState("");
   const [selectedAction, setSelectedAction] = useState("room");
   const [gameId, setGameId] = useState("");
-  const [category, setCategory] = useState("");
   const [imposterCount, setImposterCount] = useState("1");
   const [playerCount, setPlayerCount] = useState("3");
   const [clueRoundChoice, setClueRoundChoice] = useState("1");
   const [customClueRounds, setCustomClueRounds] = useState("");
   const [hintInputMode, setHintInputMode] = useState("TABLE_TALK");
-  const [categories, setCategories] = useState([]);
   const [error, setError] = useState("");
-  const [loadingCategories, setLoadingCategories] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const clueRounds = clueRoundChoice === "custom"
     ? Number(customClueRounds)
     : Number(clueRoundChoice);
   const clueRoundCountValid =
     Number.isInteger(clueRounds) && clueRounds >= 1 && clueRounds <= 10;
-
-  useEffect(() => {
-    let active = true;
-    gameRequest("/categories")
-      .then((result) => {
-        if (active) setCategories(result.categories);
-      })
-      .catch((requestError) => {
-        if (active) setError(requestError.message);
-      })
-      .finally(() => {
-        if (active) setLoadingCategories(false);
-      });
-    return () => {
-      active = false;
-    };
-  }, []);
 
   async function createRoom(event) {
     event.preventDefault();
@@ -62,7 +42,7 @@ export default function HomePage() {
         method: "POST",
         body: {
           player_name: playerName,
-          category: category || null,
+          category: null,
           imposter_count: Number(imposterCount),
           total_rounds: 1,
           desired_player_count: Number(playerCount),
@@ -162,19 +142,6 @@ export default function HomePage() {
             autoComplete="nickname"
             required
           />
-
-          <label htmlFor="category">စကားလုံးအမျိုးအစား</label>
-          <SelectBox
-            id="category"
-            value={category}
-            onValueChange={setCategory}
-            disabled={loadingCategories}
-          >
-            <option value="">
-              {loadingCategories ? "ခဏစောင့်ပါ..." : "ကျပန်းရွေးပါ"}
-            </option>
-            {categories.map((name) => <option key={name} value={name}>{name}</option>)}
-          </SelectBox>
 
           <label htmlFor="imposterCount">Imposter</label>
           <SelectBox

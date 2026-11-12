@@ -81,6 +81,24 @@ export async function gameRequest(path, { method = "GET", body, token } = {}) {
   return result;
 }
 
+export async function translateText(text) {
+  const response = await fetch(`${API_URL}/translate`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text }),
+  });
+  const result = await response.json();
+  if (!response.ok) {
+    throw new Error(
+      typeof result.detail === "string" ? result.detail : "Japanese translation failed",
+    );
+  }
+  if (typeof result.translation !== "string" || !result.translation.trim()) {
+    throw new Error("Japanese translation service returned no translation");
+  }
+  return result.translation;
+}
+
 export function gameWebSocketUrl(gameId, playerId, token) {
   const websocketUrl = API_URL.replace(/^http/, "ws");
   const query = new URLSearchParams({ token });

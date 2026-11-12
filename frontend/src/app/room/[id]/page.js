@@ -235,11 +235,11 @@ export default function GamePage() {
   }, []);
 
   useEffect(() => {
-    if (!editingRoom || !isHost || categories.length > 0) return;
+    if (!isHost || game?.phase !== "WAITING_FOR_PLAYERS" || categories.length > 0) return;
     request("/categories", undefined, "GET").then((result) => {
       if (result) setCategories(result.categories);
     });
-  }, [categories.length, editingRoom, isHost, request]);
+  }, [categories.length, game?.phase, isHost, request]);
 
   async function submitTextGuess(event) {
     event.preventDefault();
@@ -463,16 +463,18 @@ export default function GamePage() {
                   <span aria-hidden="true">{copied ? "✓" : "⧉"}</span>
                 </button>
               </div>
+              {isHost && (
+                <div className="room-category-setting">
+                  <label htmlFor="editCategory">စကားလုံးအမျိုးအစား</label>
+                  <SelectBox id="editCategory" value={game.category} onValueChange={changeCategory}>
+                    {categories.map((category) => (
+                      <option key={category} value={category}>{category}</option>
+                    ))}
+                  </SelectBox>
+                </div>
+              )}
               {isHost && editingRoom && (
                 <div className="room-settings-grid">
-                  <div>
-                    <label htmlFor="editCategory">စကားလုံးအမျိုးအစား</label>
-                    <SelectBox id="editCategory" value={game.category} onValueChange={changeCategory}>
-                      {categories.map((category) => (
-                        <option key={category} value={category}>{category}</option>
-                      ))}
-                    </SelectBox>
-                  </div>
                   <div>
                     <label htmlFor="editHintMode">အရိပ်အမြွက်နှင့် နောက်ဆုံးခန့်မှန်းပုံစံ</label>
                     <SelectBox id="editHintMode" value={game.hint_input_mode ?? ""} onValueChange={changeHintMode}>

@@ -2,6 +2,14 @@
 
 import { Children, isValidElement, useEffect, useId, useRef, useState } from "react";
 
+function getTextContent(value) {
+  if (typeof value === "string" || typeof value === "number") return String(value);
+  if (Array.isArray(value)) return value.map(getTextContent).join("");
+  if (!isValidElement(value)) return "";
+  if (typeof value.props.text === "string") return value.props.text;
+  return getTextContent(value.props.children);
+}
+
 export default function SelectBox({
   children,
   disabled = false,
@@ -23,6 +31,7 @@ export default function SelectBox({
     .map((option) => ({
       value: String(option.props.value ?? option.key),
       label: option.props.children,
+      searchText: getTextContent(option.props.children),
       disabled: option.props.disabled,
     }));
   const selectedIndex = options.findIndex((option) => option.value === String(value));
@@ -114,7 +123,7 @@ export default function SelectBox({
       const startIndex = open ? activeIndex + 1 : selectedIndex + 1;
       for (let offset = 0; offset < options.length; offset += 1) {
         const index = (startIndex + offset + options.length) % options.length;
-        const label = String(options[index].label).toLocaleLowerCase();
+        const label = options[index].searchText.toLocaleLowerCase();
         if (!options[index].disabled && label.startsWith(typeaheadRef.current)) {
           setActiveIndex(index);
           setOpen(true);

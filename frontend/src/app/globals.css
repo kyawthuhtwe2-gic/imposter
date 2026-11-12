@@ -876,6 +876,12 @@ html[data-theme="day"] .watermark-credit strong {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.room-category-setting {
+  display: grid;
+  gap: 0.4rem;
+  margin: 1rem 0;
+}
+
 .room-settings-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
