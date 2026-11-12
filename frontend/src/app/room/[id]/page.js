@@ -266,7 +266,7 @@ export default function GamePage() {
   if (!game) {
     return <main className="state-shell"><section className="glass-card state-card">
       <div className="loading-orb" aria-hidden="true" />
-      <h1>{error ? "ဂိမ်းကို ဖွင့်မရပါ" : "ဂိမ်းအချက်အလက်ကို ရယူနေသည်"}</h1>
+      <h3>{error ? "ဂိမ်းကို ဖွင့်မရပါ" : "ဂိမ်းအချက်အလက်ကို ရယူနေသည်"}</h3>
       <p role={error ? "alert" : undefined}>{error || "ခဏစောင့်ပေးပါ..."}</p>
       {error && <a className="secondary-button link-button" href="/">ပင်မစာမျက်နှာသို့ ပြန်သွားမယ်</a>}
     </section></main>;
