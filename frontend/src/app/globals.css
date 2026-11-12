@@ -924,8 +924,17 @@ html[data-theme="day"] .watermark-credit strong {
 }
 
 .lock-icon {
-  color: #c4b5fd;
-  font-size: 2rem;
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto;
+}
+
+.lock-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .role-reveal-card {

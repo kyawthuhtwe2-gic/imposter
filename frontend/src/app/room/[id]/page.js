@@ -588,7 +588,9 @@ export default function GamePage() {
                   {!role ? (
                     <>
                       <div className="hidden-role-card">
-                        <span className="lock-icon" aria-hidden="true">◈</span>
+                        <span className="lock-icon" aria-hidden="true">
+                          <Image src="/show.png" alt="" width={64} height={64} />
+                        </span>
                         <strong>သင့်အခန်းကဏ္ဍကို ဖုံးကွယ်ထားသည်</strong>
                         <span>အခြားသူများ မကြည့်မိစေရန် သေချာပါစေ</span>
                       </div>
