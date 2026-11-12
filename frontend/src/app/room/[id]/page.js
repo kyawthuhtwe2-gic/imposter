@@ -643,18 +643,24 @@ export default function GamePage() {
               <ul className="clue-status-list" aria-label="အရိပ်အမြွက်ပေးပြီးသူများ">
                 {activeCluePlayers.map((player) => {
                   const submitted = game.submitted_clue_player_ids.includes(player.player_id);
-                  const isLocalTurn =
-                    currentTurn?.player_id === player.player_id && canControlPlayer(player.player_id);
+                  const isCurrentTurn = currentTurn?.player_id === player.player_id;
+                  const isLocalTurn = isCurrentTurn && canControlPlayer(player.player_id);
+                  const isOtherTurn = isCurrentTurn && !isLocalTurn;
                   return (
                     <li
                       key={player.player_id}
-                      className={`${submitted ? "submitted " : ""}${isLocalTurn ? "my-turn" : ""}`}
+                      className={`${submitted ? "submitted " : ""}${isLocalTurn ? "my-turn" : ""}${isOtherTurn ? " other-turn" : ""}`}
                     >
-                      <span className="clue-status-indicator" aria-hidden="true">
-                        {submitted ? "✓" : "·"}
-                      </span>
+                      <Image
+                        className="clue-status-indicator"
+                        src={submitted ? "/tick.png" : "/turn.png"}
+                        alt=""
+                        aria-hidden="true"
+                        width={20}
+                        height={20}
+                      />
                       <h3>{player.name}</h3>
-                      {currentTurn?.player_id === player.player_id ? (
+                      {isCurrentTurn ? (
                         isLocalTurn ? (
                           <span className="you-badge">{submitted ? "ပေးပြီး" : "Your Turn"}</span>
                         ) : (

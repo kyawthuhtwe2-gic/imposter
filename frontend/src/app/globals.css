@@ -1287,14 +1287,17 @@ html[data-theme="day"] .watermark-credit strong {
   color: #ffd1d8;
 }
 
-.clue-status-list li.submitted .clue-status-indicator {
-  color: var(--green);
+.clue-status-list li.other-turn {
+  border-color: rgba(250, 204, 21, 0.42);
+  background: rgba(234, 179, 8, 0.16);
+  color: #fef3c7;
 }
 
 .clue-status-indicator {
   flex: 0 0 auto;
-  color: #858ba7;
-  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
 
 .clue-list strong {
@@ -2441,6 +2444,12 @@ html[data-theme="day"] .clue-status-list li.my-turn {
   border-color: rgba(200, 61, 90, 0.3);
   background: rgba(200, 61, 90, 0.11);
   color: #8f2940;
+}
+
+html[data-theme="day"] .clue-status-list li.other-turn {
+  border-color: rgba(161, 98, 7, 0.3);
+  background: rgba(234, 179, 8, 0.13);
+  color: #735b08;
 }
 
 html[data-theme="day"] .turn-banner {
