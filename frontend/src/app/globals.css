@@ -1414,6 +1414,9 @@ html[data-theme="day"] .watermark-credit strong {
 .result-hero.is-draw .result-hero-icon.has-image,
 html[data-theme="day"] .result-hero-icon.has-image,
 html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 4rem;
   height: 4rem;
   border: 0;
@@ -1422,7 +1425,8 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
 
 .result-hero-icon.has-image img {
   display: block;
-  width: 100%;
+  width: auto;
+  max-width: 100%;
   height: 100%;
   object-fit: contain;
 }
