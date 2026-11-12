@@ -592,7 +592,6 @@ export default function GamePage() {
                           <Image src="/show.png" alt="" width={64} height={64} />
                         </span>
                         <strong>သင့်အခန်းကဏ္ဍကို ဖုံးကွယ်ထားသည်</strong>
-                        <span>အခြားသူများ မကြည့်မိစေရန် သေချာပါစေ</span>
                       </div>
                       <button className="primary-button" type="button" onClick={revealRole}>
                         အခန်းကဏ္ဍ ဖော်ပြမယ် <span aria-hidden="true">↗</span>
