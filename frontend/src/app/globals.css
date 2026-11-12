@@ -1885,6 +1885,10 @@ html[data-theme="day"] .watermark-credit strong {
     padding: 1.2rem;
   }
 
+  .how-to-play {
+    margin-top: 0.9rem;
+  }
+
   .how-to-play ol {
     grid-template-columns: 1fr;
     gap: 0.5rem;
