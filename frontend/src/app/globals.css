@@ -1918,6 +1918,18 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
     gap: 0.5rem;
   }
 
+  .home-choice-button {
+    gap: 0.7rem;
+    min-height: 72px;
+    padding: 0.75rem 1rem;
+  }
+
+  .home-choice-image {
+    flex-basis: 44px;
+    width: 44px;
+    height: 44px;
+  }
+
   .room-shell {
     padding-top: 0.75rem;
   }
