@@ -883,6 +883,18 @@ html[data-theme="day"] .watermark-credit strong {
   margin: 1rem 0;
 }
 
+.room-lobby-settings {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem 1rem;
+  margin: 1rem 0;
+}
+
+.room-lobby-settings .room-category-setting {
+  min-width: 0;
+  margin: 0;
+}
+
 .room-settings-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2088,6 +2100,10 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
     grid-template-columns: 1fr;
   }
 
+  .room-lobby-settings {
+    grid-template-columns: 1fr;
+  }
+
   .vote-options {
     grid-template-columns: 1fr;
   }
@@ -2552,6 +2568,11 @@ html[data-theme="day"] .state-card .error-message {
   .result-modal h2,
   .confirm-modal h2 {
     font-size: clamp(1.5rem, 5.5vw, 1.75rem);
+  }
+
+  .game-panel h2,
+  .players-panel h2 {
+    font-size: clamp(1.2rem, 4vw, 1.35rem);
   }
 
   h3,

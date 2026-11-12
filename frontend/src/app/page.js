@@ -13,24 +13,13 @@ export default function HomePage() {
   const [gameId, setGameId] = useState("");
   const [imposterCount, setImposterCount] = useState("1");
   const [playerCount, setPlayerCount] = useState("3");
-  const [clueRoundChoice, setClueRoundChoice] = useState("1");
-  const [customClueRounds, setCustomClueRounds] = useState("");
   const [hintInputMode, setHintInputMode] = useState("TABLE_TALK");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const clueRounds = clueRoundChoice === "custom"
-    ? Number(customClueRounds)
-    : Number(clueRoundChoice);
-  const clueRoundCountValid =
-    Number.isInteger(clueRounds) && clueRounds >= 1 && clueRounds <= 10;
 
   async function createRoom(event) {
     event.preventDefault();
     setError("");
-    if (!clueRoundCountValid) {
-      setError("အရိပ်အမြွက်အကြိမ်ကို ၁ မှ ၁၀ အတွင်း ထည့်ပါ။");
-      return;
-    }
     if (!hintInputMode) {
       setError("အရိပ်အမြွက်ပေးမည့်ပုံစံကို ရွေးပါ။");
       return;
@@ -46,7 +35,6 @@ export default function HomePage() {
           imposter_count: Number(imposterCount),
           total_rounds: 1,
           desired_player_count: Number(playerCount),
-          clue_rounds: clueRounds,
           hint_input_mode: hintInputMode,
         },
       });
@@ -174,37 +162,6 @@ export default function HomePage() {
               <option key={count} value={count}>{count} ယောက်</option>
             ))}
           </SelectBox>
-
-          <label htmlFor="clueRoundCount">အရိပ်အမြွက်ပေးရမည့် အကြိမ်</label>
-          <SelectBox
-            id="clueRoundCount"
-            value={clueRoundChoice}
-            onValueChange={setClueRoundChoice}
-          >
-            <option value="1">၁ ကြိမ်</option>
-            <option value="2">၂ ကြိမ်</option>
-            <option value="3">၃ ကြိမ်</option>
-            <option value="4">၄ ကြိမ်</option>
-            <option value="5">၅ ကြိမ်</option>
-            <option value="custom">စိတ်ကြိုက်သတ်မှတ်မယ်</option>
-          </SelectBox>
-          {clueRoundChoice === "custom" && (
-            <>
-              <label htmlFor="customClueRounds">အရိပ်အမြွက်အကြိမ် (၁ မှ ၁၀)</label>
-              <input
-                id="customClueRounds"
-                type="number"
-                min="1"
-                max="10"
-                step="1"
-                inputMode="numeric"
-                value={customClueRounds}
-                onChange={(event) => setCustomClueRounds(event.target.value)}
-                placeholder="ဥပမာ - ၆"
-                required
-              />
-            </>
-          )}
 
           <label htmlFor="hintInputMode">အရိပ်အမြွက်နှင့် နောက်ဆုံးခန့်မှန်းပုံစံ</label>
           <SelectBox

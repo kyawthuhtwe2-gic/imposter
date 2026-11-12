@@ -453,13 +453,26 @@ export default function GamePage() {
                 </button>
               </div>
               {isHost && (
-                <div className="room-category-setting">
-                  <label htmlFor="editCategory">စကားလုံးအမျိုးအစား</label>
-                  <SelectBox id="editCategory" value={game.category} onValueChange={changeCategory}>
-                    {selectableCategories.map((category) => (
-                      <option key={category} value={category}>{category}</option>
-                    ))}
-                  </SelectBox>
+                <div className="room-lobby-settings">
+                  <div className="room-category-setting">
+                    <label htmlFor="editCategory">စကားလုံးအမျိုးအစား</label>
+                    <SelectBox id="editCategory" value={game.category} onValueChange={changeCategory}>
+                      {selectableCategories.map((category) => (
+                        <option key={category} value={category}>{category}</option>
+                      ))}
+                    </SelectBox>
+                  </div>
+                  <div className="room-category-setting">
+                    <label htmlFor="editClueRounds">အရိပ်အမြွက်ပေးရမည့် အကြိမ်</label>
+                    <SelectBox
+                      id="editClueRounds"
+                      value={game.clue_rounds}
+                      onValueChange={changeClueRounds}
+                    >
+                      {Array.from({ length: 10 }, (_, index) => index + 1)
+                        .map((count) => <option key={count} value={count}>{count} ကြိမ်</option>)}
+                    </SelectBox>
+                  </div>
                 </div>
               )}
               {isHost && editingRoom && (
@@ -489,13 +502,6 @@ export default function GamePage() {
                       <option value="1">၁ ယောက်</option>
                       <option value="2">၂ ယောက်</option>
                       <option value="3">၃ ယောက်</option>
-                    </SelectBox>
-                  </div>
-                  <div>
-                    <label htmlFor="editClueRounds">အရိပ်အမြွက်ပေးရမည့် အကြိမ်</label>
-                    <SelectBox id="editClueRounds" value={game.clue_rounds} onValueChange={changeClueRounds}>
-                      {Array.from({ length: 10 }, (_, index) => index + 1)
-                        .map((count) => <option key={count} value={count}>{count} ကြိမ်</option>)}
                     </SelectBox>
                   </div>
                 </div>
