@@ -865,7 +865,9 @@ export default function GamePage() {
 
           {game.phase === "IMPOSTER_GUESS" && (
             <section className="glass-card game-panel centered-panel">
-              <p className="eyebrow">နောက်ဆုံးအခွင့်အရေး</p>
+              <div className="phase-icon" aria-hidden="true">
+                <Image src="/qa.png" alt="" width={72} height={72} />
+              </div>
               <h2>လျှို့ဝှက်စကားလုံးကို ခန့်မှန်းပါ</h2>
               <p className="muted">ဖော်ထုတ်ခံရသူက စကားလုံးကို တစ်ကြိမ်သာ ခန့်မှန်းနိုင်သည်။</p>
               {game.hint_input_mode === "TEXT_INPUT" && canControlPlayer(game.eliminated_player_id) ? (
@@ -888,9 +890,6 @@ export default function GamePage() {
                 </form>
               ) : game.hint_input_mode === "TABLE_TALK" ? (
                 <div className="table-talk-actions">
-                  <p className="table-talk-prompt">
-                    ဖော်ထုတ်ခံရသူက စကားလုံးကို လူချင်းပြောပါ။ ခန့်မှန်းချက်ကို အိမ်ရှင်က အတည်ပြုပေးမည်။
-                  </p>
                   {canControlPlayer(game.eliminated_player_id) && !game.guess_submitted && (
                     <button className="primary-button" type="button" onClick={markGuessSpoken}>
                       ခန့်မှန်းပြီးပါပြီ <span aria-hidden="true">→</span>

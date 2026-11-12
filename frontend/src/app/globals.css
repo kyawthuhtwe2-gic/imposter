@@ -1969,6 +1969,29 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
     border-radius: 14px;
   }
 
+  .result-hero-icon.has-image,
+  .result-hero.is-draw .result-hero-icon.has-image,
+  html[data-theme="day"] .result-hero-icon.has-image,
+  html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
+    width: 3.25rem;
+    height: 3.25rem;
+  }
+
+  .phase-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .lock-icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .role-symbol img {
+    width: 3.25rem;
+    height: 3.25rem;
+  }
+
   .result-status {
     padding: 0.3rem 0.5rem;
     font-size: 0.68rem;
