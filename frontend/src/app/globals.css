@@ -551,16 +551,10 @@ textarea:focus {
 }
 
 .page-footer {
-  display: grid;
-  gap: 0.3rem;
-  justify-items: end;
   width: 100%;
   margin: auto 0 0;
-  padding: 0.75rem 1.25rem 1rem;
   border-top: 1px solid var(--border);
-  color: #737a98;
-  text-align: right;
-  font-size: 0.78rem;
+  background: #000;
 }
 
 .creator-watermark {
@@ -568,51 +562,12 @@ textarea:focus {
   align-items: center;
   justify-self: center;
   gap: 0.65rem;
-  margin-top: 0.15rem;
-  padding: 0.45rem 0.7rem;
   color: var(--muted);
-  text-align: left;
-  font-size: 0.75rem;
 }
 
-.watermark-mark {
-  display: grid;
-  width: 1.65rem;
-  height: 1.65rem;
-  flex: 0 0 auto;
-  place-items: center;
-  border: 1px solid rgba(167, 139, 250, 0.2);
-  border-radius: 50%;
-  background: rgba(124, 58, 237, 0.1);
-  color: var(--purple);
-  font-size: 0.8rem;
-}
-
-.watermark-credit {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  line-height: 1.2;
-}
-
-.watermark-credit > span {
+.creator-watermark > span {
   color: var(--muted);
   font-size: 0.7rem;
-}
-
-.watermark-credit strong {
-  color: var(--text);
-  font-size: 0.82rem;
-}
-
-.watermark-date {
-  margin-left: 0.15rem;
-  padding-left: 0.65rem;
-  border-left: 1px solid var(--border);
-  color: var(--muted);
-  font-size: 0.7rem;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
 }
 
 html[data-theme="day"] .creator-watermark {
@@ -2144,7 +2099,6 @@ html[data-theme="day"] .setup-card .secondary-button {
 
 html[data-theme="day"] .hero-copy,
 html[data-theme="day"] .muted,
-html[data-theme="day"] .page-footer,
 html[data-theme="day"] .player-name > span,
 html[data-theme="day"] .player-state,
 html[data-theme="day"] .clue-player,
@@ -2160,6 +2114,11 @@ html[data-theme="day"] .hidden-role-card,
 html[data-theme="day"] .turn-banner strong,
 html[data-theme="day"] .table-talk-prompt {
   color: var(--text);
+}
+
+html[data-theme="day"] .page-footer {
+  background: #000;
+  color: #9da2bd;
 }
 
 html[data-theme="day"] .round-reveal strong {
