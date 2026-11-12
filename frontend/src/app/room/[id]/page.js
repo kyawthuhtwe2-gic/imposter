@@ -564,8 +564,9 @@ export default function GamePage() {
 
           {game.phase === "ROLE_ASSIGNMENT" && (
             <section className="glass-card game-panel centered-panel">
-              <div className="phase-icon" aria-hidden="true">✦</div>
-              <p className="eyebrow">လျှို့ဝှက်အခန်းကဏ္ဍများ</p>
+              <div className="phase-icon" aria-hidden="true">
+                <Image src="/ready.png" alt="" width={72} height={72} />
+              </div>
               <h2>လူတိုင်း အသင့်ဖြစ်ပြီလား?</h2>
               <p className="muted">စက်ကို တစ်ယောက်ချင်းစီထံ လွှဲပေးပြီး ကိုယ့်အခန်းကဏ္ဍကို သီးသန့်ကြည့်ပါ။</p>
               {isHost ? (

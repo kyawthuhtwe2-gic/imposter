@@ -889,15 +889,17 @@ html[data-theme="day"] .watermark-credit strong {
 
 .phase-icon {
   display: grid;
-  width: 56px;
-  height: 56px;
+  width: 72px;
+  height: 72px;
   margin: 0 auto 1rem;
   place-items: center;
-  border: 1px solid rgba(167, 139, 250, 0.28);
-  border-radius: 18px;
-  background: rgba(124, 58, 237, 0.13);
-  color: #d7c6ff;
-  font-size: 1.5rem;
+}
+
+.phase-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .hidden-role-card {
