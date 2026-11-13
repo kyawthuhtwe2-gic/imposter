@@ -636,11 +636,13 @@ html[data-theme="day"] .watermark-credit strong {
   backdrop-filter: blur(14px);
 }
 
-.room-page-topbar {
+.room-page-topbar,
+.home-topbar {
   background: #000;
 }
 
-.room-page-topbar::before {
+.room-page-topbar::before,
+.home-topbar::before {
   position: absolute;
   z-index: -1;
   top: 0;
@@ -2711,12 +2713,9 @@ html[data-theme="day"] .room-topbar {
   border-color: var(--border);
 }
 
-html[data-theme="day"] .room-page-topbar {
-  background: #fff;
-}
-
+html[data-theme="day"] .room-page-topbar,
 html[data-theme="day"] .home-topbar {
-  background: transparent;
+  background: #fff;
 }
 
 html[data-theme="day"] .hidden-role-card {
