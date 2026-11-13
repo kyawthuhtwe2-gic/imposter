@@ -1716,6 +1716,15 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
   min-width: 0;
 }
 
+.round-reveal-label > span,
+.round-reveal-label > strong {
+  display: block;
+}
+
+.round-reveal-label > strong {
+  margin-top: 0.15rem;
+}
+
 .round-reveal-imposters > .player-avatar {
   grid-area: icon;
 }
@@ -1735,7 +1744,6 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
 }
 
 .round-reveal-secret strong {
-  display: inline-block;
   max-width: 100%;
   font-size: 1rem;
 }
