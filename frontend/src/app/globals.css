@@ -1372,7 +1372,7 @@ html[data-theme="day"] .watermark-credit strong {
   font-weight: 700;
 }
 
-.player-row .player-avatar svg {
+.player-avatar svg {
   width: 18px;
   height: 18px;
   fill: currentColor;

@@ -651,14 +651,12 @@ export default function GamePage() {
                       key={player.player_id}
                       className={`${submitted ? "submitted " : ""}${isLocalTurn ? "my-turn" : ""}${isOtherTurn ? " other-turn" : ""}`}
                     >
-                      <Image
-                        className="clue-status-indicator"
-                        src={submitted ? "/tick.png" : "/turn.png"}
-                        alt=""
-                        aria-hidden="true"
-                        width={20}
-                        height={20}
-                      />
+                      <span className="player-avatar" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" focusable="false">
+                          <circle cx="12" cy="8" r="4" />
+                          <path d="M4.5 21a7.5 7.5 0 0 1 15 0z" />
+                        </svg>
+                      </span>
                       <h3>{player.name}</h3>
                       {isCurrentTurn ? (
                         isLocalTurn ? (
@@ -669,6 +667,14 @@ export default function GamePage() {
                       ) : (
                         <span>{submitted ? "ပေးပြီး" : "စောင့်နေသည်"}</span>
                       )}
+                      <Image
+                        className="clue-status-indicator"
+                        src={submitted ? "/tick.png" : "/turn.png"}
+                        alt=""
+                        aria-hidden="true"
+                        width={20}
+                        height={20}
+                      />
                     </li>
                   );
                 })}
@@ -702,7 +708,12 @@ export default function GamePage() {
                 <ol className="clue-list">
                   {clues.map((item, index) => (
                     <li key={`${item.player_id}-${index}`}>
-                      <span className="clue-index">{String(index + 1).padStart(2, "0")}</span>
+                      <span className="player-avatar" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" focusable="false">
+                          <circle cx="12" cy="8" r="4" />
+                          <path d="M4.5 21a7.5 7.5 0 0 1 15 0z" />
+                        </svg>
+                      </span>
                       <span className="clue-player">{item.player_name}</span>
                       <span className="clue-round-label">အကြိမ် {item.clue_round_number}</span>
                       <strong>{item.clue}</strong>
@@ -803,7 +814,12 @@ export default function GamePage() {
                   {voteTargets.map((player) => (
                     <li key={player.player_id}>
                       <button className="vote-option" type="button" onClick={() => submitVote(player.player_id)}>
-                        <span className="player-avatar">{player.name.slice(0, 1)}</span>
+                        <span className="player-avatar" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" focusable="false">
+                            <circle cx="12" cy="8" r="4" />
+                            <path d="M4.5 21a7.5 7.5 0 0 1 15 0z" />
+                          </svg>
+                        </span>
                         <strong>{player.name}</strong>
                         <span aria-hidden="true">→</span>
                       </button>
