@@ -473,8 +473,8 @@ export default function GamePage() {
                 src="/room.png"
                 alt=""
                 aria-hidden="true"
-                width={20}
-                height={20}
+                width={28}
+                height={28}
               />
               အခန်းကုဒ် - {game.room_code}
             </div>
@@ -593,6 +593,14 @@ export default function GamePage() {
                 {" "}အရိပ်အမြွက်ကို {game.clue_rounds} ကြိမ်စီ ပေးရမည်။
               </p>
               <div className="lobby-code">
+                <Image
+                  className="room-id-icon"
+                  src="/room.png"
+                  alt=""
+                  aria-hidden="true"
+                  width={28}
+                  height={28}
+                />
                 <span>အခန်းကုဒ်</span>
                 <strong>{game.room_code}</strong>
                 <button
