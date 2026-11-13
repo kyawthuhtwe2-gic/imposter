@@ -41,6 +41,7 @@ app.add_middleware(
 )
 game_service = GameService()
 connections: dict[str, dict[WebSocket, str]] = {}
+ROOM_CLOSED_CLOSE_CODE = 4001
 
 
 def raise_game_error(error: Exception) -> None:
@@ -78,8 +79,8 @@ async def close_game_connections(game_id: str) -> None:
     for websocket in room_connections:
         try:
             await websocket.send_json({"type": "room_closed"})
-            await websocket.close(code=1000)
-        except WebSocketDisconnect:
+            await websocket.close(code=ROOM_CLOSED_CLOSE_CODE)
+        except (RuntimeError, WebSocketDisconnect):
             pass
 
 

@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { clearRoomTokens, gameRequest, gameWebSocketUrl } from "../utils/gameApi";
 
+const ROOM_CLOSED_CLOSE_CODE = 4001;
+
 export function useGameState(gameId, playerId) {
   const [game, setGame] = useState(null);
   const [error, setError] = useState("");
@@ -73,8 +75,14 @@ export function useGameState(gameId, playerId) {
         setError("ဂိမ်းအချက်အလက်ကို ဖတ်မရပါ။ ခဏစောင့်ပြီး ထပ်မံကြိုးစားပါ။");
       }
     });
-    socket.addEventListener("close", () => {
-      if (active) setConnection("Disconnected");
+    socket.addEventListener("close", (event) => {
+      if (!active) return;
+      if (event.code === ROOM_CLOSED_CLOSE_CODE) {
+        clearRoomTokens(gameId);
+        window.location.href = "/";
+        return;
+      }
+      setConnection("Disconnected");
     });
     socket.addEventListener("error", () => {
       if (active) setConnection("Connection error");
