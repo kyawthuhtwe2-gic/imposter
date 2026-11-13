@@ -473,8 +473,8 @@ export default function GamePage() {
                 src="/room.png"
                 alt=""
                 aria-hidden="true"
-                width={28}
-                height={28}
+                width={36}
+                height={36}
               />
               အခန်းကုဒ် - {game.room_code}
             </div>
@@ -598,8 +598,8 @@ export default function GamePage() {
                   src="/room.png"
                   alt=""
                   aria-hidden="true"
-                  width={28}
-                  height={28}
+                  width={36}
+                  height={36}
                 />
                 <span>အခန်းကုဒ်</span>
                 <strong>{game.room_code}</strong>
