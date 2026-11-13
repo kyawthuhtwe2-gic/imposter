@@ -2813,6 +2813,22 @@ html[data-theme="day"] .state-card .error-message {
 }
 
 @media (max-width: 680px) {
+  .room-topbar {
+    gap: 0.6rem;
+    padding-top: 0.65rem;
+    padding-bottom: 0.55rem;
+  }
+
+  .wordmark {
+    gap: 0.45rem;
+    font-size: 1.05rem;
+  }
+
+  .wordmark-logo {
+    width: 36px;
+    height: 36px;
+  }
+
   .room-header-actions {
     gap: 0.4rem;
   }
@@ -2836,6 +2852,27 @@ html[data-theme="day"] .state-card .error-message {
     width: 40px;
     height: 40px;
     min-height: 40px;
+  }
+}
+
+@media (max-width: 420px) {
+  .room-page-topbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.55rem;
+    align-items: start;
+  }
+
+  .room-page-topbar .wordmark {
+    justify-self: start;
+  }
+
+  .room-page-topbar .room-header-actions {
+    width: 100%;
+  }
+
+  .room-header-room-control {
+    margin-right: auto;
   }
 }
 
