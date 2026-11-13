@@ -837,6 +837,12 @@ export default function GamePage() {
               <ul className="results-list">
                 {game.vote_counts?.map((result) => (
                   <li key={result.player_id}>
+                    <span className="player-avatar" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <circle cx="12" cy="8" r="4" />
+                        <path d="M4.5 21a7.5 7.5 0 0 1 15 0z" />
+                      </svg>
+                    </span>
                     <span>{result.player_name}</span>
                     <strong>{result.count} မဲ</strong>
                   </li>
@@ -913,11 +919,22 @@ export default function GamePage() {
 
               <div className="round-reveal">
                 <div className="round-reveal-secret">
-                  <span>လျှို့ဝှက်စကားလုံး</span>
+                  <div className="round-reveal-label">
+                    <Image src="/secret.png" alt="" width={24} height={24} />
+                    <span>လျှို့ဝှက်စကားလုံး</span>
+                  </div>
                   <strong>{roundResult.secret_word}</strong>
                 </div>
                 <div className="round-reveal-imposters">
-                  <span>Imposter</span>
+                  <div className="round-reveal-label">
+                    <span className="player-avatar" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <circle cx="12" cy="8" r="4" />
+                        <path d="M4.5 21a7.5 7.5 0 0 1 15 0z" />
+                      </svg>
+                    </span>
+                    <span>Imposter</span>
+                  </div>
                   <strong>{roundResult.imposter_names.join("၊ ")}</strong>
                 </div>
               </div>

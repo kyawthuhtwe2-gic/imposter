@@ -1243,7 +1243,7 @@ html[data-theme="day"] .watermark-credit strong {
 
 .clue-status-list li {
   display: grid;
-  grid-template-columns: 42px minmax(0, 1fr) 28px;
+  grid-template-columns: 34px minmax(0, 1fr) 28px;
   grid-template-rows: auto auto;
   min-height: 76px;
   min-width: 0;
@@ -1266,15 +1266,8 @@ html[data-theme="day"] .watermark-credit strong {
 
 .clue-status-list .player-avatar {
   grid-row: 1 / 3;
-  width: 42px;
-  height: 42px;
   border-radius: 13px;
   background: rgba(124, 58, 237, 0.17);
-}
-
-.clue-status-list .player-avatar svg {
-  width: 21px;
-  height: 21px;
 }
 
 .clue-status-list li h3 {
@@ -1613,6 +1606,22 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
 
 .round-reveal > .round-reveal-imposters {
   background: rgba(251, 113, 133, 0.055);
+}
+
+.round-reveal-label {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.round-reveal-label img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.round-reveal-label .player-avatar {
+  border-radius: 8px;
 }
 
 .round-reveal span {
