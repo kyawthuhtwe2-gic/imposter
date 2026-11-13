@@ -805,6 +805,10 @@ html[data-theme="day"] .watermark-credit strong {
   color: var(--muted);
 }
 
+.inline-note.player-count-needed {
+  color: var(--red);
+}
+
 .copy-button {
   flex: 0 0 auto;
   min-height: 40px;

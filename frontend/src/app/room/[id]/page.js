@@ -679,11 +679,6 @@ export default function GamePage() {
                 )}
               </div>
   
-              {desiredPlayerCount && game.player_count < desiredPlayerCount && (
-                <p className="inline-note">
-                  စတင်ရန် Player {desiredPlayerCount - game.player_count} ဦး ထပ်ဝင်ရန် လိုသည်။
-                </p>
-              )}
               {!game.hint_input_mode && (
                 <p className="inline-note">ဂိမ်းမစမီ အရိပ်အမြွက်ပေးမည့်ပုံစံကို ရွေးပါ။</p>
               )}
@@ -1166,6 +1161,13 @@ export default function GamePage() {
             isHost={isHost}
             request={request}
           />
+          {game.phase === "WAITING_FOR_PLAYERS" &&
+            desiredPlayerCount &&
+            game.player_count < desiredPlayerCount && (
+            <p className="inline-note player-count-needed">
+                စတင်ရန် Player {desiredPlayerCount - game.player_count} ဦး ထပ်ဝင်ရန် လိုသည်။
+              </p>
+            )}
           <div className="sidebar-tip">
             <span aria-hidden="true">✦</span>
             <p>လျှို့ဝှက်စကားလုံးကို မပြောဘဲ သဲလွန်စပေးပါ။</p>
