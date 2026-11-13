@@ -1662,11 +1662,18 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
   object-fit: contain;
 }
 
-.round-reveal-secret .round-reveal-label,
-.round-reveal-imposters .round-reveal-label {
+.round-reveal-secret .round-reveal-label {
   grid-area: content;
   display: block;
   min-width: 0;
+}
+
+.round-reveal-imposters .round-reveal-label {
+  grid-area: content;
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  gap: 0.35rem;
 }
 
 .round-reveal-imposters > .player-avatar {
@@ -1689,16 +1696,13 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
 
 .round-reveal-secret strong {
   display: inline-block;
-  width: fit-content;
   max-width: 100%;
-  margin-top: 0.1rem;
-  padding: 0.45rem 0.8rem;
+  margin-top: 0.3rem;
+  padding: 0.35rem 0.7rem;
   border: 1px solid rgba(196, 181, 253, 0.16);
-  border-radius: 11px;
-  background: rgba(10, 12, 30, 0.28);
-  box-shadow: inset 0 1px rgba(255, 255, 255, 0.04);
-  font-size: clamp(1.15rem, 3vw, 1.55rem);
-  font-weight: 750;
+  border-radius: 10px;
+  background: rgba(124, 58, 237, 0.12);
+  font-size: 1rem;
   line-height: 1.3;
 }
 
@@ -2461,8 +2465,7 @@ html[data-theme="day"] .round-reveal-secret > img {
 
 html[data-theme="day"] .round-reveal-secret strong {
   border-color: rgba(112, 68, 197, 0.14);
-  background: rgba(112, 68, 197, 0.09);
-  box-shadow: inset 0 1px rgba(255, 255, 255, 0.7);
+  background: rgba(112, 68, 197, 0.1);
 }
 
 html[data-theme="day"] .round-reveal > .round-reveal-imposters {
