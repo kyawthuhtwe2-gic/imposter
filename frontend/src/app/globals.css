@@ -681,13 +681,14 @@ html[data-theme="day"] .watermark-credit strong {
 
 .room-header-room-control {
   display: inline-flex;
+  height: 42px;
   align-items: center;
   gap: 0.35rem;
 }
 
 .room-header-room-control.has-exit {
   gap: 0.25rem;
-  padding: 3px;
+  padding: 2px;
   border: 1px solid rgba(184, 190, 255, 0.16);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.055);
@@ -851,9 +852,9 @@ html[data-theme="day"] .watermark-credit strong {
 }
 
 .leave-room-button {
-  width: 38px;
-  height: 38px;
-  min-height: 38px;
+  width: 36px;
+  height: 36px;
+  min-height: 36px;
   padding: 0;
   border-color: rgba(251, 113, 133, 0.22);
   border-radius: 50%;
@@ -2807,6 +2808,14 @@ html[data-theme="day"] .state-card .error-message {
 @media (max-width: 680px) {
   .room-header-actions {
     gap: 0.4rem;
+  }
+
+  .room-header-room-control {
+    height: 40px;
+  }
+
+  .room-header-room-control.has-exit {
+    padding: 1px;
   }
 
   .theme-toggle {
