@@ -725,9 +725,9 @@ html[data-theme="day"] .watermark-credit strong {
 }
 
 .room-id-icon {
-  width: 20px;
-  height: 20px;
-  flex: 0 0 20px;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
   object-fit: contain;
 }
 
