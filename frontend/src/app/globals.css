@@ -636,6 +636,10 @@ html[data-theme="day"] .watermark-credit strong {
   backdrop-filter: blur(14px);
 }
 
+.room-page-topbar {
+  background: #000;
+}
+
 .room-page-topbar::after,
 .home-topbar::after {
   position: absolute;
@@ -2695,7 +2699,10 @@ html[data-theme="day"] .room-topbar {
   border-color: var(--border);
 }
 
-html[data-theme="day"] .room-page-topbar,
+html[data-theme="day"] .room-page-topbar {
+  background: #fff;
+}
+
 html[data-theme="day"] .home-topbar {
   background: transparent;
 }
