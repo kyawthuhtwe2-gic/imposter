@@ -2357,7 +2357,9 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
   }
 
   .sidebar-tip {
-    display: none;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    padding: 0.65rem;
   }
 }
 
