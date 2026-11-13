@@ -619,6 +619,15 @@ html[data-theme="day"] .watermark-credit strong {
   padding-top: 0rem;
 }
 
+.home-shell,
+.room-shell {
+  padding-bottom: 0.75rem;
+}
+
+.page-footer {
+  margin-top: 0.5rem;
+}
+
 .room-topbar {
   display: flex;
   align-items: center;
