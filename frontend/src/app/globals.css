@@ -686,23 +686,7 @@ html[data-theme="day"] .watermark-credit strong {
   gap: 0.35rem;
 }
 
-.room-header-room-control.has-exit {
-  gap: 0.25rem;
-  padding: 2px;
-  border: 1px solid rgba(184, 190, 255, 0.16);
-  border-radius: 999px;
-  background: transparent;
-}
-
 .room-header-room-control .room-id-pill {
-  background: transparent;
-  box-shadow: none;
-}
-
-.room-header-room-control.has-exit .room-id-pill {
-  min-height: 36px;
-  padding: 0 0.65rem 0 0.35rem;
-  border: 0;
   background: transparent;
   box-shadow: none;
 }
@@ -856,9 +840,9 @@ html[data-theme="day"] .watermark-credit strong {
 }
 
 .leave-room-button {
-  width: 36px;
-  height: 36px;
-  min-height: 36px;
+  width: 42px;
+  height: 42px;
+  min-height: 42px;
   padding: 0;
   border-color: rgba(251, 113, 133, 0.22);
   border-radius: 50%;
@@ -2575,17 +2559,7 @@ html[data-theme="day"] .room-id-pill {
   color: #545a70;
 }
 
-html[data-theme="day"] .room-header-room-control.has-exit {
-  border-color: var(--border);
-  background: transparent;
-}
-
 html[data-theme="day"] .room-header-room-control .room-id-pill {
-  background: transparent;
-  box-shadow: none;
-}
-
-html[data-theme="day"] .room-header-room-control.has-exit .room-id-pill {
   background: transparent;
   box-shadow: none;
 }
@@ -2822,14 +2796,16 @@ html[data-theme="day"] .state-card .error-message {
     height: 40px;
   }
 
-  .room-header-room-control.has-exit {
-    padding: 1px;
-  }
-
   .theme-toggle {
     width: 40px;
     height: 40px;
     flex-basis: 40px;
+  }
+
+  .leave-room-button {
+    width: 40px;
+    height: 40px;
+    min-height: 40px;
   }
 }
 

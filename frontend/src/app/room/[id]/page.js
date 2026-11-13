@@ -462,27 +462,7 @@ export default function GamePage() {
           <span>Imposter</span>
         </a>
         <div className="room-header-actions">
-          <div
-            className={`room-header-room-control ${canExitRoom ? "has-exit" : ""}`}
-          >
-            {canExitRoom && (
-              <button
-                ref={exitButtonRef}
-                className="icon-button leave-room-button"
-                type="button"
-                onClick={() => {
-                  setExitFailed(false);
-                  setShowExitDialog(true);
-                }}
-                aria-label="အခန်းမှ ထွက်ရန်"
-                title="အခန်းမှ ထွက်ရန်"
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M10 17l5-5-5-5M15 12H3" />
-                  <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7" />
-                </svg>
-              </button>
-            )}
+          <div className="room-header-room-control">
             <div
               className="room-id-pill"
               aria-label={`Room ID ${game.room_code}; ${connectionLabel}`}
@@ -491,6 +471,24 @@ export default function GamePage() {
               အခန်းကုဒ် - {game.room_code}
             </div>
           </div>
+          {canExitRoom && (
+            <button
+              ref={exitButtonRef}
+              className="icon-button leave-room-button"
+              type="button"
+              onClick={() => {
+                setExitFailed(false);
+                setShowExitDialog(true);
+              }}
+              aria-label="အခန်းမှ ထွက်ရန်"
+              title="အခန်းမှ ထွက်ရန်"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M10 17l5-5-5-5M15 12H3" />
+                <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7" />
+              </svg>
+            </button>
+          )}
           <ThemeToggle />
         </div>
       </header>
