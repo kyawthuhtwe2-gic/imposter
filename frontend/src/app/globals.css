@@ -679,6 +679,29 @@ html[data-theme="day"] .watermark-credit strong {
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.04);
 }
 
+.room-header-room-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.room-header-room-control.has-exit {
+  gap: 0.25rem;
+  padding: 3px;
+  border: 1px solid rgba(184, 190, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.room-header-room-control.has-exit .room-id-pill {
+  min-height: 36px;
+  padding: 0 0.65rem 0 0.35rem;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
 .connection-dot {
   flex: 0 0 8px;
   width: 8px;
@@ -2539,6 +2562,17 @@ html[data-theme="day"] .room-id-pill {
   background: rgba(255, 255, 255, 0.82);
   box-shadow: 0 2px 8px rgba(37, 45, 80, 0.06);
   color: #545a70;
+}
+
+html[data-theme="day"] .room-header-room-control.has-exit {
+  border-color: var(--border);
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 2px 8px rgba(37, 45, 80, 0.06);
+}
+
+html[data-theme="day"] .room-header-room-control.has-exit .room-id-pill {
+  background: transparent;
+  box-shadow: none;
 }
 
 html[data-theme="day"] .leave-room-button {

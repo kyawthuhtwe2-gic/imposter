@@ -334,6 +334,7 @@ export default function GamePage() {
       : connection === "Connection error"
         ? "Connection error"
         : "Connecting";
+  const canExitRoom = game.phase === "WAITING_FOR_PLAYERS" || game.phase === "GAME_OVER";
 
   async function copyRoomCode() {
     try {
@@ -445,34 +446,38 @@ export default function GamePage() {
         </a>
         <div className="room-header-actions">
           <div
-            className="room-id-pill"
-            aria-label={`Room ID ${game.room_code}; ${connectionLabel}`}
-            title={connectionLabel}
+            className={`room-header-room-control ${canExitRoom ? "has-exit" : ""}`}
           >
-            <span
-              className={`connection-dot ${connection === "Connected" ? "online" : ""}`}
-              aria-hidden="true"
-            />
-            အခန်းကုဒ် {game.room_code}
-          </div>
-          {(game.phase === "WAITING_FOR_PLAYERS" || game.phase === "GAME_OVER") && (
-            <button
-              ref={exitButtonRef}
-              className="icon-button leave-room-button"
-              type="button"
-              onClick={() => {
-                setExitFailed(false);
-                setShowExitDialog(true);
-              }}
-              aria-label="အခန်းမှ ထွက်ရန်"
-              title="အခန်းမှ ထွက်ရန်"
+            {canExitRoom && (
+              <button
+                ref={exitButtonRef}
+                className="icon-button leave-room-button"
+                type="button"
+                onClick={() => {
+                  setExitFailed(false);
+                  setShowExitDialog(true);
+                }}
+                aria-label="အခန်းမှ ထွက်ရန်"
+                title="အခန်းမှ ထွက်ရန်"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M10 17l5-5-5-5M15 12H3" />
+                  <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7" />
+                </svg>
+              </button>
+            )}
+            <div
+              className="room-id-pill"
+              aria-label={`Room ID ${game.room_code}; ${connectionLabel}`}
+              title={connectionLabel}
             >
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M10 17l5-5-5-5M15 12H3" />
-                <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7" />
-              </svg>
-            </button>
-          )}
+              <span
+                className={`connection-dot ${connection === "Connected" ? "online" : ""}`}
+                aria-hidden="true"
+              />
+              အခန်းကုဒ် {game.room_code}
+            </div>
+          </div>
           <ThemeToggle />
         </div>
       </header>
