@@ -2813,8 +2813,13 @@ html[data-theme="day"] .state-card .error-message {
 }
 
 @media (max-width: 680px) {
+  .room-shell {
+    padding-top: 0;
+  }
+
   .room-topbar {
     gap: 0.6rem;
+    margin-top: 0;
     padding-top: 0.65rem;
     padding-bottom: 0.55rem;
   }
