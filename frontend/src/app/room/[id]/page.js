@@ -71,10 +71,10 @@ function PlayerList({ players, playerId, game, isHost, request }) {
                 : player.eliminated
                   ? "ထွက်ပြီး"
                   : game.phase === "ROLE_REVEAL" && player.role_viewed
-                  ? "ကြည့်ပြီး"
-                  : game.phase === "VOTING" && player.has_voted
-                    ? "မဲပေးပြီး"
-                    : "ကစားနေ"}
+                    ? "ကြည့်ပြီး"
+                    : game.phase === "VOTING" && player.has_voted
+                      ? "မဲပေးပြီး"
+                      : "ကစားနေ"}
             </span>
           )}
         </li>
@@ -109,7 +109,7 @@ export default function GamePage() {
       .map((player) => player.player_id);
     setLocalPlayerIds((current) =>
       current.length === availableIds.length &&
-      current.every((player, index) => player === availableIds[index])
+        current.every((player, index) => player === availableIds[index])
         ? current
         : availableIds,
     );
@@ -468,6 +468,14 @@ export default function GamePage() {
               aria-label={`Room ID ${game.room_code}; ${connectionLabel}`}
               title={connectionLabel}
             >
+              <Image
+                className="room-id-icon"
+                src="/room.png"
+                alt=""
+                aria-hidden="true"
+                width={20}
+                height={20}
+              />
               အခန်းကုဒ် - {game.room_code}
             </div>
           </div>
@@ -678,7 +686,7 @@ export default function GamePage() {
                   </button>
                 )}
               </div>
-  
+
               {!game.hint_input_mode && (
                 <p className="inline-note">ဂိမ်းမစမီ အရိပ်အမြွက်ပေးမည့်ပုံစံကို ရွေးပါ။</p>
               )}
@@ -881,33 +889,33 @@ export default function GamePage() {
                       {submittingHint ? "ခဏစောင့်ပါ..." : "အရိပ်အမြွက်ပေးပြီးပါပြီ"}
                     </button>
                   </div>
-              )}
+                )}
 
               {canControlPlayer(game.current_turn_player_id) &&
                 game.hint_input_mode === "TEXT_INPUT" && (
-                <form
-                  className="action-form"
-                  onSubmit={async (event) => {
-                    event.preventDefault();
-                    setSubmittingHint(true);
-                    if (await submitClue(clue)) setClue("");
-                    setSubmittingHint(false);
-                  }}
-                >
-                  <label htmlFor="clue">သင့်အရိပ်အမြွက်</label>
-                  <textarea
-                    id="clue"
-                    value={clue}
-                    maxLength={200}
-                    onChange={(event) => setClue(event.target.value)}
-                    placeholder="စကားလုံးကို တိုက်ရိုက်မပြောပါနှင့်"
-                    required
-                  />
-                  <button className="primary-button" type="submit" disabled={submittingHint}>
-                    {submittingHint ? "ခဏစောင့်ပါ..." : "အရိပ်အမြွက် ပေးပို့မည်"} <span aria-hidden="true">→</span>
-                  </button>
-                </form>
-              )}
+                  <form
+                    className="action-form"
+                    onSubmit={async (event) => {
+                      event.preventDefault();
+                      setSubmittingHint(true);
+                      if (await submitClue(clue)) setClue("");
+                      setSubmittingHint(false);
+                    }}
+                  >
+                    <label htmlFor="clue">သင့်အရိပ်အမြွက်</label>
+                    <textarea
+                      id="clue"
+                      value={clue}
+                      maxLength={200}
+                      onChange={(event) => setClue(event.target.value)}
+                      placeholder="စကားလုံးကို တိုက်ရိုက်မပြောပါနှင့်"
+                      required
+                    />
+                    <button className="primary-button" type="submit" disabled={submittingHint}>
+                      {submittingHint ? "ခဏစောင့်ပါ..." : "အရိပ်အမြွက် ပေးပို့မည်"} <span aria-hidden="true">→</span>
+                    </button>
+                  </form>
+                )}
               {game.current_turn_player_id !== null && !canControlPlayer(game.current_turn_player_id) && (
                 <p className="inline-note">သင့်အလှည့်ရောက်သည်အထိ စကားလုံးများကို နားထောင်ပါ။</p>
               )}
@@ -1164,14 +1172,13 @@ export default function GamePage() {
           {game.phase === "WAITING_FOR_PLAYERS" &&
             desiredPlayerCount &&
             game.player_count < desiredPlayerCount && (
-            <p className="inline-note player-count-needed">
-                စတင်ရန် Player {desiredPlayerCount - game.player_count} ဦး ထပ်ဝင်ရန် လိုသည်။
-              </p>
+              <div className="sidebar-tip">
+                <span aria-hidden="true">✦</span>
+                <p className="inline-note player-count-needed">
+                  စတင်ရန် Player {desiredPlayerCount - game.player_count} ဦး ထပ်ဝင်ရန် လိုသည်။
+                </p>
+              </div>
             )}
-          <div className="sidebar-tip">
-            <span aria-hidden="true">✦</span>
-            <p>လျှို့ဝှက်စကားလုံးကို မပြောဘဲ သဲလွန်စပေးပါ။</p>
-          </div>
         </aside>
       </div>
 

@@ -724,6 +724,13 @@ html[data-theme="day"] .watermark-credit strong {
     inset 0 -1px 3px rgba(0, 0, 0, 0.16);
 }
 
+.room-id-icon {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  object-fit: contain;
+}
+
 .turn-indicator-image {
   display: block;
   width: 32px;
@@ -1992,14 +1999,14 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
   gap: 0.65rem;
   margin-top: 1.1rem;
   padding: 0.8rem;
-  border: 1px solid rgba(96, 165, 250, 0.14);
+  border: 1px solid rgba(251, 113, 133, 0.25);
   border-radius: 12px;
-  background: rgba(59, 130, 246, 0.06);
-  color: #b5cbed;
+  background: rgba(127, 29, 51, 0.28);
+  color: #ffc0ca;
 }
 
 .sidebar-tip span {
-  color: #8dbaff;
+  color: var(--red);
 }
 
 .sidebar-tip p {
