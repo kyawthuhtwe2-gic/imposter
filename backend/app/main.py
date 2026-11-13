@@ -73,6 +73,31 @@ async def broadcast(game_id: str) -> None:
             connections.get(game_id, {}).pop(websocket, None)
 
 
+async def close_game_connections(game_id: str) -> None:
+    room_connections = connections.pop(game_id, {})
+    for websocket in room_connections:
+        try:
+            await websocket.send_json({"type": "room_closed"})
+            await websocket.close(code=1000)
+        except WebSocketDisconnect:
+            pass
+
+
+async def close_player_connections(game_id: str, player_id: str) -> None:
+    room_connections = connections.get(game_id, {})
+    for websocket, connected_player_id in room_connections.copy().items():
+        if connected_player_id != player_id:
+            continue
+        try:
+            await websocket.send_json({"type": "player_left"})
+            await websocket.close(code=1000)
+        except WebSocketDisconnect:
+            pass
+        room_connections.pop(websocket, None)
+    if not room_connections:
+        connections.pop(game_id, None)
+
+
 @app.get("/health")
 async def health() -> dict[str, str]:
     return {"status": "ok"}
@@ -177,6 +202,25 @@ async def remove_player(
         raise_game_error(error)
     await broadcast(game_id)
     return {"status": "removed"}
+
+
+@app.post("/games/{game_id}/leave")
+async def leave_game(
+    game_id: str,
+    request: PlayerActionRequest,
+    authorization: str | None = Header(default=None),
+) -> dict[str, str]:
+    authorize_player(game_id, request.player_id, authorization)
+    try:
+        room_closed = game_service.leave_game(game_id, request.player_id)
+    except (ValueError, PermissionError) as error:
+        raise_game_error(error)
+    if room_closed:
+        await close_game_connections(game_id)
+        return {"status": "closed"}
+    await close_player_connections(game_id, request.player_id)
+    await broadcast(game_id)
+    return {"status": "left"}
 
 
 @app.get("/games/{game_id}/state")

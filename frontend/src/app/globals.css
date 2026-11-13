@@ -836,6 +836,31 @@ html[data-theme="day"] .watermark-credit strong {
   transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease;
 }
 
+.leave-room-button {
+  width: 38px;
+  min-height: 38px;
+  padding: 0;
+  border-color: rgba(251, 113, 133, 0.22);
+  background: rgba(225, 29, 72, 0.08);
+  color: #fda4af;
+}
+
+.leave-room-button svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.leave-room-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(251, 113, 133, 0.5);
+  background: rgba(225, 29, 72, 0.16);
+}
+
 .copy-room-button:hover {
   transform: translateY(-1px);
   border-color: rgba(167, 139, 250, 0.55);
@@ -1670,10 +1695,8 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
 
 .round-reveal-imposters .round-reveal-label {
   grid-area: content;
-  display: flex;
+  display: block;
   min-width: 0;
-  align-items: baseline;
-  gap: 0.35rem;
 }
 
 .round-reveal-imposters > .player-avatar {
@@ -2459,7 +2482,6 @@ html[data-theme="day"] .round-reveal-secret > img {
 
 html[data-theme="day"] .round-reveal-secret strong {
   border-color: rgba(112, 68, 197, 0.14);
-  background: rgba(112, 68, 197, 0.1);
 }
 
 html[data-theme="day"] .round-reveal > .round-reveal-imposters {

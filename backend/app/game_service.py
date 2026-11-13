@@ -271,6 +271,16 @@ class GameService:
         ):
             game.imposter_count = None
 
+    def leave_game(self, game_id: str, player_id: str) -> bool:
+        game = self._get_game(game_id)
+        self._get_player(game, player_id)
+        if player_id == game.host_id or game.phase != GamePhase.WAITING_FOR_PLAYERS:
+            del self.games[game_id]
+            return True
+
+        game.players = [player for player in game.players if player.player_id != player_id]
+        return False
+
     def authenticate_player(self, game_id: str, player_id: str, token: str) -> None:
         player = self._get_player(self._get_game(game_id), player_id)
         if not compare_digest(player.player_token, token):

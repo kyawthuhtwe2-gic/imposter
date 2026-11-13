@@ -485,6 +485,57 @@ def test_host_can_add_edit_and_remove_players_by_id(monkeypatch) -> None:
     assert state["players"][1]["name"] == "Renamed"
 
 
+def test_guest_can_leave_waiting_room(monkeypatch) -> None:
+    service = GameService()
+    monkeypatch.setattr(main, "game_service", service)
+    client = TestClient(main.app)
+    host = client.post("/games", json={"player_name": "Host"}).json()
+    guest = client.post(
+        f"/games/{host['game_id']}/players", json={"player_name": "Guest"}
+    ).json()
+
+    response = client.post(
+        f"/games/{host['game_id']}/leave",
+        json={"player_id": guest["player_id"]},
+        headers={"Authorization": f"Bearer {guest['player_token']}"},
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {"status": "left"}
+    state = client.get(
+        f"/games/{host['game_id']}/state",
+        params={"player_id": host["player_id"]},
+        headers={"Authorization": f"Bearer {host['player_token']}"},
+    ).json()
+    assert [player["player_id"] for player in state["players"]] == [host["player_id"]]
+
+
+def test_host_exit_notifies_connected_players_and_closes_room(monkeypatch) -> None:
+    service = GameService()
+    monkeypatch.setattr(main, "game_service", service)
+    main.connections.clear()
+    client = TestClient(main.app)
+    host = client.post("/games", json={"player_name": "Host"}).json()
+    guest = client.post(
+        f"/games/{host['game_id']}/players", json={"player_name": "Guest"}
+    ).json()
+
+    with client.websocket_connect(
+        f"/ws/{host['game_id']}/{guest['player_id']}?token={guest['player_token']}"
+    ) as guest_socket:
+        guest_socket.receive_json()
+        response = client.post(
+            f"/games/{host['game_id']}/leave",
+            json={"player_id": host["player_id"]},
+            headers={"Authorization": f"Bearer {host['player_token']}"},
+        )
+
+        assert response.status_code == 200
+        assert response.json() == {"status": "closed"}
+        assert guest_socket.receive_json() == {"type": "room_closed"}
+    assert host["game_id"] not in service.games
+
+
 def test_selected_player_count_is_host_controlled_and_enforced(monkeypatch) -> None:
     monkeypatch.setattr(main, "game_service", GameService())
     client = TestClient(main.app)

@@ -152,6 +152,29 @@ def test_host_manages_players_by_stable_id_and_preserves_order() -> None:
         service.remove_player(game_id, players[0], players[0])
 
 
+def test_non_host_can_leave_waiting_room() -> None:
+    service, game_id, players = create_game()
+
+    room_closed = service.leave_game(game_id, players[1])
+
+    assert room_closed is False
+    assert [player.player_id for player in service.games[game_id].players] == [
+        players[0],
+        players[2],
+    ]
+
+
+def test_host_or_active_player_leaving_closes_room() -> None:
+    service, game_id, players = create_game()
+    assert service.leave_game(game_id, players[0]) is True
+    assert game_id not in service.games
+
+    service, game_id, players = create_game()
+    service.games[game_id].phase = GamePhase.CLUE_ROUND
+    assert service.leave_game(game_id, players[1]) is True
+    assert game_id not in service.games
+
+
 def test_selected_player_count_controls_room_capacity_and_start() -> None:
     service = GameService()
     game, host = service.create_game(

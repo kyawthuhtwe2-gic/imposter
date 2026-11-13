@@ -1,5 +1,15 @@
 const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000").replace(/\/$/, "");
 
+export function clearRoomTokens(gameId) {
+  const tokenPrefix = `imposter-token:${gameId}`;
+  for (let index = window.sessionStorage.length - 1; index >= 0; index -= 1) {
+    const key = window.sessionStorage.key(index);
+    if (key === tokenPrefix || key?.startsWith(`${tokenPrefix}:`)) {
+      window.sessionStorage.removeItem(key);
+    }
+  }
+}
+
 function localizeError(detail) {
   const message = typeof detail === "string" ? detail : "";
   if (/authentication|required|invalid player/i.test(message)) {

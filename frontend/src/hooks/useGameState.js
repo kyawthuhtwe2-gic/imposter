@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { gameRequest, gameWebSocketUrl } from "../utils/gameApi";
+import { clearRoomTokens, gameRequest, gameWebSocketUrl } from "../utils/gameApi";
 
 export function useGameState(gameId, playerId) {
   const [game, setGame] = useState(null);
@@ -55,6 +55,11 @@ export function useGameState(gameId, playerId) {
       try {
         const message = JSON.parse(event.data);
         if (!active) return;
+        if (message.type === "room_closed" || message.type === "player_left") {
+          clearRoomTokens(gameId);
+          window.location.href = "/";
+          return;
+        }
         if (message.type === "replay") {
           window.sessionStorage.setItem(
             `imposter-token:${message.game_id}`,

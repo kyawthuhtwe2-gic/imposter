@@ -5,6 +5,7 @@ import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import ThemeToggle from "../../../components/ThemeToggle";
 import SelectBox from "../../../components/SelectBox";
+import { clearRoomTokens } from "../../../utils/gameApi";
 import {
   useClueRound,
   useGameResults,
@@ -327,6 +328,22 @@ export default function GamePage() {
     }
   }
 
+  async function leaveRoom() {
+    const closesRoom = isHost || game.phase !== "WAITING_FOR_PLAYERS";
+    const message = closesRoom
+      ? "အခန်းမှ ထွက်ပါက ဂိမ်းအခန်းကို အားလုံးအတွက် ပိတ်ပါမည်။ ဆက်လုပ်မလား?"
+      : "အခန်းမှ ထွက်ပြီး ပင်မစာမျက်နှာသို့ ပြန်မလား?";
+    if (!window.confirm(message)) return;
+
+    const result = await request(`/games/${encodeURIComponent(id)}/leave`, {
+      player_id: playerId,
+    });
+    if (!result) return;
+
+    clearRoomTokens(id);
+    window.location.href = "/";
+  }
+
   async function advanceRound() {
     await request(`/games/${encodeURIComponent(id)}/rounds/next`, { player_id: playerId });
   }
@@ -411,6 +428,18 @@ export default function GamePage() {
             />
             အခန်းကုဒ် {game.room_code}
           </div>
+          <button
+            className="icon-button leave-room-button"
+            type="button"
+            onClick={leaveRoom}
+            aria-label="အခန်းမှ ထွက်ရန်"
+            title="အခန်းမှ ထွက်ရန်"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M10 17l5-5-5-5M15 12H3" />
+              <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7" />
+            </svg>
+          </button>
           <ThemeToggle />
         </div>
       </header>
@@ -927,7 +956,6 @@ export default function GamePage() {
                   <Image src="/secret.png" alt="" width={34} height={34} />
                   <div className="round-reveal-label">
                     <span>လျှို့ဝှက်စကားလုံး</span>
-                    <br />
                     <strong>{roundResult.secret_word}</strong>
                   </div>
                 </div>
@@ -940,7 +968,6 @@ export default function GamePage() {
                   </span>
                   <div className="round-reveal-label">
                     <span>Imposter</span>
-                    <br />
                     <strong>{roundResult.imposter_names.join("၊ ")}</strong>
                   </div>
                 </div>
