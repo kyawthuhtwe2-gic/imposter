@@ -1617,6 +1617,7 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
 
 .round-reveal > .round-reveal-secret {
   position: relative;
+  grid-template-areas: "icon content";
   grid-template-columns: 34px minmax(0, 1fr);
   align-items: center;
   gap: 0.65rem;
@@ -1636,6 +1637,7 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
 }
 
 .round-reveal > .round-reveal-imposters {
+  grid-template-areas: "icon content";
   grid-template-columns: 34px minmax(0, 1fr);
   align-items: center;
   gap: 0.65rem;
@@ -1649,6 +1651,7 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
 }
 
 .round-reveal-secret > img {
+  grid-area: icon;
   box-sizing: border-box;
   width: 34px;
   height: 34px;
@@ -1661,8 +1664,13 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
 
 .round-reveal-secret .round-reveal-label,
 .round-reveal-imposters .round-reveal-label {
+  grid-area: content;
   display: block;
   min-width: 0;
+}
+
+.round-reveal-imposters > .player-avatar {
+  grid-area: icon;
 }
 
 .round-reveal-label .player-avatar {

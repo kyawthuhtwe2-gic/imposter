@@ -927,7 +927,6 @@ export default function GamePage() {
                   <Image src="/secret.png" alt="" width={34} height={34} />
                   <div className="round-reveal-label">
                     <span>လျှို့ဝှက်စကားလုံး</span>
-                    <br />
                     <strong>{roundResult.secret_word}</strong>
                   </div>
                 </div>
@@ -940,7 +939,6 @@ export default function GamePage() {
                   </span>
                   <div className="round-reveal-label">
                     <span>Imposter</span>
-                    <br />
                     <strong>{roundResult.imposter_names.join("၊ ")}</strong>
                   </div>
                 </div>
