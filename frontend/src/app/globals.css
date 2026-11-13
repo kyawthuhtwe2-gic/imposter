@@ -691,8 +691,13 @@ html[data-theme="day"] .watermark-credit strong {
   padding: 2px;
   border: 1px solid rgba(184, 190, 255, 0.16);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.055);
+  background: transparent;
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.room-header-room-control .room-id-pill {
+  background: transparent;
+  box-shadow: none;
 }
 
 .room-header-room-control.has-exit .room-id-pill {
@@ -2573,8 +2578,13 @@ html[data-theme="day"] .room-id-pill {
 
 html[data-theme="day"] .room-header-room-control.has-exit {
   border-color: var(--border);
-  background: rgba(255, 255, 255, 0.82);
+  background: transparent;
   box-shadow: 0 2px 8px rgba(37, 45, 80, 0.06);
+}
+
+html[data-theme="day"] .room-header-room-control .room-id-pill {
+  background: transparent;
+  box-shadow: none;
 }
 
 html[data-theme="day"] .room-header-room-control.has-exit .room-id-pill {
