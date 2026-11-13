@@ -488,7 +488,7 @@ export default function GamePage() {
               aria-label={`Room ID ${game.room_code}; ${connectionLabel}`}
               title={connectionLabel}
             >
-              အခန်းကုဒ် {game.room_code}
+              အခန်းကုဒ် - {game.room_code}
             </div>
           </div>
           <ThemeToggle />
