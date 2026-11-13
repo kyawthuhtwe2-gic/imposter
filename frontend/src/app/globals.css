@@ -1697,13 +1697,7 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
 .round-reveal-secret strong {
   display: inline-block;
   max-width: 100%;
-  margin-top: 0.3rem;
-  padding: 0.35rem 0.7rem;
-  border: 1px solid rgba(196, 181, 253, 0.16);
-  border-radius: 10px;
-  background: rgba(124, 58, 237, 0.12);
   font-size: 1rem;
-  line-height: 1.3;
 }
 
 .result-columns {
