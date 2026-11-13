@@ -1996,6 +1996,7 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
 
 .sidebar-tip {
   display: flex;
+  align-items: center;
   gap: 0.65rem;
   margin-top: 1.1rem;
   padding: 0.8rem;
