@@ -509,12 +509,16 @@ export default function GamePage() {
               </svg>
             </button>
             <h2 id="exit-dialog-title">
-              {closesRoom ? "အခန်းကို ပိတ်မလား?" : "အခန်းမှ ထွက်မလား?"}
+              {isHost
+                ? "အခန်းဖန်တီးသူအနေဖြင့် အခန်းကို ပိတ်မလား?"
+                : "ကစားသမားအနေဖြင့် အခန်းမှ ထွက်မလား?"}
             </h2>
             <p id="exit-dialog-message" className="muted">
-              {closesRoom
-                ? "အခန်းမှ ထွက်ပါက အခန်းသည် အားလုံးအတွက် ပိတ်သွားပါမည်။"
-                : "အခန်းမှ ထွက်ပြီး ပင်မစာမျက်နှာသို့ ပြန်သွားပါမည်။"}
+              {isHost
+                ? "အခန်းဖန်တီးသူ ထွက်ပါက အခန်းသည် အားလုံးအတွက် ပိတ်သွားပါမည်။"
+                : closesRoom
+                  ? "ဂိမ်းပြီးဆုံးသွားသဖြင့် ထွက်ပါက အခန်းသည် အားလုံးအတွက် ပိတ်သွားပါမည်။"
+                  : "အခန်းမှ ထွက်ပြီး ပင်မစာမျက်နှာသို့ ပြန်သွားပါမည်။"}
             </p>
             {exitFailed && error && <p className="error-message" role="alert">{error}</p>}
             <div className="modal-actions">
