@@ -702,19 +702,6 @@ html[data-theme="day"] .watermark-credit strong {
   box-shadow: none;
 }
 
-.connection-dot {
-  flex: 0 0 8px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #74809c;
-}
-
-.connection-dot.online {
-  background: var(--green);
-  box-shadow: 0 0 12px rgba(110, 231, 183, 0.65);
-}
-
 .turn-indicator-image {
   display: block;
   width: 32px;
@@ -865,10 +852,11 @@ html[data-theme="day"] .watermark-credit strong {
 
 .leave-room-button {
   width: 38px;
+  height: 38px;
   min-height: 38px;
   padding: 0;
   border-color: rgba(251, 113, 133, 0.22);
-  border-radius: 12px;
+  border-radius: 50%;
   background: rgba(225, 29, 72, 0.08);
   color: #fda4af;
   box-shadow: 0 4px 12px rgba(225, 29, 72, 0.08);

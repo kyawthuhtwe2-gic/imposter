@@ -471,10 +471,6 @@ export default function GamePage() {
               aria-label={`Room ID ${game.room_code}; ${connectionLabel}`}
               title={connectionLabel}
             >
-              <span
-                className={`connection-dot ${connection === "Connected" ? "online" : ""}`}
-                aria-hidden="true"
-              />
               အခန်းကုဒ် {game.room_code}
             </div>
           </div>
