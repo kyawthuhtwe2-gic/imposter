@@ -2084,6 +2084,7 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
 .exit-confirm-modal {
   position: relative;
   overflow: hidden;
+  width: min(100%, 500px);
   padding-top: 3rem;
   border-color: rgba(251, 113, 133, 0.22);
   background:
@@ -2879,6 +2880,11 @@ html[data-theme="day"] .state-card .error-message {
     font-size: 0.9rem;
   }
 
+  .exit-confirm-modal .modal-actions button {
+    font-size: 0.85rem;
+    padding-inline: 0.55rem;
+  }
+
   h1,
   .hero h1,
   .room-heading h1,
@@ -2896,6 +2902,14 @@ html[data-theme="day"] .state-card .error-message {
   .result-modal h2,
   .confirm-modal h2 {
     font-size: clamp(1.5rem, 5.5vw, 1.75rem);
+  }
+
+  .exit-confirm-modal h2 {
+    font-size: clamp(1.2rem, 4vw, 1.4rem);
+  }
+
+  .exit-confirm-modal .muted {
+    font-size: 0.84rem;
   }
 
   .game-panel h2,
@@ -2920,5 +2934,20 @@ html[data-theme="day"] .state-card .error-message {
 
   h6 {
     font-size: clamp(1rem, 3.4vw, 1.1rem);
+  }
+}
+
+@media (max-width: 420px) {
+  .exit-confirm-modal h2 {
+    font-size: 1.15rem;
+  }
+
+  .exit-confirm-modal .muted {
+    font-size: 0.78rem;
+  }
+
+  .exit-confirm-modal .modal-actions button {
+    font-size: 0.78rem;
+    line-height: 1.3;
   }
 }
