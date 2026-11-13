@@ -292,6 +292,11 @@ export default function GamePage() {
       game.clue_rounds) * 100
     : 0;
   const roundResult = game.round_results.find((item) => item.round_number === game.round_number);
+  const imposterPlayerIds = new Set(
+    roundResult?.player_stats
+      .filter((player) => player.role === "imposter")
+      .map((player) => player.player_id) ?? [],
+  );
   const overallWinner = game.final_results?.winner === "TIE"
     ? "သရေကျပါသည်"
     : game.final_results?.winner === "IMPOSTERS"
@@ -919,7 +924,7 @@ export default function GamePage() {
 
               <div className="round-reveal">
                 <div className="round-reveal-secret">
-                  <Image src="/secret.png" alt="" width={24} height={24} />
+                  <Image src="/secret.png" alt="" width={34} height={34} />
                   <div className="round-reveal-label">
                     <span>လျှို့ဝှက်စကားလုံး</span>
                     <br />
@@ -948,7 +953,10 @@ export default function GamePage() {
                   </div>
                   <ul className="results-list">
                     {roundResult.vote_counts.map((result) => (
-                      <li key={result.player_id}>
+                      <li
+                        key={result.player_id}
+                        className={imposterPlayerIds.has(result.player_id) ? "imposter-vote-result" : undefined}
+                      >
                         <span className="player-avatar" aria-hidden="true">
                           <svg viewBox="0 0 24 24" focusable="false">
                             <circle cx="12" cy="8" r="4" />
