@@ -114,6 +114,7 @@ export default function GamePage() {
         : availableIds,
     );
   }, [game?.players, game?.game_id, playerId]);
+
   const currentTurn = players.find((player) => player.player_id === game?.current_turn_player_id);
   const isMyTurn = game?.phase === "CLUE_ROUND" && currentTurn?.player_id === playerId;
   const turnKey = `${game?.game_id}:${game?.round_number}:${game?.current_clue_round}:${currentTurn?.player_id}`;
@@ -150,6 +151,24 @@ export default function GamePage() {
   const [replaying, setReplaying] = useState(false);
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState("");
+  const [showExitDialog, setShowExitDialog] = useState(false);
+  const [leavingRoom, setLeavingRoom] = useState(false);
+  const [exitFailed, setExitFailed] = useState(false);
+  const exitButtonRef = useRef(null);
+
+  useEffect(() => {
+    if (!showExitDialog) return undefined;
+    function handleEscape(event) {
+      if (event.key === "Escape" && !leavingRoom) {
+        setShowExitDialog(false);
+        setExitFailed(false);
+        exitButtonRef.current?.focus();
+      }
+    }
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [showExitDialog, leavingRoom]);
+
   const canControlPlayer = (candidateId) => localPlayerIds.includes(candidateId);
   const votingPlayer = players.find((player) => player.player_id === votingPlayerId);
 
@@ -329,19 +348,27 @@ export default function GamePage() {
   }
 
   async function leaveRoom() {
-    const closesRoom = isHost || game.phase !== "WAITING_FOR_PLAYERS";
-    const message = closesRoom
-      ? "အခန်းမှ ထွက်ပါက ဂိမ်းအခန်းကို အားလုံးအတွက် ပိတ်ပါမည်။ ဆက်လုပ်မလား?"
-      : "အခန်းမှ ထွက်ပြီး ပင်မစာမျက်နှာသို့ ပြန်မလား?";
-    if (!window.confirm(message)) return;
-
+    if (leavingRoom) return;
+    setLeavingRoom(true);
+    setExitFailed(false);
     const result = await request(`/games/${encodeURIComponent(id)}/leave`, {
       player_id: playerId,
     });
-    if (!result) return;
+    if (!result) {
+      setLeavingRoom(false);
+      setExitFailed(true);
+      return;
+    }
 
     clearRoomTokens(id);
     window.location.href = "/";
+  }
+
+  function closeExitDialog() {
+    if (leavingRoom) return;
+    setShowExitDialog(false);
+    setExitFailed(false);
+    exitButtonRef.current?.focus();
   }
 
   async function advanceRound() {
@@ -428,21 +455,80 @@ export default function GamePage() {
             />
             အခန်းကုဒ် {game.room_code}
           </div>
-          <button
-            className="icon-button leave-room-button"
-            type="button"
-            onClick={leaveRoom}
-            aria-label="အခန်းမှ ထွက်ရန်"
-            title="အခန်းမှ ထွက်ရန်"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path d="M10 17l5-5-5-5M15 12H3" />
-              <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7" />
-            </svg>
-          </button>
+          {(game.phase === "WAITING_FOR_PLAYERS" || game.phase === "GAME_OVER") && (
+            <button
+              ref={exitButtonRef}
+              className="icon-button leave-room-button"
+              type="button"
+              onClick={() => {
+                setExitFailed(false);
+                setShowExitDialog(true);
+              }}
+              aria-label="အခန်းမှ ထွက်ရန်"
+              title="အခန်းမှ ထွက်ရန်"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M10 17l5-5-5-5M15 12H3" />
+                <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7" />
+              </svg>
+            </button>
+          )}
           <ThemeToggle />
         </div>
       </header>
+
+      {showExitDialog && (
+        <div
+          className="modal-backdrop confirm-backdrop"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) closeExitDialog();
+          }}
+        >
+          <section
+            className="glass-card confirm-modal exit-confirm-modal"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="exit-dialog-title"
+            aria-describedby="exit-dialog-message"
+            aria-busy={leavingRoom}
+          >
+            <div className="exit-dialog-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M10 17l5-5-5-5M15 12H3" />
+                <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7" />
+              </svg>
+            </div>
+            <h2 id="exit-dialog-title">
+              {isHost || game.phase !== "WAITING_FOR_PLAYERS" ? "အခန်းကို ပိတ်မလား?" : "အခန်းမှ ထွက်မလား?"}
+            </h2>
+            <p id="exit-dialog-message" className="muted">
+              {isHost || game.phase !== "WAITING_FOR_PLAYERS"
+                ? "အခန်းမှ ထွက်ပါက အခန်းသည် အားလုံးအတွက် ပိတ်သွားပါမည်။"
+                : "အခန်းမှ ထွက်ပြီး ပင်မစာမျက်နှာသို့ ပြန်သွားပါမည်။"}
+            </p>
+            {exitFailed && error && <p className="error-message" role="alert">{error}</p>}
+            <div className="modal-actions">
+              <button
+                className="secondary-button"
+                type="button"
+                onClick={closeExitDialog}
+                disabled={leavingRoom}
+                autoFocus
+              >
+                မထွက်တော့ပါ
+              </button>
+              <button
+                className="exit-confirm-button"
+                type="button"
+                onClick={leaveRoom}
+                disabled={leavingRoom}
+              >
+                {leavingRoom ? "ထွက်နေသည်..." : "ထွက်မည်"}
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
 
       <div className="room-layout">
         <section className="room-main">
@@ -1039,7 +1125,7 @@ export default function GamePage() {
             </section>
           )}
 
-          {error && <p className="error-message" role="alert">{error}</p>}
+          {error && (!showExitDialog || !exitFailed) && <p className="error-message" role="alert">{error}</p>}
         </section>
 
         <aside className="glass-card players-panel">
