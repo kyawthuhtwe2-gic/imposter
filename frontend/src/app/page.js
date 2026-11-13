@@ -211,7 +211,7 @@ export default function HomePage() {
                 autoCapitalize="characters"
                 maxLength={9}
                 pattern="[A-Z]{2} [0-9]{6}"
-                placeholder="AA 345009"
+                placeholder="အခန်းကုဒ်ရိုက်ထည့်ပါ"
                 autoComplete="off"
                 required
               />
