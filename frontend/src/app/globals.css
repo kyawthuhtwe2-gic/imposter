@@ -687,6 +687,8 @@ html[data-theme="day"] .watermark-credit strong {
 }
 
 .room-header-room-control .room-id-pill {
+  height: 42px;
+  min-height: 42px;
   background: transparent;
   border-radius: 999px;
   box-shadow:
@@ -2799,6 +2801,11 @@ html[data-theme="day"] .state-card .error-message {
 
   .room-header-room-control {
     height: 40px;
+  }
+
+  .room-header-room-control .room-id-pill {
+    height: 40px;
+    min-height: 40px;
   }
 
   .theme-toggle {
