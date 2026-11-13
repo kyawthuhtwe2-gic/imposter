@@ -688,7 +688,10 @@ html[data-theme="day"] .watermark-credit strong {
 
 .room-header-room-control .room-id-pill {
   background: transparent;
-  box-shadow: none;
+  border-radius: 999px;
+  box-shadow:
+    inset 0 1px 4px rgba(255, 255, 255, 0.07),
+    inset 0 -1px 3px rgba(0, 0, 0, 0.16);
 }
 
 .turn-indicator-image {
@@ -2561,7 +2564,9 @@ html[data-theme="day"] .room-id-pill {
 
 html[data-theme="day"] .room-header-room-control .room-id-pill {
   background: transparent;
-  box-shadow: none;
+  box-shadow:
+    inset 0 1px 4px rgba(37, 45, 80, 0.08),
+    inset 0 -1px 3px rgba(255, 255, 255, 0.7);
 }
 
 html[data-theme="day"] .leave-room-button {
