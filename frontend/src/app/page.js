@@ -197,11 +197,21 @@ export default function HomePage() {
               <input
                 id="gameId"
                 value={gameId}
-                onChange={(event) => setGameId(event.target.value.replace(/\D/g, "").slice(0, 4))}
-                inputMode="numeric"
-                maxLength={4}
-                pattern="[0-9]{4}"
-                placeholder="ဂဏန်း ၄ လုံး"
+                onChange={(event) => {
+                  const compactCode = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 8);
+                  const letters = compactCode.match(/^[A-Z]{0,2}/)?.[0] ?? "";
+                  const digits = compactCode.slice(letters.length).replace(/\D/g, "").slice(0, 6);
+                  setGameId(
+                    letters.length === 2 && digits
+                      ? `${letters} ${digits}`
+                      : `${letters}${digits}`,
+                  );
+                }}
+                inputMode="text"
+                autoCapitalize="characters"
+                maxLength={9}
+                pattern="[A-Z]{2} [0-9]{6}"
+                placeholder="AA 345009"
                 autoComplete="off"
                 required
               />

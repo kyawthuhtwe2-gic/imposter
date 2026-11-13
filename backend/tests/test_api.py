@@ -71,15 +71,18 @@ def test_spoken_imposter_guess_is_adjudicated_by_authenticated_host(monkeypatch)
     assert game.phase == GamePhase.GAME_OVER
 
 
-def test_room_code_is_four_digits_and_can_be_used_to_join(monkeypatch) -> None:
+def test_room_code_uses_two_uppercase_letters_and_six_digits(monkeypatch) -> None:
     monkeypatch.setattr(main, "game_service", GameService())
     client = TestClient(main.app)
     created = client.post("/games", json={"player_name": "Host"}).json()
+    room_code = created["room_code"]
 
-    assert len(created["room_code"]) == 4
-    assert created["room_code"].isdigit()
+    assert len(room_code) == 9
+    assert all("A" <= character <= "Z" for character in room_code[:2])
+    assert room_code[2] == " "
+    assert all("0" <= character <= "9" for character in room_code[3:])
     joined = client.post(
-        f"/games/{created['room_code']}/players",
+        f"/games/{room_code.lower().replace(' ', '')}/players",
         json={"player_name": "Guest"},
     )
 
