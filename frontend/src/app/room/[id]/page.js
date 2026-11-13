@@ -335,6 +335,10 @@ export default function GamePage() {
         ? "Connection error"
         : "Connecting";
   const canExitRoom = game.phase === "WAITING_FOR_PLAYERS" || game.phase === "GAME_OVER";
+  const closesRoom = isHost || game.phase !== "WAITING_FOR_PLAYERS";
+  const exitCancelText = closesRoom ? "မပိတ်တော့ပါ" : "မထွက်တော့ပါ";
+  const exitActionText = closesRoom ? "အခန်းပိတ်မည်" : "အခန်းမှ ထွက်မည်";
+  const exitProgressText = closesRoom ? "အခန်းပိတ်နေသည်..." : "ထွက်နေသည်...";
 
   async function copyRoomCode() {
     try {
@@ -500,10 +504,10 @@ export default function GamePage() {
               </svg>
             </div>
             <h2 id="exit-dialog-title">
-              {isHost || game.phase !== "WAITING_FOR_PLAYERS" ? "အခန်းကို ပိတ်မလား?" : "အခန်းမှ ထွက်မလား?"}
+              {closesRoom ? "အခန်းကို ပိတ်မလား?" : "အခန်းမှ ထွက်မလား?"}
             </h2>
             <p id="exit-dialog-message" className="muted">
-              {isHost || game.phase !== "WAITING_FOR_PLAYERS"
+              {closesRoom
                 ? "အခန်းမှ ထွက်ပါက အခန်းသည် အားလုံးအတွက် ပိတ်သွားပါမည်။"
                 : "အခန်းမှ ထွက်ပြီး ပင်မစာမျက်နှာသို့ ပြန်သွားပါမည်။"}
             </p>
@@ -516,7 +520,7 @@ export default function GamePage() {
                 disabled={leavingRoom}
                 autoFocus
               >
-                မထွက်တော့ပါ
+                {exitCancelText}
               </button>
               <button
                 className="exit-confirm-button"
@@ -524,7 +528,7 @@ export default function GamePage() {
                 onClick={leaveRoom}
                 disabled={leavingRoom}
               >
-                {leavingRoom ? "ထွက်နေသည်..." : "ထွက်မည်"}
+                {leavingRoom ? exitProgressText : exitActionText}
               </button>
             </div>
           </section>
