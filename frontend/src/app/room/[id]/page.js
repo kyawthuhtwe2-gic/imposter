@@ -659,13 +659,13 @@ export default function GamePage() {
                       </span>
                       <h3>{player.name}</h3>
                       {isCurrentTurn ? (
-                        isLocalTurn ? (
-                          <span className="you-badge">{submitted ? "ပေးပြီး" : "Your Turn"}</span>
-                        ) : (
-                          <span>{submitted ? "ပေးပြီး" : "အလှည့်ရောက်နေသည်"}</span>
-                        )
+                        <span className={`clue-player-status${submitted ? " is-submitted" : ""}${isLocalTurn ? " is-local-turn" : " is-current-turn"}`}>
+                          {submitted ? "ပေးပြီး" : isLocalTurn ? "Your Turn" : "အလှည့်ရောက်နေသည်"}
+                        </span>
                       ) : (
-                        <span>{submitted ? "ပေးပြီး" : "စောင့်နေသည်"}</span>
+                        <span className={`clue-player-status${submitted ? " is-submitted" : ""}`}>
+                          {submitted ? "ပေးပြီး" : "စောင့်နေသည်"}
+                        </span>
                       )}
                       <Image
                         className="clue-status-indicator"
