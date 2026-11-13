@@ -497,12 +497,17 @@ export default function GamePage() {
             aria-describedby="exit-dialog-message"
             aria-busy={leavingRoom}
           >
-            <div className="exit-dialog-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" focusable="false">
-                <path d="M10 17l5-5-5-5M15 12H3" />
-                <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7" />
+            <button
+              className="icon-button exit-dialog-close"
+              type="button"
+              onClick={closeExitDialog}
+              disabled={leavingRoom}
+              aria-label="ပိတ်ရန်"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="m6 6 12 12M18 6 6 18" />
               </svg>
-            </div>
+            </button>
             <h2 id="exit-dialog-title">
               {closesRoom ? "အခန်းကို ပိတ်မလား?" : "အခန်းမှ ထွက်မလား?"}
             </h2>

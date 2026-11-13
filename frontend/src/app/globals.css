@@ -2082,7 +2082,9 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
 }
 
 .exit-confirm-modal {
+  position: relative;
   overflow: hidden;
+  padding-top: 3rem;
   border-color: rgba(251, 113, 133, 0.22);
   background:
     radial-gradient(circle at 50% 0%, rgba(225, 29, 72, 0.12), transparent 46%),
@@ -2091,26 +2093,33 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
   text-align: center;
 }
 
-.exit-dialog-icon {
+.exit-dialog-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
   display: grid;
-  width: 58px;
-  height: 58px;
-  margin: 0 auto 1rem;
+  width: 36px;
+  height: 36px;
+  min-height: 36px;
+  padding: 0;
   place-items: center;
-  border: 1px solid rgba(251, 113, 133, 0.28);
-  border-radius: 19px;
-  background: rgba(225, 29, 72, 0.12);
-  color: #fda4af;
+  border-radius: 50%;
+  color: var(--muted);
 }
 
-.exit-dialog-icon svg {
-  width: 25px;
-  height: 25px;
+.exit-dialog-close svg {
+  width: 18px;
+  height: 18px;
   fill: none;
   stroke: currentColor;
   stroke-linecap: round;
-  stroke-linejoin: round;
   stroke-width: 1.8;
+}
+
+.exit-dialog-close:hover:not(:disabled) {
+  border-color: rgba(251, 113, 133, 0.4);
+  background: rgba(225, 29, 72, 0.1);
+  color: #fda4af;
 }
 
 .exit-confirm-modal .modal-actions {
