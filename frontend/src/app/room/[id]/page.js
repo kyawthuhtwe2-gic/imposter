@@ -144,6 +144,7 @@ export default function GamePage() {
   const [clue, setClue] = useState("");
   const [submittingHint, setSubmittingHint] = useState(false);
   const [editingRoom, setEditingRoom] = useState(false);
+  const [selectedPlayerCount, setSelectedPlayerCount] = useState(null);
   const [categories, setCategories] = useState([]);
   const selectableCategories = game?.hint_input_mode === "TEXT_INPUT"
     ? categories.filter((category) => !category.endsWith(" Kanji"))
@@ -155,6 +156,11 @@ export default function GamePage() {
   const [leavingRoom, setLeavingRoom] = useState(false);
   const [exitFailed, setExitFailed] = useState(false);
   const exitButtonRef = useRef(null);
+  const desiredPlayerCount = selectedPlayerCount ?? game?.desired_player_count ?? null;
+
+  useEffect(() => {
+    setSelectedPlayerCount(game?.desired_player_count ?? null);
+  }, [game?.desired_player_count]);
 
   useEffect(() => {
     if (!showExitDialog) return undefined;
@@ -385,10 +391,13 @@ export default function GamePage() {
   }
 
   async function changePlayerCount(value) {
-    await request(`/games/${encodeURIComponent(id)}/settings/players`, {
+    const nextPlayerCount = Number(value);
+    setSelectedPlayerCount(nextPlayerCount);
+    const result = await request(`/games/${encodeURIComponent(id)}/settings/players`, {
       player_id: playerId,
-      desired_player_count: Number(value),
+      desired_player_count: nextPlayerCount,
     });
+    if (!result) setSelectedPlayerCount(null);
   }
 
   async function changeCategory(value) {
@@ -409,17 +418,21 @@ export default function GamePage() {
     const imposterCount = Number(value);
     const minimumPlayers = imposterCount * 2 + 1;
     const targetPlayerCount = Math.max(
-      game.desired_player_count ?? 3,
+      desiredPlayerCount ?? 3,
       game.player_count,
       minimumPlayers,
     );
 
     if (targetPlayerCount !== game.desired_player_count) {
+      setSelectedPlayerCount(targetPlayerCount);
       const playerCountResult = await request(
         `/games/${encodeURIComponent(id)}/settings/players`,
         { player_id: playerId, desired_player_count: targetPlayerCount },
       );
-      if (!playerCountResult) return;
+      if (!playerCountResult) {
+        setSelectedPlayerCount(null);
+        return;
+      }
     }
 
     await request(`/games/${encodeURIComponent(id)}/settings`, {
@@ -615,7 +628,7 @@ export default function GamePage() {
                     <label htmlFor="editPlayerCount">Player</label>
                     <SelectBox
                       id="editPlayerCount"
-                      value={game.desired_player_count ?? Math.max(3, game.player_count)}
+                      value={desiredPlayerCount ?? Math.max(3, game.player_count)}
                       onValueChange={changePlayerCount}
                     >
                       {Array.from({ length: 8 }, (_, index) => index + 3)
@@ -648,8 +661,8 @@ export default function GamePage() {
                     disabled={
                       !game.hint_input_mode ||
                       game.player_count < 3 ||
-                      (game.desired_player_count !== null &&
-                        game.player_count !== game.desired_player_count)
+                      (desiredPlayerCount !== null &&
+                        game.player_count !== desiredPlayerCount)
                     }
                     onClick={() => request(`/games/${encodeURIComponent(id)}/start`, { player_id: playerId })}
                   >
@@ -668,9 +681,9 @@ export default function GamePage() {
                 )}
               </div>
   
-              {game.desired_player_count && game.player_count < game.desired_player_count && (
+              {desiredPlayerCount && game.player_count < desiredPlayerCount && (
                 <p className="inline-note">
-                  စတင်ရန် Player {game.desired_player_count - game.player_count} ဦး ထပ်ဝင်ရန် လိုသည်။
+                  စတင်ရန် Player {desiredPlayerCount - game.player_count} ဦး ထပ်ဝင်ရန် လိုသည်။
                 </p>
               )}
               {!game.hint_input_mode && (
