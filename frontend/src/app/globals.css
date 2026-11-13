@@ -1473,12 +1473,16 @@ html[data-theme="day"] .watermark-credit strong {
 
 .results-list li {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 1rem;
   padding: 0.75rem 0.85rem;
   border: 1px solid rgba(184, 190, 255, 0.08);
   border-radius: 11px;
   background: rgba(255, 255, 255, 0.025);
+}
+
+.results-list li > span:not(.player-avatar) {
+  flex: 1;
 }
 
 .results-list strong {
@@ -1600,11 +1604,29 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
 }
 
 .round-reveal > .round-reveal-secret {
+  position: relative;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: center;
+  gap: 0.65rem;
+  overflow: hidden;
+  padding: 1rem;
   border-color: rgba(167, 139, 250, 0.25);
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.14), rgba(96, 165, 250, 0.07));
+  background:
+    radial-gradient(circle at 100% 0%, rgba(147, 112, 219, 0.2), transparent 42%),
+    linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(96, 165, 250, 0.07));
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.06), 0 8px 24px rgba(45, 28, 91, 0.12);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.round-reveal > .round-reveal-secret:hover {
+  transform: translateY(-2px);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.08), 0 12px 28px rgba(45, 28, 91, 0.2);
 }
 
 .round-reveal > .round-reveal-imposters {
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: center;
+  gap: 0.65rem;
   background: rgba(251, 113, 133, 0.055);
 }
 
@@ -1614,10 +1636,21 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
   gap: 0.45rem;
 }
 
-.round-reveal-label img {
-  width: 24px;
-  height: 24px;
+.round-reveal-secret > img {
+  box-sizing: border-box;
+  width: 34px;
+  height: 34px;
+  padding: 6px;
+  border: 1px solid rgba(196, 181, 253, 0.2);
+  border-radius: 11px;
+  background: rgba(124, 58, 237, 0.16);
   object-fit: contain;
+}
+
+.round-reveal-secret .round-reveal-label,
+.round-reveal-imposters .round-reveal-label {
+  display: block;
+  min-width: 0;
 }
 
 .round-reveal-label .player-avatar {
@@ -1632,6 +1665,21 @@ html[data-theme="day"] .result-hero.is-draw .result-hero-icon.has-image {
 .round-reveal strong {
   overflow-wrap: anywhere;
   color: #e4d8ff;
+}
+
+.round-reveal-secret strong {
+  display: inline-block;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 0.1rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid rgba(196, 181, 253, 0.16);
+  border-radius: 11px;
+  background: rgba(10, 12, 30, 0.28);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.04);
+  font-size: clamp(1.15rem, 3vw, 1.55rem);
+  font-weight: 750;
+  line-height: 1.3;
 }
 
 .result-columns {
@@ -2383,6 +2431,12 @@ html[data-theme="day"] .result-hero.is-draw .result-status {
 html[data-theme="day"] .round-reveal > .round-reveal-secret {
   border-color: rgba(112, 68, 197, 0.2);
   background: linear-gradient(135deg, rgba(112, 68, 197, 0.08), rgba(40, 116, 201, 0.045));
+}
+
+html[data-theme="day"] .round-reveal-secret strong {
+  border-color: rgba(112, 68, 197, 0.14);
+  background: rgba(112, 68, 197, 0.06);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.7);
 }
 
 html[data-theme="day"] .round-reveal > .round-reveal-imposters {
